@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+
+  <extension
+        point="org.eclipse.equinox.http.registry.servlets">
+        <servlet alias="/Spring3HibernateOSGiJSPs/*.jsp" 
+            class="org.eclipse.equinox.jsp.jasper.registry.JSPFactory:/WebContent">
+        </servlet>
+  </extension>
+
+   <extension
+         point="org.eclipse.equinox.http.registry.resources">
+      <resource
+          alias="/Spring3HibernateOSGiJSPs"
+          base-name="/WebContent">
+      </resource>
+   </extension>
+   
+   <!-- The below does not seem to register the dispatcher servlet correctly, will try Sriram's way -->
+   <!--extension point="org.eclipse.equinox.http.registry.servlets">
+		<servlet alias="/Spring3HibernateOSGi" 
+			class="org.springframework.web.servlet.DispatcherServlet"
+			load-on-startup="true">
+			<init-param
+               name="contextConfigLocation"
+               value="/WebContent/WEB-INF/spring-servlet.xml">
+         	</init-param>
+			<init-param
+               name="contextClass"
+               value="spring3hibernateosgi.BAC">
+         	</init-param>         	
+		</servlet>
+   </extension-->
+   <!-- the above is throwing - classNotFoundException for spring3hibernateosgi.BAC -->
+
+</plugin>

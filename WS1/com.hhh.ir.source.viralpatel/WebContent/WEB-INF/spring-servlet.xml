@@ -1,0 +1,101 @@
+<?xml  version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:jee="http://www.springframework.org/schema/jee"
+	xmlns:lang="http://www.springframework.org/schema/lang"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee.xsd
+		http://www.springframework.org/schema/lang http://www.springframework.org/schema/lang/spring-lang.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
+
+<!-- Unable to locate Spring NamespaceHandler for XML schema namespace [http://www.springframework.org/schema/p]
+the p namespace seems to not work on OSGi environment
+Solution:
+http://static.springsource.org/spring/docs/2.0.x/reference/beans.html
+3.3.3.6.2. The p-namespace and how to use it to configure properties
+ -->
+	<bean id="jspViewResolver"
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="viewClass"
+			value="org.springframework.web.servlet.view.JstlView" />
+		<property name="prefix" value="/Spring3HibernateOSGiJSPs/jsp/" />
+		<property name="suffix" value=".jsp" />
+	</bean>
+	
+	<!-- context:component-scan for annotations does not seem to be working with OSGi -->
+	<!-- auto wiring does not seem to work in OSGi too -->
+	<bean name="contactController"
+		class="net.viralpatel.contact.controller.ContactController">
+		<property name="contactService" ref="contactService"></property>
+	</bean>
+	
+	<bean name="contactService"
+		class="net.viralpatel.contact.service.ContactServiceImpl">
+		<property name="contactDAO" ref="contactDAO"></property>
+	</bean>	
+
+	<bean name="contactDAO"
+		class="net.viralpatel.contact.dao.ContactDAOImpl">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>	
+	
+	<bean id="propertyConfigurer"
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="location" value="/WebContent/WEB-INF/jdbc.properties"></property>
+	</bean>	
+		
+	<bean id="dataSource"
+		class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+		<property name="driverClassName" value="${jdbc.driverClassName}"></property>
+		<property name="url" value="${jdbc.databaseurl}"></property>
+		<property name="username" value="${jdbc.username}"></property>
+		<property name="password" value="${jdbc.password}"></property>
+	</bean>	
+	
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="configLocation">
+			<value>classpath:hibernate.cfg.xml</value>
+		</property>
+		<property name="configurationClass">
+			<value>org.hibernate.cfg.AnnotationConfiguration</value>
+		</property>
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">${jdbc.dialect}</prop>
+				<prop key="hibernate.show_sql">true</prop>
+			</props>
+		</property>
+	</bean>
+	
+<!-- Hrishikesh: Configuration problem: Unable to locate Spring NamespaceHandler for XML schema namespace [http://www.springframework.org/schema/tx]
+Offending resource: URL [bundleentry://20.fwk1863550684/WebContent/WEB-INF/spring-servlet.xml]
+
+service.registerServlet("/Spring3HibernateOSGi",  servlet, initparam, null); -> this line in spring3hibernateosgi.Activator throws error sometimes;
+sometimes on restart the error goes away; it appears like the plugin that has the namespacehandler for this namespace (tx) is not started before the 
+plugin Spring3HibernateOSGi is started;
+
+details about these are in the chapters 33 and 34 of spring reference doc -> http://docs.spring.io/spring/docs/4.0.0.RELEASE/spring-framework-reference/htmlsingle;
+
+workaround for now is to go to the osgi prompt and explicitly start the Spring3HibernateOSGi plugin;
+
+-->	
+
+	<tx:annotation-driven/>
+	<!--  without above line -->
+	<!-- osgi org.hibernate.HibernateException: No Hibernate Session bound to thread, and configuration does not allow creation of non-transactional one here -->
+	
+	<bean id="transactionManager"
+		class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	
+</beans>

@@ -1,0 +1,15 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-configuration PUBLIC
+    "-//Hibernate/Hibernate Configuration DTD//EN"
+    "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+
+ 
+<hibernate-configuration>
+    <session-factory>
+    	<!-- the hbm2ddl if not present throws - Table/View 'HIBERNATE_UNIQUE_KEY' does not exist -->
+    	<!-- first time use create, then change to 'validate', if left as 'create', the data will not be persisted across server restarts, may be because the tables are recreated -->
+    	<property name="hibernate.hbm2ddl.auto">validate</property> 
+        <mapping class="net.viralpatel.contact.form.Contact" />
+    </session-factory>
+	    
+</hibernate-configuration>
