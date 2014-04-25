@@ -3,7 +3,7 @@
 #################
 
 *.pydevproject
-.project
+# hri123 .project
 .metadata
 bin/
 tmp/
@@ -20,7 +20,7 @@ local.properties
 .externalToolBuilders/
 
 # Locally stored "Eclipse launch configurations"
-*.launch
+# hri123 *.launch
 
 # CDT-specific
 .cproject

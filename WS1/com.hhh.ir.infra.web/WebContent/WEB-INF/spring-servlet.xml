@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN 2.0//EN"
+"http://www.springframework.org/dtd/spring-beans-2.0.dtd">
+<beans>
+	<bean id="viewResolver"
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="viewClass"
+			value="org.springframework.web.servlet.view.InternalResourceView" />
+		<property name="prefix" value="/infraweb/views/" />
+		<property name="suffix" value=".jsp" />
+	</bean>
+
+	<bean id="actionResolver"
+		class="org.springframework.web.servlet.mvc.multiaction.ParameterMethodNameResolver">
+		<property name="paramName">
+			<value>action</value>
+		</property>
+		<property name="defaultMethodName">
+			<value>test</value>
+		</property>
+	</bean>
+
+	<!-- BeanNameUrlHandlerMapping -->
+	<bean name="/infraweb/request.do"
+		class="com.hhh.ir.infra.web.module.ModulesHTTPService">
+		<property name="methodNameResolver">
+			<ref bean="actionResolver" />
+		</property>
+		<property name="modulesMgmtService" ref="modulesMgmtServiceInst"></property>
+	</bean>
+</beans>

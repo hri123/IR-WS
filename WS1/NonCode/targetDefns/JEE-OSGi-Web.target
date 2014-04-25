@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?><?pde version="3.6"?><target name="JEE-OSGi-Web">
+<locations>
+<location path="${workspace_loc}\targetPlatform\jetty" type="Directory"/>
+<location path="${workspace_loc}\targetPlatform\ebr-hibernate" type="Directory"/>
+<location path="${workspace_loc}\targetPlatform\eclipse" type="Directory"/>
+<location path="${workspace_loc}\targetPlatform\spring" type="Directory"/>
+<location path="${workspace_loc}\targetPlatform\spring-osgi" type="Directory"/>
+<location path="${workspace_loc}\targetPlatform\utils" type="Directory"/>
+<location path="${workspace_loc}\targetPlatform\derby" type="Directory"/>
+</locations>
+</target>

@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sqwvendormap:VendorInfo xmi:version="2.0"
+	xmlns:xmi="http://www.omg.org/XMI" xmlns:sqwvendormap="com.ibm.datatools.sqw.vendormap.ecore">
+
+	<vendor vendorID="SQL Server" updateSyntaxType="1">
+		<!--  map from SQL Server to DB2 UDB -->
+		<mapToVendor vendorID="DB2 UDB">
+			<typeMapTable key="SMALLMONEY">
+				<value typeName="NUMERIC" minLength="10" minScale="4" />
+			</typeMapTable>
+			<typeMapTable key="MONEY">
+				<value typeName="NUMERIC" minLength="19" minScale="4" />
+			</typeMapTable>
+			<typeMapTable key="SMALLDATETIME">
+				<value typeName="TIMESTAMP" />
+			</typeMapTable>
+			<typeMapTable key="DATETIME">
+				<value typeName="TIMESTAMP" />
+			</typeMapTable>
+			<typeMapTable key="BIT">
+				<value typeName="SMALLINT" />
+			</typeMapTable>
+			<typeMapTable key="TIMESTAMP">
+				<value typeName="CHAR FOR BIT DATA" minLength="8" />
+			</typeMapTable>
+			<typeMapTable key="UNIQUEIDENTIFIER">
+				<value typeName="CHAR" minLength="36" />
+			</typeMapTable>
+			<typeMapTable key="TEXT">
+				<value typeName="CLOB" minLength="1048576" />
+			</typeMapTable>
+			<typeMapTable key="NTEXT">
+				<value typeName="DBCLOB" minLength="1048576" />
+			</typeMapTable>
+			<typeMapTable key="IMAGE">
+				<value typeName="BLOB" minLength="1048576" />
+			</typeMapTable>
+		</mapToVendor>
+		<!--  end of map from SQL Server to DB2 UDB -->
+
+	</vendor>
+
+
+	<vendor vendorID="Oracle">
+		<!--  map from Oracle to DB2 UDB  -->
+		<mapToVendor vendorID="DB2 UDB">
+			<typeMapTable key="LONG">
+				<value typeName="CLOB" />
+			</typeMapTable>
+		</mapToVendor>
+		<!--  end of map from Oracle to DB2 UDB  -->
+	</vendor>
+
+
+	<vendor vendorID="Informix" updateSyntaxType="1">
+		<!--  map from Informix to DB2 UDB  -->
+		<mapToVendor vendorID="DB2 UDB">
+			<typeMapTable key="MONEY">
+				<value typeName="DECIMAL" minLength="16" minScale="2" />
+			</typeMapTable>
+			<typeMapTable key="BOOLEAN">
+				<value typeName="CHAR" minLength="1" />
+			</typeMapTable>
+			<typeMapTable key="DATETIME">
+				<value typeName="TIMESTAMP" />
+			</typeMapTable>
+			<typeMapTable key="SERIAL">
+				<value typeName="INTEGER" />
+			</typeMapTable>
+			<typeMapTable key="INTERVAL">
+				<value typeName="DECIMAL" minLength="20" minScale="5" />
+			</typeMapTable>
+		</mapToVendor>
+		<mapToVendor vendorID="Generic SQW">
+			<typeMapTable key="DOUBLE PRECISION">
+				<value typeName="DOUBLE" />
+			</typeMapTable>
+			<typeMapTable key="FLOAT">
+				<value typeName="DOUBLE" />
+			</typeMapTable>
+			<typeMapTable key="SMALLFLOAT">
+				<value typeName="REAL" />
+			</typeMapTable>
+			<typeMapTable key="DATETIME">
+				<value typeName="TIMESTAMP" />
+			</typeMapTable>
+			<typeMapTable key="INT8">
+				<value typeName="BIGINT" />
+			</typeMapTable>
+			<typeMapTable key="BYTE">
+				<value typeName="BINARY" />
+			</typeMapTable>
+		</mapToVendor>
+		<!-- end of  map from Informix  to DB2 UDB  -->
+	</vendor>
+
+	<!--  map from  DB2 UDB  to other vendors-->
+	<vendor vendorID="DB2 UDB">
+
+		<mapToVendor vendorID="SQL Server">
+			<typeMapTable key="DATE">
+				<value typeName="DATETIME" />
+			</typeMapTable>
+			<typeMapTable key="TIMESTAMP">
+				<value typeName="DATETIME" />
+			</typeMapTable>
+			<typeMapTable key="CLOB">
+				<value typeName="TEXT" minLength="-2" />
+			</typeMapTable>
+			<typeMapTable key="DBCLOB">
+				<value typeName="NTEXT" minLength="-2" />
+			</typeMapTable>
+			<typeMapTable key="CHAR FOR BIT DATA">
+				<value typeName="BINARY" />
+			</typeMapTable>
+			<typeMapTable key="BLOB">
+				<value typeName="IMAGE" minLength="-2" />
+			</typeMapTable>
+		</mapToVendor>
+
+		<mapToVendor vendorID="Informix">
+			<typeMapTable key="TIMESTAMP">
+				<value typeName="DATETIME" />
+			</typeMapTable>
+		</mapToVendor>
+		<mapToVendor vendorID="Generic SQW">
+			<typeMapTable key="LONG VARCHAR">
+				<value typeName="LVARCHAR" />
+			</typeMapTable>
+		</mapToVendor>
+	</vendor>
+	<vendor vendorID="DB2 UDB zSeries">
+		<mapToVendor vendorID="Generic SQW">
+			<typeMapTable key="LONG VARCHAR">
+				<value typeName="LVARCHAR" />
+			</typeMapTable>
+		</mapToVendor>
+	</vendor>
+	<!--
+		map from Generic SQW Vendor to other vendors ( just exceptions where
+		simple decision by name mapping is not suitable)
+	-->
+	<vendor vendorID="Generic SQW">
+		<mapToVendor vendorID="Informix">
+			<typeMapTable key="DBCLOB">
+				<value typeName="BLOB" />
+			</typeMapTable>
+			<typeMapTable key="GRAPHIC">
+				<value typeName="CHAR" />
+			</typeMapTable>
+			<typeMapTable key="VARGRAPHIC">
+				<value typeName="VARCHAR" />
+			</typeMapTable>
+			<typeMapTable key="LONG VARGRAPHIC">
+				<value typeName="LVARCHAR" />
+			</typeMapTable>
+			<typeMapTable key="DOUBLE">
+				<value typeName="DOUBLE PRECISION" />
+			</typeMapTable>
+			<typeMapTable key="REAL">
+				<value typeName="SMALLFLOAT" />
+			</typeMapTable>
+			<typeMapTable key="TIME">
+				<value typeName="DATE" />
+			</typeMapTable>
+			<typeMapTable key="TIMESTAMP">
+				<value typeName="DATETIME" />
+			</typeMapTable>
+			<typeMapTable key="TINYINT">
+				<value typeName="SMALLINT" />
+			</typeMapTable>
+			<typeMapTable key="BINARY">
+				<value typeName="BYTE" />
+			</typeMapTable>
+			<typeMapTable key="VARBINARY">
+				<value typeName="BLOB" />
+			</typeMapTable>
+			<typeMapTable key="BIGINT">
+				<value typeName="INT8" />
+			</typeMapTable>
+			<typeMapTable key="CHAR FOR BIT DATA">
+				<value typeName="BLOB" />
+			</typeMapTable>
+			<typeMapTable key="VARCHAR FOR BIT DATA">
+				<value typeName="BYTE" />
+			</typeMapTable>
+			<typeMapTable key="LONG VARCHAR FOR BIT DATA">
+				<value typeName="BYTE" />
+			</typeMapTable>
+			<typeMapTable key="XML">
+				<value typeName="CLOB" />
+			</typeMapTable>
+			<typeMapTable key="INTERVAL">
+				<value typeName="DECIMAL" />
+			</typeMapTable>
+			<typeMapTable key="ROWID">
+				<value typeName="CHAR" />
+			</typeMapTable>
+		</mapToVendor>
+
+
+		<mapToVendor vendorID="DB2 UDB">
+			<typeMapTable key="TINYINT">
+				<value typeName="SMALLINT" />
+			</typeMapTable>
+			<typeMapTable key="BOOLEAN">
+				<value typeName="CHAR" minLength="1" />
+			</typeMapTable>
+			<typeMapTable key="NCHAR">
+				<value typeName="CHAR" />
+			</typeMapTable>
+			<typeMapTable key="NVARCHAR">
+				<value typeName="VARCHAR" />
+			</typeMapTable>
+			<typeMapTable key="LVARCHAR">
+				<value typeName="LONG VARCHAR" />
+			</typeMapTable>
+			<typeMapTable key="TEXT">
+				<value typeName="CLOB" />
+			</typeMapTable>
+			<typeMapTable key="MONEY">
+				<value typeName="DECIMAL" minLength="16" minScale="2" />
+			</typeMapTable>
+			<typeMapTable key="SERIAL">
+				<value typeName="INTEGER" />
+			</typeMapTable>
+			<typeMapTable key="SERIAL8">
+				<value typeName="BIGINT" />
+			</typeMapTable>
+			<typeMapTable key="INTERVAL">
+				<value typeName="DECIMAL" minLength="20" minScale="5" />
+			</typeMapTable>
+			<typeMapTable key="ROWID">
+				<value typeName="VARCHAR" />
+			</typeMapTable>
+		</mapToVendor>
+
+		<mapToVendor vendorID="DB2 UDB zSeries">
+			<typeMapTable key="TINYINT">
+				<value typeName="SMALLINT" />
+			</typeMapTable>
+			<typeMapTable key="BOOLEAN">
+				<value typeName="CHAR" minLength="1" />
+			</typeMapTable>
+			<typeMapTable key="NCHAR">
+				<value typeName="CHAR" />
+			</typeMapTable>
+			<typeMapTable key="NVARCHAR">
+				<value typeName="VARCHAR" />
+			</typeMapTable>
+			<typeMapTable key="LVARCHAR">
+				<value typeName="LONG VARCHAR" />
+			</typeMapTable>
+			<typeMapTable key="TEXT">
+				<value typeName="CLOB" />
+			</typeMapTable>
+			<typeMapTable key="MONEY">
+				<value typeName="DECIMAL" minLength="16" minScale="2" />
+			</typeMapTable>
+			<typeMapTable key="SERIAL">
+				<value typeName="INTEGER" />
+			</typeMapTable>
+			<typeMapTable key="SERIAL8">
+				<value typeName="BIGINT" />
+			</typeMapTable>
+			<typeMapTable key="INTERVAL">
+				<value typeName="DECIMAL" minLength="20" minScale="5" />
+			</typeMapTable>
+		</mapToVendor>
+
+	</vendor>
+</sqwvendormap:VendorInfo>

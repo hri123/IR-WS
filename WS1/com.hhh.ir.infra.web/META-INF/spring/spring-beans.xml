@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:osgi="http://www.springframework.org/schema/osgi"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+						http://www.springframework.org/schema/beans/spring-beans.xsd
+						http://www.springframework.org/schema/osgi
+						http://www.springframework.org/schema/osgi/spring-osgi.xsd">						
+
+	<osgi:list cardinality="0..N" id="moduleContributorsOSGiServices"
+		interface="com.hhh.ir.infra.web.module.IModuleContributor">
+		<osgi:comparator>
+			<osgi:natural basis="service" />
+		</osgi:comparator>
+	</osgi:list>
+
+	<bean id="modulesMgmtServiceInst" class="com.hhh.ir.infra.web.module.ModulesMgmtService"
+		scope="singleton">
+		<property name="moduleContributors" ref="moduleContributorsOSGiServices"></property>
+	</bean>
+
+	<osgi:service ref="modulesMgmtServiceInst"
+		interface="com.hhh.ir.infra.web.module.IModulesMgmtService">
+	</osgi:service>
+
+	<bean id="infraweb" class="com.hhh.ir.infra.core.services.HTTPContextRegistry"
+		init-method="init">
+		<property name="webRoot" value="/WebContent"></property>
+		<property name="alias" value="/infraweb"></property>
+		<property name="controllerAliasPattern" value="/infraweb/*.do" />
+		<property name="contextConfigFile" value="WEB-INF/spring-servlet.xml" />
+	</bean>
+
+
+</beans>

@@ -1,0 +1,18 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: common dbcp bin Plug-in
+Bundle-SymbolicName: com.hhh.thirdparty.common.dbcp.bin;singleton:=true
+Bundle-Version: 2.2.0.qualifier
+Bundle-Vendor: HHH
+Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-ClassPath: lib/commons-dbcp-1.2.1.jar,
+ lib/commons-pool-1.2.jar
+Export-Package: org.apache.commons.dbcp,
+ org.apache.commons.dbcp.cpdsadapter,
+ org.apache.commons.dbcp.datasources,
+ org.apache.commons.jocl,
+ org.apache.commons.pool,
+ org.apache.commons.pool.impl
+Require-Bundle: com.hhh.thirdparty.opensource.bin;bundle-version="2.3.0";visibility:=reexport,
+ com.hhh.thirdparty.shared.db.drivers;bundle-version="2.2.0",
+ org.apache.derby.core
