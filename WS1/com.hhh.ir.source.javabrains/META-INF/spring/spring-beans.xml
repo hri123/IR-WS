@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:osgi="http://www.springframework.org/schema/osgi"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+						http://www.springframework.org/schema/beans/spring-beans.xsd
+						http://www.springframework.org/schema/osgi
+						http://www.springframework.org/schema/osgi/spring-osgi.xsd">
+			
+	<bean id="contextApplicationContextProvider" 
+   		class="javabrains.AppContextUtil">
+   	</bean>
+						
+	<bean id="triangle1" class="com.hhh.ir.container.Triangle">
+		<property name="side1" value="3"></property>
+		<property name="side2" value="4"></property>
+		<property name="side3" value="5"></property>
+	</bean>
+	
+	<bean id="javabrainsWeb" class="com.hhh.ir.infra.core.services.HTTPContextRegistry"
+		init-method="init">
+		<property name="webRoot" value="/WebContent"></property>
+		<property name="alias" value="/javabrains"></property>
+		<property name="controllerAliasPattern" value="/javabrains/*.do" />
+		<property name="contextConfigFile" value="WEB-INF/spring-servlet.xml"/>
+	</bean>
+
+	
+</beans>
