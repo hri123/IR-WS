@@ -1,0 +1,97 @@
+@CHARSET "ISO-8859-1";
+/*
+*This stylesheet will be use to create and overwriting styling needed for individual items.
+*/
+
+.oneui .olympiaLaunchIndexMainDiv .dijitButton .dijitButtonNode {
+	background-color: #00b299;
+	background-image: none;
+	padding: 12px 9px;
+}
+
+.olympiaLaunchIndexMainDiv .dijitButtonText {
+	color: #dfe6eb;
+	font: bold;	
+}
+
+.olympiaLaunchIndexMainDiv .dijitTabChecked .dijitTabContent .tabLabel {
+	color: #dfe6eb;
+	font-size: 13px;
+}
+
+.olympiaLaunchIndexMainDiv .dijitTabContent .tabLabel {
+	color: #3b4b54;
+	font-size: 13px;
+}
+
+.olympiaLaunchIndexMainDiv .dijitTabChecked .dijitTabInnerDiv {
+	background-color: #00b299;
+}
+
+.olympiaLaunchIndexMainDiv .launchConsoleText {
+	color: #3b4b54;
+}
+
+.olympiaLaunchIndexMainDiv .launchConsoleText p {
+	font-family: Helvetica;
+	font-size: 14px;
+	margin-top: -20px;
+	margin-bottom: 10px;
+	text-align: center;
+}
+
+.olympiaLaunchIndexMainDiv .launchConsoleHeaderText {
+	color: #3b4b54;
+	text-align: center;
+	margin: 20px;
+}
+
+.olympiaLaunchIndexMainDiv .launchConsoleHeaderText p {
+	font-family: Helvetica;
+	font-size: 24px;
+	margin-top: 0px;
+	margin-bottom: 0px;
+}
+
+.olympiaLaunchIndexMainDiv .centerTable { 
+	text-align: center; 
+} 
+.olympiaLaunchIndexMainDiv .centerTable table { 
+	margin-left: auto; 
+	margin-right: auto; 
+	text-align: center;
+	border-spacing:0;
+}
+.olympiaLaunchIndexMainDiv .centerTable td { 
+	width: 250px; 
+}
+
+.olympiaLaunchIndexMainDiv .centerTable tr.row2 p {
+	font-family:Helvetica;
+	font-size:24px;
+	margin-top:10px;
+	margin-bottom:10px;
+}
+
+.olympiaLaunchIndexMainDiv .centerTable tr.row3 p {
+	font-family:Helvetica;
+	font-size:12px;
+	text-align: center;
+	color: #3b4b54;
+}
+
+.olympiaLaunchIndexMainDiv .centerTableMDBS tr.row td:first-child { 
+	border-right: thin solid grey; 
+}
+
+.olympiaLaunchIndexMainDiv .centerTableIJDS tr.row td:first-child + td { 
+	display: none; 
+}
+
+.olympiaLaunchIndexMainDiv .centerTableIJDS tr.row td:first-child { 
+	border-right: none; 
+}
+
+.olympiaLaunchIndexMainDiv .centerTableIJDS .testConnectivity { 
+	display: none; 
+}

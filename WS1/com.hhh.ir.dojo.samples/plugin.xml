@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.equinox.http.registry.resources">
+      <resource
+            alias="/dojo/jazz"
+            base-name="/WebContent">
+      </resource>
+   </extension>
+   
+      
+   <extension
+        point="org.eclipse.equinox.http.registry.servlets">
+        <servlet alias="/dojo/jazz/*.jsp" 
+            class="org.eclipse.equinox.jsp.jasper.registry.JSPFactory:/WebContent">
+        </servlet>
+   </extension>
+   
+   <extension
+         point="org.eclipse.equinox.http.registry.servlets">
+      <servlet
+      		alias="/test"
+      		class="com.example.servlet.MyServlet">
+      </servlet>
+   </extension>
+
+</plugin>

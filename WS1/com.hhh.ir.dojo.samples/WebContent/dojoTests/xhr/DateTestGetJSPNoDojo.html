@@ -1,0 +1,53 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<script type="text/javascript">
+	
+	var xhr;
+	
+	function doXHR() {
+
+		   //other browsers & IE 7.0
+		   if (window.XMLHttpRequest) {
+		    	xhr = new XMLHttpRequest();
+		   } else if (window.ActiveXObject) {
+	 			try{
+		 			xhr = new ActiveXObject("Msxml2.XMLHTTP");
+		 	  	  }catch (e) {
+			 			try{
+				 			xhr = new ActiveXObject("Microsoft.XMLHTTP");
+			 			}catch (e) {
+								xhr=false;
+						}
+				}
+		   }
+
+		   if(xhr){
+				
+			   xhr.open("GET","date.jsp",true);
+			   xhr.onreadystatechange=handleData;
+			   xhr.send(null);  
+		   }	
+		   
+	}
+
+
+	function handleData(){
+		document.getElementById("resultDiv")
+		if(xhr.readyState==4){
+			if(xhr.status==200){	
+				document.getElementById("resultDiv").innerHTML=xhr.responseText;
+			}else{
+				document.getElementById("resultDiv").innerHTML="Error in communication!";
+			}
+		}
+	}
+	
+</script>
+</head>
+<body>
+
+<div id="resultDiv"></div>
+<input type="button" value="GO"  onclick="doXHR();"/> 
+</body>
+</html>

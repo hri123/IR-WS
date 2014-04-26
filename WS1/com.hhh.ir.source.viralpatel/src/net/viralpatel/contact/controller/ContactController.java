@@ -25,7 +25,6 @@ import com.google.gson.Gson;
  * @Service
  * @Repository
  * http://stackoverflow.com/questions/6827752/whats-the-difference-between-component-repository-service-annotations-in
- * @author ADMINIBM
  *
  */
 @Controller

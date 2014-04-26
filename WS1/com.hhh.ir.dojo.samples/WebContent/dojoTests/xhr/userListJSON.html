@@ -1,0 +1,82 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<script type="text/javascript">
+	
+	var xhr;
+	
+	function doXHR() {
+
+		   //other browsers & IE 7.0
+		   if (window.XMLHttpRequest) {
+		    	xhr = new XMLHttpRequest();
+		   } else if (window.ActiveXObject) {
+	 			try{
+		 			xhr = new ActiveXObject("Msxml2.XMLHTTP");
+		 	  	  }catch (e) {
+			 			try{
+				 			xhr = new ActiveXObject("Microsoft.XMLHTTP");
+			 			}catch (e) {
+								xhr=false;
+						}
+				}
+		   }
+
+		   if(xhr){
+
+							
+			   xhr.open("GET","userList.json",true);
+			   xhr.onreadystatechange=handleData;
+			   xhr.send(null);  
+		   }	
+		   
+	}
+
+
+	function handleData(){
+		if(xhr.readyState==4){
+			if(xhr.status==200){	
+				var data=xhr.responseText;	
+				var usr=eval('('+ data +')');
+
+				var table=document.createElement("table")
+				table.setAttribute("border","2px")
+				table.setAttribute("bgcolor","red")
+				
+				for(var i=0;i<usr.users.length;i++){
+
+					var tr=document.createElement("tr")
+				
+					var td1=document.createElement("td")
+					var td2=document.createElement("td")
+					var td3=document.createElement("td")
+				
+		            var idNode=document.createTextNode(usr.users[i]['id'])
+		 			var nameNode=document.createTextNode(usr.users[i]['name'])
+					var ageNode=document.createTextNode(usr.users[i]['age'])
+
+					td1.appendChild(idNode)
+					td2.appendChild(nameNode)
+					td3.appendChild(ageNode)
+
+					tr.appendChild(td1)
+					tr.appendChild(td2)
+					tr.appendChild(td3)
+
+					table.appendChild(tr)
+				}
+				document.getElementById("resultDiv").appendChild(table)
+			}else{
+				document.getElementById("resultDiv").innerHTML="Error in communication!";
+			}
+		}
+	}
+
+</script>
+</head>
+<body>
+<center>
+<div id="resultDiv"></div>
+<input type="button" value="LIST" onclick="doXHR();" /></center>
+</body>
+</html>

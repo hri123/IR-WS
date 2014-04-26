@@ -1,0 +1,166 @@
+.TaskDetails {
+	
+}
+
+.TaskDetails .container {
+	width: 90%;
+	border-color: gray;
+	border-style: solid;
+	border-width: thin;
+	background-color: white;
+	position: relative;
+	margin: auto;
+	margin-top: 2em;
+	margin-bottom: 2em;
+}
+
+.TaskDetails .top {
+	background-color: silver;
+	border-color: gray;
+	border-style: solid;
+	border-width: thin;
+	margin: 5px;
+	border-radius: .5em;
+}
+
+.TaskDetails .summaryClass {
+	width: 90%;
+	float: none;
+}
+
+.TaskDetails .left {
+	text-align: left;
+	background-color: white;
+	overflow: hidden;
+	float: left;
+	border-style: solid;
+	border-width: thin;
+	clear: left;
+	border-color: #80ff80;
+	width: 45%;
+	position: relative;
+	margin: 5px;
+}
+
+.TaskDetails .right {
+	text-align: left;
+	background-color: white;
+	overflow: hidden;
+	float: left;
+	border-style: solid;
+	border-width: thin;
+	clear: right;
+	border-color: #80ff80;
+	width: 45%;
+	margin: 5px;
+}
+
+.TaskDetails .bottom {
+	vertical-align: bottom;
+	overflow: hidden;
+	width: 90%;
+	border-color: #80ff80;
+	border-style: solid;
+	border-width: thin;
+	margin: 5px;
+}
+
+fieldset {
+
+	border-color: #80ff80;
+	border-style: solid;
+	border-width: thin;
+	padding: .5em;
+}
+
+blockquote {
+	margin: 1em;
+	background: #B0EAA1;
+	padding: 1em;
+	border-radius: 1.5em;
+	box-shadow: black 1em 1em 0.5em;
+}
+
+blockquote p {
+	margin: 0
+}
+
+.section {
+	break-inside: avoid;
+	margin: 0 0 2em 0;
+	padding: 1.3em 1em 0 1em
+}
+
+.long {
+	break-inside: auto
+}
+
+.section,.aside {
+	box-sizing: border-box;
+	-moz-box-sizing: border-box
+}
+
+#banner .home {
+	position: relative;
+	display: block;
+	top: -6.75em;
+	left: 0;
+	margin: -7px 0 0 0;
+	height: 6.75em;
+	background: url(logo-bg) #2371aa;
+	border-top: 2px solid #3b80b3;
+	padding: 0;
+	line-height: 0
+}
+
+*>.home img {
+	display: none
+}
+
+.home a {
+	text-decoration: none
+}
+
+.home a:before {
+	content: url(w3c-logo)
+}
+
+#banner {
+	border-top: double 8px #ddd;
+/* 	position: relative; */
+	left: 0;
+	top: 6.75em;
+	right: 0;
+/* 	height: 2.6em; */
+	margin: -1px 0 0 0;
+	padding: .5em 20px;
+	text-transform: uppercase
+}
+
+#banner ul {
+	margin: 0;
+	padding: 0 0 0 90px
+}
+
+#banner li {
+	display: inline;
+	margin: 0 1.5em 0 0
+}
+
+#banner li a {
+	margin: 0 -.5em;
+	padding: .3em .5em;
+	font-size: .9em
+}
+
+a {
+    color: #0C3D5F;
+    text-decoration: none;
+}
+
+a:HOVER {
+	text-decoration: underline;
+
+#banner h2 {
+	display: none
+}

@@ -6,7 +6,6 @@
 	// Hrishikesh: externalizing the dojoroot so that any change in the context root can be done at one place
 	// String dojoRoot = "/dojoroot/1.9.2";
 	String dojoRoot = "//ajax.googleapis.com/ajax/libs/dojo/1.9.3";
-	String idxRoot = "";
 	String hwtiRoot = "/infraweb";
 %>
 
@@ -14,10 +13,6 @@
 <script type="text/javascript"
 	data-dojo-config="
         	packages: [{
-            name: 'idx',
-            location: '<%=idxRoot%>/idx'
-       		},
-       		{
             name: 'hwti',
             location: '<%=hwtiRoot%>/hwti'
        		}],
@@ -29,7 +24,6 @@
 	href="<%=dojoRoot%>/dijit/themes/dijit.css">
 <link rel="stylesheet" type="text/css"
 	href="<%=dojoRoot%>/dojo/resources/dojo.css">
-<link rel="stylesheet" type="text/css" href="<%=idxRoot%>/idx/themes/oneui/oneui.css">
 
 	<link rel="stylesheet" href="<%=dojoRoot%>/dijit/themes/claro/claro.css">
 	<style type="text/css">@import "<%=dojoRoot%>/dojox/grid/resources/claroGrid.css";
