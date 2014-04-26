@@ -15,6 +15,7 @@ local.properties
 .classpath
 .settings/
 .loadpath
+dojorootfolder/
 
 # External tool builders
 .externalToolBuilders/
