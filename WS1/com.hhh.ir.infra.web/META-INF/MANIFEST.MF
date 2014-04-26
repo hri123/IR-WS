@@ -21,6 +21,7 @@ Bundle-ActivationPolicy: lazy
 Require-Bundle: org.springframework.web.servlet;bundle-version="3.0.2",
  org.springframework.web;bundle-version="3.0.2",
  javax.servlet;bundle-version="2.5.0",
- org.springframework.beans;bundle-version="3.0.2"
+ org.springframework.beans;bundle-version="3.0.2",
+ com.hhh.thirdparty.dojotoolkit;bundle-version="1.0.0"
 Export-Package: com.hhh.ir.infra.core.services,
  com.hhh.ir.infra.web.module

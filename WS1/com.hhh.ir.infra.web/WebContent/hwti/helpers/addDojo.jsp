@@ -4,8 +4,9 @@
 
 <%
 	// Hrishikesh: externalizing the dojoroot so that any change in the context root can be done at one place
-	// String dojoRoot = "/dojoroot/1.9.2";
-	String dojoRoot = "//ajax.googleapis.com/ajax/libs/dojo/1.9.3";
+	String dojoRoot = "/dojoroot/1.9.2";
+	// from CDN as below
+	// String dojoRoot = "//ajax.googleapis.com/ajax/libs/dojo/1.9.3";
 	String hwtiRoot = "/infraweb";
 %>
 
