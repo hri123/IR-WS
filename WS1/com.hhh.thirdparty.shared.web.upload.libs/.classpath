@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry kind="src" path="src"/>
 	<classpathentry exported="true" kind="lib" path="lib/jcl-over-slf4j-1.5.5.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/log4j.osgi-1.2.15-SNAPSHOT.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/slf4j-api-1.5.5.jar"/>

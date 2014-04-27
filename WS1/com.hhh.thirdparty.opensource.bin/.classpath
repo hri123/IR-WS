@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry kind="src" path="src"/>
 	<classpathentry exported="true" kind="lib" path="lib/commons-configuration-1.4.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/commons-digester.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/IBMJSON4J_Apache_V1.jar"/>
