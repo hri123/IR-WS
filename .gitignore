@@ -12,8 +12,8 @@ tmp/
 *.swp
 *~.nib
 local.properties
-.classpath
-.settings/
+# hri123 .classpath
+# hri123 .settings/
 .loadpath
 dojorootfolder/
 
