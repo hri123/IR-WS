@@ -3,6 +3,6 @@
 IR-WS - Contains workspaces for my IR
 =====================================
 
-* WS1 - (previously known as JEE-OSGi-Web) - learning dojo, learning spring over OSGi, learning WTi, learning end to end web development from dojo to osgi to spring to hibernate
+* WS1 - (previously known as JEE-OSGi-Web)
 
 
