@@ -3,4 +3,5 @@
 WS1
 ===
 
-* Details - learning dojo, learning spring over OSGi, learning WTi, learning end to end web development from dojo to osgi to spring to hibernate
+* __Details__ - learning dojo, learning spring over OSGi, learning WTi, learning end to end web development from dojo to osgi to spring to hibernate
+* __SetUp__ - refer NonCode/WS-Setup.md
