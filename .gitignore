@@ -15,7 +15,7 @@ local.properties
 # hri123 .classpath
 # hri123 .settings/
 .loadpath
-dojorootfolder/
+# hri123 dojorootfolder/ # dojorootfolder has its own .gitignore
 
 # External tool builders
 .externalToolBuilders/
