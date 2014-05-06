@@ -8,5 +8,6 @@ Links
 =====
 
 * [Markdown Cheatsheet](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet)
+* [Git-HowTos](https://github.com/hri123/IR-WS/wiki/Git-HowTos)
 
 
