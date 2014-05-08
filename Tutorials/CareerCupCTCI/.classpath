@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src/author/Chapter 17"/>
+	<classpathentry kind="src" path="src/author/Chapter 4"/>
+	<classpathentry kind="src" path="src/author/Chapter 8"/>
+	<classpathentry kind="src" path="src/author/Introduction"/>
+	<classpathentry kind="src" path="src/author/Chapter 9"/>
+	<classpathentry kind="src" path="src/author/Chapter 1"/>
+	<classpathentry kind="src" path="src/author/Chapter 10"/>
+	<classpathentry kind="src" path="src/author/Chapter 14"/>
+	<classpathentry kind="src" path="src/author/Chapter 18"/>
+	<classpathentry kind="src" path="src/author/Chapter 5"/>
+	<classpathentry kind="src" path="src/author/Chapter 11"/>
+	<classpathentry kind="src" path="src/author/Chapter 2"/>
+	<classpathentry kind="src" path="src/author/CtCILibrary"/>
+	<classpathentry kind="src" path="src/author/Chapter 16"/>
+	<classpathentry kind="src" path="src/author/Chapter 3"/>
+	<classpathentry kind="src" path="src/author/Chapter 7"/>
+	<classpathentry kind="src" path="src/mine"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
