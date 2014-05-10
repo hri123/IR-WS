@@ -6,7 +6,14 @@
  
 <hibernate-configuration>
     <session-factory>
-        <mapping class="net.viralpatel.contact.form.Contact" />
+
+	    <!-- table in the database is automatically created like repository contributor of WTi -->
+    	<!-- the hbm2ddl if not present throws - Table/View 'HIBERNATE_UNIQUE_KEY' does not exist -->
+    	<!-- first time use create, then change to 'validate', if left as 'create', the data will not be persisted across server restarts, may be because the tables are recreated -->
+    	<property name="hibernate.hbm2ddl.auto">create</property> 
+
+	    <mapping class="net.viralpatel.contact.form.Contact" />
+        
     </session-factory>
 	    
 </hibernate-configuration>

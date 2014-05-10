@@ -3,16 +3,19 @@ package net.viralpatel.contact.form;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="CONTACTS", schema="DB2ADMIN")
+// @Table(name="CONTACTS", schema="DB2ADMIN") // for DB2
+@Table(name="CONTACTS") // for Derby
 public class Contact {
 	
 	@Id
 	@Column(name="ID")
-	@GeneratedValue
+	// @GeneratedValue // for DB2
+	@GeneratedValue(strategy=GenerationType.AUTO) // for Derby
 	private Integer id;
 	
 	@Column(name="FIRSTNAME")
