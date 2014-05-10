@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?pde version="3.6"?>
+
+<target name="Toast Target">
+<locations>
+<location path="${workspace_loc}/ToastTarget/org.eclipse.platform.testing" type="Directory"/>
+<location path="${workspace_loc}/ToastTarget/delta.pack/eclipse" type="Directory"/>
+<location path="${eclipse_home}" type="Directory"/>
+<location includeAllPlatforms="false" includeMode="planner" type="InstallableUnit">
+<unit id="org.eclipse.equinox.sdk.feature.group" version="3.6.0.v20100601-7H7R-7v8rtGVR34XkO3kfH3DUO07"/>
+<repository location="http://download.eclipse.org/releases/helios"/>
+</location>
+<location includeAllPlatforms="false" includeMode="planner" type="InstallableUnit">
+<unit id="org.eclipse.rcp.sdk.id" version="3.6.0.I20100608-0911"/>
+<repository location="http://download.eclipse.org/releases/helios"/>
+</location>
+</locations>
+</target>

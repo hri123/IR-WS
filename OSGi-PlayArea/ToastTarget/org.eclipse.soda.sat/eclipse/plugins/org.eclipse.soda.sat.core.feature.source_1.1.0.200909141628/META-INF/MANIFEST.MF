@@ -1,0 +1,8 @@
+Manifest-Version: 1.0
+Bundle-Vendor: %providerName
+Bundle-Version: 1.1.0.200909141628
+Bundle-Localization: plugin
+Bundle-Name: %pluginName
+Bundle-SymbolicName: org.eclipse.soda.sat.core.feature.source; singlet
+ on=true
+

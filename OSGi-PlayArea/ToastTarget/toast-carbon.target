@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?pde version="3.6"?>
+
+<target name="Toast Target">
+<locations>
+<location path="${workspace_loc}/ToastTarget/org.eclipse.platform.testing" type="Directory"/>
+<location path="${workspace_loc}/ToastTarget/delta.pack/eclipse" type="Directory"/>
+<location includeAllPlatforms="false" includeMode="slicer" type="InstallableUnit">
+<unit id="org.eclipse.equinox.sdk.feature.group" version="3.6.2.r362_v20110210b-7H7R67v9rtOv_dTCawtb0WQnN92B"/>
+<repository location="http://download.eclipse.org/releases/helios"/>
+</location>
+</locations>
+<environment>
+<ws>carbon</ws>
+<arch>x86</arch>
+</environment>
+</target>
