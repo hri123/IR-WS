@@ -1,0 +1,11 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Sample1
+Bundle-SymbolicName: com.ir.sample1
+Bundle-Version: 1.0.0.qualifier
+Bundle-Activator: com.ir.sample1.Activator
+Bundle-Vendor: IR
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Import-Package: org.osgi.framework;version="1.3.0",
+ org.osgi.util.tracker;version="1.3.1"
+Bundle-ActivationPolicy: lazy
