@@ -1,0 +1,12 @@
+---
+applications:
+- name: hMeanTrial1
+  mem: 128M
+  instances: 1
+  host: hmeantrial1
+  domain: mybluemix.net
+  path: .
+  command: node app.js
+  services:
+  - mongodb-fs
+  
