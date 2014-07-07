@@ -14,7 +14,14 @@ var mongoose = require('mongoose'),
 
 // Initializing system variables
 var config = require('./server/config/config');
-var db = mongoose.connect(config.db);
+
+var db;
+if (process.env.VCAP_SERVICES) {
+   var env = JSON.parse(process.env.VCAP_SERVICES);
+   db = mongoose.connect(env['mongodb-2.2'][0].credentials.url);
+} else {
+   db = mongoose.connect(config.db);
+}
 
 // Bootstrap Models, Dependencies, Routes and the app as an express app
 var app = require('./server/config/system/bootstrap')(passport, db);
