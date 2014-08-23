@@ -1,0 +1,44 @@
+<html>
+<head>
+<title></title>
+<script src="jquery-1.11.1.js"></script>
+<!-- <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.js"></script> -->
+<style type="text/css">
+.emphasis {
+	font-weight: bold;
+}
+.emphasis2 {
+	color: red;
+}
+</style>
+
+<script>
+
+	// if the script is before the dom as in the case of this file, $('li:first-child') will return null
+	// as the dom is not yet created. Either this script has to be moved below the dom like in the case of 
+	// the file 1-Hello-jQuery.html or need to add the ready method so that jquery waits until the dom 
+	// is loaded
+	$(document).ready(function() {
+		$('li:first-child').addClass('emphasis');
+	});
+	
+	// short hand for $(document).ready is just $
+	$(function() {
+		$('li:first-child').addClass('emphasis2');
+	});
+	
+	// based on what is passed as parameter to $() function, jquery will decide what to do with it
+	// CSS Selector, function, etc. For more details, see the jquery.js file
+</script>
+
+</head>
+<body>
+	<ul>
+		<li>hello</li>
+		<li>hello 2</li>
+		<li>hello 3</li>
+	</ul>
+
+
+</body>
+</html>

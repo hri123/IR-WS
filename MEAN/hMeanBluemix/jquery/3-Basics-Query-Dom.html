@@ -1,0 +1,91 @@
+<!doctype html>
+<html>
+<head>
+<meta charset=utf-8>
+<title></title>
+<style>
+.container {
+	color: green;
+}
+
+/* if this is not mentioned explicitly the css of child li will inherit from its parent li */
+li {
+	color: black;
+}
+
+/* selects all li under ul having class emphasis */
+ul.emphasis li {
+	
+}
+
+/* selects only the immediate children li under ul having class emphasis */
+ul.emphasis>li {
+	
+}
+</style>
+</head>
+<body>
+
+	<div class="container">
+		<h1>Welcome to My Website</h1>
+		<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed
+			do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
+			enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi
+			ut aliquip ex ea commodo consequat.</p>
+
+		<div class="container">
+			<ul class="emphasis container">
+				<li>item</li>
+				<li>item 2</li>
+				<li>item 2</li>
+				<li>item 4</li>
+				<li>item 5</li>
+				<li>
+					<ul>
+						<li>hello from the nest.</li>
+					</ul>
+				</li>
+			</ul>
+		</div>
+	</div>
+
+	<script src="jquery-1.11.1.js"></script>
+
+	<script>
+		// find - to get equivalent to 'ul.emphasis li'
+		$('ul.emphasis').find('li').css('color', 'green');
+
+		// children - to get equivalent to 'ul.emphasis > li'
+		$('ul.emphasis').children('li').css('color', 'red');
+
+		$('ul.emphasis').find('li:nth-child(2)').css('color', 'blue');
+		$('ul.emphasis').children('li').first().css('color', 'yellow');
+
+		// in addition to css selector jquery provides additional selectors for browsers not supporting this selector
+		$('ul.emphasis').children('li:first').css('font-weight', 'bold');
+		// is same as
+		$('ul.emphasis').children('li:first-child').css('font-style', 'italic');
+		// is same as
+		$('ul.emphasis').children('li').eq(0).text('added programmatically');
+		// also observe the chaining as every method call return jQuery object
+		// is same as
+		$('ul.emphasis').children('li').eq(0).next().prev().text(
+				'added programmatically 2');
+
+		// there are other methods like parent, parents, closest
+		// jquery assumes dom as family tree, so using children, parent terminologies makes sense
+		// -----------------------------------------------------------------------------------
+		//       ------------------
+		// go to |'api.jquery.com'| which has a beautiful documentation about all tree traversal methods
+		//       ------------------
+		// -----------------------------------------------------------------------------------
+	</script>
+
+</body>
+</html>
+
+
+
+
+
+
