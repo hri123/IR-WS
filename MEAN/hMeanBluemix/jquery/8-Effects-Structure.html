@@ -1,0 +1,195 @@
+<!doctype html>
+<html>
+<head>
+<meta charset=utf-8>
+<title>Slides and Structure</title>
+<style>
+body {
+	width: 600px;
+	margin: auto;
+	font-family: sans-serif;
+}
+
+#contact {
+	background: #e3e3e3;
+	padding: 1em 2em;
+	position: relative;
+}
+
+.js #contact {
+	position: absolute;
+	top: 0;
+	width: inherit;
+	display: none;
+}
+
+#contact h2 {
+	margin-top: 0;
+}
+
+#contact ul {
+	padding: 0;
+}
+
+#contact li {
+	list-style: none;
+	margin-bottom: 1em;
+}
+
+/* Close button on form */
+.close {
+	position: absolute;
+	right: 10px;
+	top: 10px;
+	font-weight: bold;
+	font-family: sans-serif;
+	cursor: pointer;
+}
+
+/* Form inputs */
+input,textarea {
+	width: 100%;
+	line-height: 2em;
+}
+
+input[type=submit] {
+	width: auto;
+}
+
+label {
+	display: block;
+	text-align: left;
+}
+</style>
+</head>
+<body>
+
+	<article>
+		<h1>My Awesome Post</h1>
+		<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed
+			do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+		<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed
+			do eiusmod tempor incididunt ut labore et dolore magna aliqua. sed do
+			eiusmod tempor incididunt ut labore et dolore magna aliqua. sed do
+			eiusmod tempor incididunt ut labore et dolore magna aliqua. sed do
+			eiusmod tempor incididunt ut labore et dolore magna aliqua. sed do
+			eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+		<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed
+			do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+		<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed
+			do eiusmod tempor incididunt ut labore et dolore magna aliqua. sed do
+			eiusmod tempor incididunt ut labore et dolore magna aliqua. sed do
+			eiusmod tempor incididunt ut labore et dolore magna aliqua. sed do
+			eiusmod tempor incididunt ut labore et dolore magna aliqua. sed do
+			eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+	</article>
+
+	<div id="contact">
+		<h2>Contact Me</h2>
+		<form action="#">
+			<ul>
+				<li><label for="name">Name: </label> <input name="name"
+					id="name"></li>
+
+				<li><label for="email">Email Address: </label> <input
+					name="email" id="email"></li>
+
+				<li><label for="comments">What's Up?</label> <textarea
+						name="comments" id="comments" cols="30" rows="10"></textarea></li>
+				<li><input type="submit" value="Submit"></li>
+			</ul>
+		</form>
+	</div>
+
+	<script src="jquery-1.11.1.js"></script>
+	<!-- <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.js"></script> -->
+
+	<script>
+		// self invoking javascript function to keep from creating global variables
+		(function() {
+
+			$('html').addClass('js');
+			// the above line is a trick to use different css if javascript is turned on
+			// if javascript is turned on the above line will add a class to the outer container - html tag
+			// then specific css e.g.: '.js #<id>' is applied to the element with <id> 
+			// if the javascript is turned off the above line does not add the class to the html element and therefore
+			// a different css is applied e.g.: '#<id>' is applied to the element with <id>
+
+		})();
+
+		var contactForm = {
+
+			container : $('#contact'),
+			
+			config: {
+			
+				effect: 'slideToggle', // fadeIn, fadeOut, fadeToggle, slideIn, SlideOut
+				speed: 500
+			},
+
+			init : function(userPrefConfig) {
+			
+				// extend is same as dojo.mixin
+				$.extend(this.config, userPrefConfig);
+
+				$('<button></button>', {
+					text : 'Contact Me'
+				}).insertAfter('article').on('click', this.show);
+
+			},
+
+			show : function() {
+			
+				var cf= contactForm,
+					container = cf.container,
+					config = cf.config;
+
+				contactForm.close.call(contactForm.container); 
+				// the javascript method 'call' will set what 'this' represents 
+				// inside the close function to what is passed as its argument
+				
+				if (container.is(':hidden')) {
+					// contactForm.container.show(); // no animation on this
+					// contactForm.container.slideToggle is same as contactForm.container['slideToggle']
+					container[config.effect](config.speed);
+				}
+			},
+
+			close : function() {
+
+				var $this = $(this); // #contact
+				
+				// dont add multiple spans
+				if ($this.find('span.close').length) return;
+				
+				$('<span class=close>X</span>')
+					.prependTo($this)
+					.on('click', function() {
+						// this == span
+						// $this.hide(); // no animation
+						$this[contactForm.config.effect](contactForm.config.speed);
+					})
+			}
+
+		};
+
+		userPrefConfig = {
+			effect: 'fadeToggle',
+			speed: 1000
+		}
+
+		contactForm.init(userPrefConfig);
+	</script>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
