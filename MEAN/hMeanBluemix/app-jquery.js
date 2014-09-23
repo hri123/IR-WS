@@ -8,10 +8,11 @@ var express = require('express');
 var app = express();
 
 app.set("view options", {layout: false});
-app.use(express.static(__dirname + '/jquery'));
+app.use('/', express.static(__dirname + '/jquery'));
 
-app.get('/', function(req, res) {
-    res.render('index.html');
+app.get('/sampleJson', function(req, res) {
+	res.setHeader('Content-Type', 'application/json');
+	res.sendfile('./jquery/json/fromJsonGenerator.json');
 });
 
 // spin up server

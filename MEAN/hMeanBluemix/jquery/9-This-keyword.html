@@ -29,7 +29,7 @@
 			console.log(this);
 		})();
 		
-		$('a').on('click', obj.doIt); // this inside obj.doIt refers to element 'a'
+		$('a').on('click', obj.doIt); // this inside obj.doIt refers to element 'a', the element that triggered the event
 		
 		$('a').on('click', $.proxy(obj.doIt, obj)); // this refers to obj
 		

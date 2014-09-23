@@ -50,7 +50,7 @@ Slider.prototype.transition = function(coords) {
 	});
 };
 
-Slider.prototype.setCoordinates = function(direction) {
+Slider.prototype.setCurrent = function(direction) {
 
 		this.current += ~~(direction === 'next') || -1; // ~~ will cast true to 1 and false to 0
 

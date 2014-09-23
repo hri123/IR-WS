@@ -1,0 +1,52 @@
+<!doctype html>
+<html>
+
+<head>
+  <meta charset=utf-8>
+  <title></title>
+  <style type="text/css">
+  </style>
+</head>
+
+<body>
+
+  <a href="http://tutsplus.com" class="myClass">Click Me</a>
+
+  <script id="blogTemplate" type="tuts/template">
+  <h2>{{title}}</h2>
+  	<img src={{thumbnail}} alt={{title}}>
+  </script>
+
+  <script src="jquery-1.11.1.js"></script>
+  <!-- <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.js"></script> -->
+
+  <script>
+  (function() {
+
+    var content = [{
+        title: 'My awesome blog post',
+        thumbnail: 'http://d2o0t5hpnwv4c1.cloudfront.net/1137_terminal/preview.png',
+      }, {
+        title: 'My second awesome blog post',
+        thumbnail: 'http://d2o0t5hpnwv4c1.cloudfront.net/1133_newrelic/200.jpg',
+      }, {
+        title: 'My third blog post',
+        thumbnail: 'http://d2o0t5hpnwv4c1.cloudfront.net/1137_terminal/preview.png',
+      }],
+      template = $.trim($('#blogTemplate').html());
+
+    $.each(content, function(index, obj) {
+		var temp = template.replace(/{{title}}/ig, obj.title)
+						   .replace(/{{thumbnail}}/ig, obj.thumbnail);
+		
+		$(document.body).append(temp); // dont manipulate dom on every iteration as it is very slow
+
+    });
+
+
+  })();
+  </script>
+
+</body>
+
+</html>

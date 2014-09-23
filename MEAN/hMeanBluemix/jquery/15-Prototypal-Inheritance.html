@@ -61,7 +61,7 @@
   var slider = new Slider($('div.slider ul'), $('.slider-nav'));
 
   slider.nav.show().find('button').on('click', function() {
-    slider.setCoordinates($(this).data('direction'));
+    slider.setCurrent($(this).data('direction'));
     slider.transition();
   });
   </script>
