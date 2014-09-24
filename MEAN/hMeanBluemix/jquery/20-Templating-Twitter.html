@@ -5,11 +5,38 @@
   <title>Twitter</title>
 
   <style type="text/css">
+
+  body {
+    width: 600px;
+    margin: auto;
+  }
+
+  img {
+    float: left;
+    margin-right: 20px;
+  }
+
+  ul {
+    list-style: none;
+
+  }
+
   </style>
 </head>
 
 <body>
 
+<ul class="tweets">
+  
+  <script id="tweets-template" type="text/x-handlebars-template">
+  {{#each this}}
+  <li>
+    <img src="{{image}}" alt='{{email}}'>
+    <p>{{message}}</p>
+  </li>
+  {{/each}}
+  </script>
+</ul>
 
   <script src="jquery-1.11.1.js"></script>
 
@@ -21,12 +48,51 @@
 
     var Twitter = {
 
-      init: function() {
-        this.url : 
+      init: function(config) {
+        // this.url = "http://www.google.com/calendar/feeds/developer-calendar@google.com/public/full?alt=json";
+        this.url = '/sampleJson';
+
+        this.template = config.template;
+        this.container = config.container;
+        this.fetch();
+
+
+      },
+
+      attachTemplate: function() {
+
+        var template = Handlebars.compile(this.template);
+        this.container.append(template(this.tweets));
+
+      },
+
+      fetch: function() {
+
+        var self = this;
+
+        $.getJSON(this.url, function(data) {
+          // console.log(data);
+          self.tweets = $.map(data.results, function(tweet) {
+            return {
+              email: tweet.email,
+              image: tweet.picture,
+              money: tweet.balance,
+              message: tweet.greeting
+            };
+          });
+          // console.log(self.tweets);
+
+          self.attachTemplate();
+        });
+
       }
 
     };
 
+    Twitter.init({
+      template: $('#tweets-template').html(),
+      container: $('ul.tweets')
+    });
 
   })();
 
