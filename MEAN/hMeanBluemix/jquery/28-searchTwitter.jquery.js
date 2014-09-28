@@ -15,7 +15,8 @@ if ( typeof Object.create !== 'function' ) {
 			self.elem = elem;
 			self.$elem = $( elem );
 
-			self.url = 'http://search.twitter.com/search.json';
+			self.url1 = 'https://api.github.com/users/';
+			self.url2 = '/repos?q=';
 
 			self.search = ( typeof options === 'string' )
 				? options
@@ -50,8 +51,8 @@ if ( typeof Object.create !== 'function' ) {
 
 		fetch: function() {
 			return $.ajax({
-				url: this.url,
-				data: { q: this.search },
+				url: this.url1 + this.search + this.url2,
+				data: {},
 				dataType: 'jsonp'
 			});
 		},
@@ -92,7 +93,7 @@ if ( typeof Object.create !== 'function' ) {
 	};
 
 	$.fn.queryTwitter.options = {
-		search: '@tutspremium',
+		search: 'douglascrockford',
 		wrapEachWith: '<li></li>',
 		limit: 10,
 		refresh: null,

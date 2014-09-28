@@ -1,0 +1,136 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset=utf-8>
+	<title>jQuery Deferreds</title>
+
+	<style type="text/css">
+	.box {
+		width: 200px;
+		height: 200px;
+		background: green;
+		display: inline-block;
+		margin-right: 3em;
+	}
+	</style>
+</head>
+<body>
+
+<div class="box">my box</div>
+<div class="box">my box</div>
+<div class="box">my box</div>
+
+<script src="jquery-1.11.1.js"></script>
+
+
+<script>
+
+var myVar;
+
+setTimeout(function() {
+	myVar = 'my value in timeout';
+	console.log(myVar); // prints 'my value in timeout' after 2 seconds
+}, 2000);
+
+console.log("myVar: " + myVar); // prints undefined, as myVar would not have got set until 2 seconds
+
+// one of the way to solve the above problem is pub-sub
+// another way is using deferreds
+
+var myVarDef;
+
+var setVal = function() {
+	var deferred = $.Deferred();
+
+	setTimeout(function() {
+		myVarDef = 'my value in Deferred';
+		deferred.resolve(); // deferred.resolve triggers done, deferred.reject triggers fail method, always method is always triggered
+
+	}, 2000);
+
+	return deferred.promise();
+}
+
+setVal().done(function() {
+	console.log(myVarDef);
+}).fail(function() { // chaining
+	console.log('failed');
+});
+
+// you can use the then method instead of the combination of done-fail
+setVal().then(function() {
+	console.log(myVarDef);
+}, function() {
+	console.log('failed');
+});
+
+$.searchTwitter = function( userName ) {
+
+	var dfd = $.Deferred(); // same as 'new $.Deferred();'
+
+	$.ajax({
+		url: 'https://api.github.com/users/' + userName + '/repos?q=',
+		data: {},
+		dataType: 'jsonp',
+		success: dfd.resolve, // if you dont use a deferred and provide a function here, you will not be able to trigger multiple functions
+		error: dfd.reject
+	});
+
+	return dfd.promise();
+};
+
+// $.ajax by itself can return promise, so the above code is same as the below one
+
+// $.searchTwitter = function( userName ) {
+// 	return $.ajax({
+// 		url: 'https://api.github.com/users/' + userName + '/repos?q=',
+// 		data: {},
+// 		dataType: 'jsonp'
+// 	}).promise();
+// };
+
+var outer = $.searchTwitter('douglascrockford');
+
+outer.then(function	( results ) {
+	console.log(results);
+});
+
+// ...
+// multiple functions can be triggered when the promise resolves
+outer.then(function(results) {
+	console.log(results);
+});
+
+
+
+// $('div.box').fadeOut(1000); // fades parallelly
+
+// to fade sequentially
+$('div.box').each(function(i) {
+	$(this).delay(1000 * i++).fadeOut(1000);
+}).promise().done(function() {
+	console.log('All animations are done');
+});
+
+function getTweets( userName ) {
+	return $.ajax({
+		url: 'https://api.github.com/users/' + userName + '/repos?q=',
+		data: {},
+		dataType: 'jsonp'
+	});
+}
+
+
+$.when( getTweets('douglascrockford'), getTweets('cowboy') ).done(function(results1, results2) {
+	console.log(results1[0].data);
+	console.log(results2[0].data);
+});
+
+
+</script>
+
+</body>
+</html>
+
+
+
