@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+
+<!-- https://www.youtube.com/watch?v=i9MHigUZKEM -->
+<!-- check documentation for more options -->
+
+<!-- testing using http-server installed using npm -->
+<html data-ng-app=""> <!-- ng-app is a angular inbuilt 'directive' --> <!-- Use this directive to auto-bootstrap an AngularJS application -->
+<head><title>Using AngularJS Directive and Data Binding</title></head>
+<body data-ng-init="customers=[{name: 'John Smith', city: 'Phoenix'}, {name: 'John Doe', city: 'San Francisco'}, {name: 'Jane Doe', city: 'Charlotte'}]">
+
+Name:
+<br/>
+<input type="text" data-ng-model="name"/> {{ name }} <!-- bind the input value to the name property -->
+<br/>
+<ul> <!-- filters using pipes -->
+  <li data-ng-repeat="cust in customers | filter:name | orderBy:'city'">{{ cust.name | uppercase }} - {{ cust.city | lowercase}}</li>
+</ul>
+
+<!-- include Angular -->	
+<script type="text/javascript" src="angular.js"></script>
+
+</body>
+</html
