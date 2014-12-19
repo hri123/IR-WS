@@ -88,51 +88,92 @@ var rbAppControllers = angular.module('rbAppControllers', []);
 
 rbAppControllers.controller('articleListController', ['$scope', '$http', '$location', '$routeParams', 'sharedArticles', 'rbFiles', function($scope, $http, $location, $routeParams, sharedArticles, rbFiles) {
 
-	var index = $routeParams.indexId;
 
-	var data = rbFiles.query({fileIndex: index}, function(data) {
+	$scope.articles = [];
 
-	// $http.get('sampleJSON?index=' + index).success(function(data) { // use services (rbFiles.query) instead
+	var indexId = $routeParams.indexId;
 
-		$scope.articles = [];
+	var invokeReadFile = function(param) {
+		var data = rbFiles.query(param, function(data) {
 
-		var articlesLength = data.length;
-		for (var i = 0; i < articlesLength; i++) {
+		// $http.get('sampleJSON?index=' + index).success(function(data) { // use services (rbFiles.query) instead
 
-			var currentArticle = data[i];
+			var articlesLength = data.length;
+			for (var i = 0; i < articlesLength; i++) {
 
-			var article = {};
+				var currentArticle = data[i];
 
-			article.tags = currentArticle.tags[0];
-			article.summary = currentArticle.summary[0];
-			article.rating = currentArticle.rating[0];
-			article.from = currentArticle.from[0];
+				var article = {};
 
-			article.content = getStructure(currentArticle.content[0]);
-			article.annotation = getStructure(currentArticle.annotation[0]);
+				article.tags = currentArticle.tags[0];
+				article.summary = currentArticle.summary[0];
+				article.rating = currentArticle.rating[0];
+				article.from = currentArticle.from[0];
 
-   			$scope.articles.push(article);
+				article.content = getStructure(currentArticle.content[0]);
+				article.annotation = getStructure(currentArticle.annotation[0]);
 
+				article.index = $scope.articles.length;
+
+	   			$scope.articles.push(article);
+			}
+			sharedArticles.articles = $scope.articles;
+	  	});
+
+	};
+
+	if (indexId == -1) {
+		for (var index = 0; index < 16; index++) {
+			var param = {fileIndex: index};
+			invokeReadFile(param);
+		}
+	} else {
+		invokeReadFile({fileIndex: indexId});
+	}
+
+	$scope.searchSectionOrSubSection = function (article) {
+
+		var found = false;
+
+		if (!$scope.search7 || $scope.search7 == "") {
+			return true;
 		}
 
-		sharedArticles.articles = $scope.articles;
+		if (article.content && article.content.sections) jQuery.each(article.content.sections, function(index, value){
+			if (value.content) {
+				if (value.content.main && value.content.main.indexOf($scope.search7) != -1) {
+					found = true;
+					return false; // return false is equivalent to break loop
+				}
+				if (value.content.sub_sections) jQuery.each(value.content.sub_sections, function(index, value) {
+					if (value.content.main && value.content.main.indexOf($scope.search7) != -1) {
+						found = true;
+						return false; // return false is equivalent to break loop
+					}
+				});
+				if (found == true) return false;
+			} 
+		});
 
-    	
-  	});
+		if (article.annotation && article.annotation.sections) jQuery.each(article.annotation.sections, function(index, value){
+			if (value.content) {
+				if (value.content.main && value.content.main.indexOf($scope.search7) != -1) {
+					found = true;
+					return false; // return false is equivalent to break loop
+				}
+				if (value.content.sub_sections) jQuery.each(value.content.sub_sections, function(index, value) {
+					if (value.content.main && value.content.main.indexOf($scope.search7) != -1) {
+						found = true;
+						return false; // return false is equivalent to break loop
+					}
+				});
+				if (found == true) return false;
+			} 
+		});
 
-/*
-	$scope.articles = [
-		{
-			tags: ["sacrifice, self-care, hurt-others"],
-			summary: ["Life or death is man’s only fundamental alternative. To live is his basic act of choice"]
-		}, {
-			tags: ["sacrifice, self-care, hurt-others"],
-			summary: ["Do not harm others and do not allow others to harm you"]
-		}
+		return found;
 
-	];
-
-*/
+	};
 
 }]);
 
