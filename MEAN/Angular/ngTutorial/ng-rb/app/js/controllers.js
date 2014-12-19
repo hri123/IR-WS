@@ -139,37 +139,80 @@ rbAppControllers.controller('articleListController', ['$scope', '$http', '$locat
 			return true;
 		}
 
-		if (article.content && article.content.sections) jQuery.each(article.content.sections, function(index, value){
-			if (value.content) {
-				if (value.content.main && value.content.main.indexOf($scope.search7) != -1) {
-					found = true;
-					return false; // return false is equivalent to break loop
-				}
-				if (value.content.sub_sections) jQuery.each(value.content.sub_sections, function(index, value) {
-					if (value.content.main && value.content.main.indexOf($scope.search7) != -1) {
-						found = true;
-						return false; // return false is equivalent to break loop
-					}
-				});
-				if (found == true) return false;
-			} 
-		});
+		var setFound = function (inContent) {
+			var searchTerm = $scope.search7.toLowerCase();
+			if (inContent && inContent.sections) jQuery.each(inContent.sections, function(index, value){
 
-		if (article.annotation && article.annotation.sections) jQuery.each(article.annotation.sections, function(index, value){
-			if (value.content) {
-				if (value.content.main && value.content.main.indexOf($scope.search7) != -1) {
+				if (value.name && value.name.toLowerCase().indexOf(searchTerm) != -1) {
 					found = true;
-					return false; // return false is equivalent to break loop
+					return false;
 				}
-				if (value.content.sub_sections) jQuery.each(value.content.sub_sections, function(index, value) {
-					if (value.content.main && value.content.main.indexOf($scope.search7) != -1) {
+				if (value.content) {
+					if (value.content.main && value.content.main.toLowerCase().indexOf(searchTerm) != -1) {
 						found = true;
 						return false; // return false is equivalent to break loop
 					}
-				});
-				if (found == true) return false;
-			} 
-		});
+					if (value.content && value.content.sub_sections) jQuery.each(value.content.sub_sections, function(index, value) {
+						if (value.name && value.name.toLowerCase().indexOf(searchTerm) != -1) {
+							found = true;
+							return false;
+						}
+						if (value.content.main && value.content.main.toLowerCase().indexOf(searchTerm) != -1) {
+							found = true;
+							return false; // return false is equivalent to break loop
+						}
+					});
+					if (found == true) return false;
+				} 
+			});
+		};
+
+		setFound(article.content);
+		if (!found) setFound(article.annotation);
+
+		return found;
+
+	};
+
+	$scope.searchAtTags = function (article) {
+
+		var found = false;
+
+		if (!$scope.search8 || $scope.search8 == "") {
+			return true;
+		}
+
+		var atTagVal = $scope.search8;
+
+		var regExp = new RegExp("@tags\\(([^)]*)" + atTagVal, "g");
+
+		if (regExp.exec(article.content.main) != null) {
+			return true;
+		} else if (regExp.exec(article.annotation.main) != null) {
+			return true;
+		}
+
+		var setFound = function (inContent) {
+			if (inContent && inContent.sections) jQuery.each(inContent.sections, function(index, value){
+
+				if (value.content) {
+					if (value.content.main && regExp.exec(value.content.main) != null) {
+						found = true;
+						return false; // return false is equivalent to break loop
+					}
+					if (value.content && value.content.sub_sections) jQuery.each(value.content.sub_sections, function(index, value) {
+						if (value.content.main && regExp.exec(value.content.main)) {
+							found = true;
+							return false; // return false is equivalent to break loop
+						}
+					});
+					if (found == true) return false;
+				} 
+			});
+		};
+
+		setFound(article.content);
+		if (!found) setFound(article.annotation);
 
 		return found;
 

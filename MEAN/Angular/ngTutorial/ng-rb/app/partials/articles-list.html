@@ -5,11 +5,11 @@ Article tag 3: <input data-ng-model="search3.tags"><br>
 Article Summary: <input data-ng-model="search4.summary"><br>
 Article Content Main: <input data-ng-model="search5.content.main"><br>
 Article Annotation Main: <input data-ng-model="search6.annotation.main"><br>
-Section (Sub-Section) Content Main: <input data-ng-model="search7"><br>
+Section (Sub-Section) Name / Content Main: <input data-ng-model="search7"><br>
+@tags: <input data-ng-model="search8"><br>
 <ol>
-    <li data-ng-repeat="article in filtered = (articles | filter : search1 : false | filter : search2 : false | filter : search3 : false | filter : search4 : false | filter : search5 : false | filter : search6: false | filter : searchSectionOrSubSection) ">
-        <a href="/#/article/{{article.index}}"><p style="white-space: pre-line;">{{article.summary}}</p></a><br/>
-        <span>ARTICLE - </span><br/>
+    <li data-ng-repeat="article in filtered = (articles | filter : search1 : false | filter : search2 : false | filter : search3 : false | filter : search4 : false | filter : search5 : false | filter : search6: false | filter : searchSectionOrSubSection | filter : searchAtTags) ">
+        <a href="/#/article/{{article.index}}"><p style="white-space: pre-line;">ARTICLE - {{article.summary}}</p></a><br/>
         <span>TAGS - {{article.tags}}</span><br/>
         <span>RATING - {{article.rating}}</span><br/>
         <span>FROM - {{article.from}}</span><br/>
