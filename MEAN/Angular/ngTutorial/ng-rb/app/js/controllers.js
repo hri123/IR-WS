@@ -105,6 +105,8 @@ rbAppControllers.controller('articleListController', ['$scope', '$http', '$locat
 
 			article.tags = currentArticle.tags[0];
 			article.summary = currentArticle.summary[0];
+			article.rating = currentArticle.rating[0];
+			article.from = currentArticle.from[0];
 
 			article.content = getStructure(currentArticle.content[0]);
 			article.annotation = getStructure(currentArticle.annotation[0]);

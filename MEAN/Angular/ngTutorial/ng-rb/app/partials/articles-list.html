@@ -3,50 +3,33 @@ Second tag<input ng-model="search2.tags"><br>
 Third tag<input ng-model="search3.tags"><br>
 
 <ol>
-    
     <li data-ng-repeat="article in articles | filter : search1 : false | filter : search2 : false | filter : search3 : false">
-        <span>ARTICLE - {{article.tags}}</span><br/>
-        <a href="/#/article/{{$index}}"><p style="white-space: pre-line;">{{article.summary}}</p></a>
-<!--         <p style="white-space: pre-line;">CONTENT - {{article.content.main}}</p>
+        <a href="/#/article/{{$index}}"><p style="white-space: pre-line;">{{article.summary}}</p></a><br/>
+        <span>ARTICLE - </span><br/>
+        <span>TAGS - {{article.tags}}</span><br/>
+        <span>RATING - {{article.rating}}</span><br/>
+        <span>FROM - {{article.from}}</span><br/>
+        <p style="white-space: pre-line;">CONTENT - </p>
         <ol>
-            
             <li data-ng-repeat="section in article.content.sections">
                 <span>SECTION - {{section.name}}</span><br/>
-                <p style="white-space: pre-line;">{{section.content.main}}</p>
-
                 <ol>
-                    
                     <li data-ng-repeat="sub_section in section.content.sub_sections">
                         <span>SUB-SECTION - {{sub_section.name}}</span><br/>
-                        <p style="white-space: pre-line;">{{sub_section.content.main}}</p>
-
                     </li>
-
                 </ol>
-
             </li>
-
         </ol>
-        <p style="white-space: pre-line;">ANNOTATION - {{article.annotation.main}}</p>
+        <p style="white-space: pre-line;">ANNOTATION - </p>
         <ol>
-            
             <li data-ng-repeat="section in article.annotation.sections">
                 <span>SECTION - {{section.name}}</span><br/>
-                <p style="white-space: pre-line;">{{section.content.main}}</p>
-
                 <ol>
-                    
                     <li data-ng-repeat="sub_section in section.content.sub_sections">
                         <span>SUB-SECTION - {{sub_section.name}}</span><br/>
-                        <p style="white-space: pre-line;">{{sub_section.content.main}}</p>
-
                     </li>
-
                 </ol>
-
             </li>
-
-        </ol> -->
+        </ol>
     </li>
-
 </ol>
