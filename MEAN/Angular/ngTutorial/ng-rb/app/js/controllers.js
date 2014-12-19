@@ -86,14 +86,13 @@ var getStructure = function(data) {
 
 var rbAppControllers = angular.module('rbAppControllers', []);
 
-rbAppControllers.controller('articleListController', ['$scope', '$http', '$location', '$routeParams', 'sharedArticles', function($scope, $http, $location, $routeParams, sharedArticles) {
+rbAppControllers.controller('articleListController', ['$scope', '$http', '$location', '$routeParams', 'sharedArticles', 'rbFiles', function($scope, $http, $location, $routeParams, sharedArticles, rbFiles) {
 
 	var index = $routeParams.indexId;
 
-	$http.get('sampleJSON?index=' + index).success(function(data) {
+	var data = rbFiles.query({fileIndex: index}, function(data) {
 
-		// printNesting(data); // for testing purposes only
-
+	// $http.get('sampleJSON?index=' + index).success(function(data) { // use services (rbFiles.query) instead
 
 		$scope.articles = [];
 
@@ -138,5 +137,87 @@ rbAppControllers.controller('articleListController', ['$scope', '$http', '$locat
 rbAppControllers.controller('articleDetailsController', ['$scope', '$http', '$location', '$routeParams', 'sharedArticles', function($scope, $http, $location, $routeParams, sharedArticles) {
 
 	$scope.article = sharedArticles.articles[$routeParams.articleId];
+
+}]);
+
+rbAppControllers.controller('metaDataController', ['$scope', 'rbFiles', function($scope, rbFiles) {
+
+	$scope.keys = function(obj){
+		return obj ? Object.keys(obj) : [];
+	};
+
+	$scope.tags = {};
+	$scope.regularTags = [];
+	$scope.atTags = [];
+
+	var addToAtTags = function(inText) {
+		var regExp = /@tags\(([^)]+)\)/g; // to extract @tags
+		var myArray;
+		while ((myArray = regExp.exec(inText)) !== null)
+		{
+			$scope.atTags.push(myArray[1]);
+			processArrayOfTags(myArray[1]);
+		}
+	};
+
+	var findAtTagsInSectionAndSubSections = function (inSectionArray) {
+		if (inSectionArray) jQuery.each(inSectionArray, function(index, value){
+			addToAtTags(value.content.main);
+			if (value.content.sub_sections) jQuery.each(value.content.sub_sections, function(index, value){
+				addToAtTags(value.content.main);
+			});
+		});
+	}
+
+	var processArrayOfTags = function (value) {
+
+		var tagArr = value.split(",");
+
+		for (var j = 0; j < tagArr.length; j++) {
+			var tag = tagArr[j].trim();
+			if ($scope.tags[tag]) {
+				$scope.tags[tag]++;
+			} else {
+				$scope.tags[tag] = 1;
+			}
+		}
+
+	};
+
+	for (var index = 0; index < 16; index++) {
+
+		var param = {fileIndex: index};
+
+		rbFiles.query(param, (function(data) {
+
+			// printNesting(data); // for testing purposes only
+
+			var articlesLength = data.length;
+			for (var i = 0; i < articlesLength; i++) {
+
+				var currentArticle = data[i];
+
+				if (currentArticle.tags[0]) {
+
+					$scope.regularTags.push(currentArticle.tags[0]);
+					processArrayOfTags(currentArticle.tags[0]);
+
+				}
+
+
+				var articleContent = getStructure(currentArticle.content[0]);
+				var articleAnnotation = getStructure(currentArticle.annotation[0]);
+
+				addToAtTags(articleContent.main);
+				findAtTagsInSectionAndSubSections(articleContent.sections);
+				addToAtTags(articleAnnotation.main);
+				findAtTagsInSectionAndSubSections(articleAnnotation.sections);
+
+			}
+	   	
+	  	}));
+	}
+
+	
 
 }]);

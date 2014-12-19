@@ -9,6 +9,9 @@ rbApp.config(['$routeProvider',
       }).when('/article/:articleId', {
         templateUrl: 'partials/article-details.html',
         controller: 'articleDetailsController'
+      }).when('/metadata', {
+        templateUrl: 'partials/metadata.html',
+        controller: 'metaDataController'
       }).
       otherwise({
         redirectTo: '/index/0'
