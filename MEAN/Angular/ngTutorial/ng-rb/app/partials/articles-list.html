@@ -1,39 +1,35 @@
-FILTERS:(<span style="color: red;">{{filtered.length}}</span>)<br/>
-Article tag 1: <input data-ng-model="search1.tags"><br>
-Article tag 2: <input data-ng-model="search2.tags"><br>
-Article tag 3: <input data-ng-model="search3.tags"><br>
-Article Summary: <input data-ng-model="search4.summary"><br>
-Article Content Main: <input data-ng-model="search5.content.main"><br>
-Article Annotation Main: <input data-ng-model="search6.annotation.main"><br>
-Section (Sub-Section) Name / Content Main: <input data-ng-model="search7"><br>
-@tags: <input data-ng-model="search8"><br>
-<ol>
-    <li data-ng-repeat="article in filtered = (articles | filter : search1 : false | filter : search2 : false | filter : search3 : false | filter : search4 : false | filter : search5 : false | filter : search6: false | filter : searchSectionOrSubSection | filter : searchAtTags) ">
-        <a href="/#/article/{{article.index}}"><p style="white-space: pre-line;">ARTICLE - {{article.summary}}</p></a><br/>
-        <span>TAGS - {{article.tags}}</span><br/>
-        <span>RATING - {{article.rating}}</span><br/>
-        <span>FROM - {{article.from}}</span><br/>
-        <p style="white-space: pre-line;">CONTENT - </p>
-        <ol>
-            <li data-ng-repeat="section in article.content.sections">
-                <span>SECTION - {{section.name}}</span><br/>
-                <ol>
-                    <li data-ng-repeat="sub_section in section.content.sub_sections">
-                        <span>SUB-SECTION - {{sub_section.name}}</span><br/>
-                    </li>
-                </ol>
-            </li>
-        </ol>
-        <p style="white-space: pre-line;">ANNOTATION - </p>
-        <ol>
-            <li data-ng-repeat="section in article.annotation.sections">
-                <span>SECTION - {{section.name}}</span><br/>
-                <ol>
-                    <li data-ng-repeat="sub_section in section.content.sub_sections">
-                        <span>SUB-SECTION - {{sub_section.name}}</span><br/>
-                    </li>
-                </ol>
-            </li>
-        </ol>
-    </li>
-</ol>
+<div class="scrollable">  
+  FILTERS:(<span style="color: red;">{{filtered.length}}</span>)<br/>
+  <div class="scrollable-content">
+    <ol>
+        <li data-ng-repeat="article in filtered = (articles | filter : search1 : false | filter : search2 : false | filter : search3 : false | filter : search4 : false | filter : search5 : false | filter : search6: false | filter : searchSectionOrSubSection | filter : searchAtTags) ">
+            <a href="/#/article/{{article.index}}"><p style="white-space: pre-line;">ARTICLE - {{article.summary}}</p></a><br/>
+            <span>TAGS - {{article.tags}}</span><br/>
+            <span>RATING - {{article.rating}}</span><br/>
+            <span>FROM - {{article.from}}</span><br/>
+            <p style="white-space: pre-line;">CONTENT - </p>
+            <ol>
+                <li data-ng-repeat="section in article.content.sections">
+                    <span>SECTION - {{section.name}}</span><br/>
+                    <ol>
+                        <li data-ng-repeat="sub_section in section.content.sub_sections">
+                            <span>SUB-SECTION - {{sub_section.name}}</span><br/>
+                        </li>
+                    </ol>
+                </li>
+            </ol>
+            <p style="white-space: pre-line;">ANNOTATION - </p>
+            <ol>
+                <li data-ng-repeat="section in article.annotation.sections">
+                    <span>SECTION - {{section.name}}</span><br/>
+                    <ol>
+                        <li data-ng-repeat="sub_section in section.content.sub_sections">
+                            <span>SUB-SECTION - {{sub_section.name}}</span><br/>
+                        </li>
+                    </ol>
+                </li>
+            </ol>
+        </li>
+    </ol>
+  </div>
+</div>

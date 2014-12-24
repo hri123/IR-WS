@@ -86,8 +86,38 @@ var getStructure = function(data) {
 
 var rbAppControllers = angular.module('rbAppControllers', []);
 
-rbAppControllers.controller('articleListController', ['$scope', '$http', '$location', '$routeParams', 'sharedArticles', 'rbFiles', function($scope, $http, $location, $routeParams, sharedArticles, rbFiles) {
+// sharing variables between sidebar and the main body
+rbAppControllers.controller('mainAppController', ['$scope', function($scope) {
 
+	$scope.search1 = {
+		tags: ''
+	};
+	$scope.search2 = {
+		tags: ''
+	};
+	$scope.search3 = {
+		tags: ''
+	};
+	$scope.search4 = {
+		summary: ''
+	};
+	$scope.search5 = {
+		content: {main: ''}
+	};
+	$scope.search6 = {
+		annotation: {main: ''}
+	};
+	$scope.search7 = {
+		val: ''
+	};
+	$scope.search8 = {
+		val: ''
+	};
+
+
+}]);
+
+rbAppControllers.controller('articleListController', ['$scope', '$http', '$location', '$routeParams', 'sharedArticles', 'rbFiles', function($scope, $http, $location, $routeParams, sharedArticles, rbFiles) {
 
 	$scope.articles = [];
 
@@ -135,12 +165,12 @@ rbAppControllers.controller('articleListController', ['$scope', '$http', '$locat
 
 		var found = false;
 
-		if (!$scope.search7 || $scope.search7 == "") {
+		if (!$scope.search7 || !$scope.search7.val || $scope.search7.val == "") {
 			return true;
 		}
 
 		var setFound = function (inContent) {
-			var searchTerm = $scope.search7.toLowerCase();
+			var searchTerm = $scope.search7.val.toLowerCase();
 			if (inContent && inContent.sections) jQuery.each(inContent.sections, function(index, value){
 
 				if (value.name && value.name.toLowerCase().indexOf(searchTerm) != -1) {
@@ -178,11 +208,11 @@ rbAppControllers.controller('articleListController', ['$scope', '$http', '$locat
 
 		var found = false;
 
-		if (!$scope.search8 || $scope.search8 == "") {
+		if (!$scope.search8.val || !$scope.search8.val || $scope.search8.val == "") {
 			return true;
 		}
 
-		var atTagVal = $scope.search8;
+		var atTagVal = $scope.search8.val;
 
 		var regExp = new RegExp("@tags\\(([^)]*)" + atTagVal, "g");
 
