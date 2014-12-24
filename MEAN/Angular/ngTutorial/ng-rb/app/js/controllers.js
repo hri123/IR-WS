@@ -161,6 +161,11 @@ rbAppControllers.controller('articleListController', ['$scope', '$http', '$locat
 		invokeReadFile({fileIndex: indexId});
 	}
 
+
+	$scope.setCurrentArticle = function (currentArticleIndex) {
+		$scope.currentArticleIndex = currentArticleIndex;
+	};
+
 	$scope.searchSectionOrSubSection = function (article) {
 
 		var found = false;
