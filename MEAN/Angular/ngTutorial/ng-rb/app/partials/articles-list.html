@@ -2,7 +2,7 @@
   <legend>FILTERS:(<span style="color: red;">{{filtered.length}}</span>)</legend>
   <div class="scrollable-content">
     <ol>
-        <li data-ng-repeat="article in filtered = (articles | filter : search1 : false | filter : search2 : false | filter : search3 : false | filter : search4 : false | filter : search5 : false | filter : search6: false | filter : searchSectionOrSubSection | filter : searchAtTags) ">
+        <li data-ng-repeat="article in filtered = (articles | filter : search1 : false | filter : search2 : false | filter : search3 : false | filter : search4 : false | filter : search5 : false | filter : search6: false | filter : searchSectionOrSubSection | filter : searchAtTags | filter : searchSectionOrSubSectionTags) ">
             <!-- <a href="/#/article/{{article.index}}"><p style="white-space: pre-line;">ARTICLE - {{article.summary}}</p></a><br/> -->
             <a href="" ui-turn-on="article_details_modal" ng-click="setCurrentArticle(article.index)" class="btn btn-default">ARTICLE - {{article.summary}}</a><br/>
             <span>TAGS - {{article.tags}}</span><br/>

@@ -53,7 +53,9 @@ rbAppControllers.controller('mainAppController', ['$scope', function($scope) {
 	$scope.search8 = {
 		val: ''
 	};
-
+	$scope.search9 = {
+		val: ''
+	};
 
 }]);
 
@@ -149,11 +151,46 @@ rbAppControllers.controller('articleListController', ['$scope', '$http', '$locat
 
 	};
 
+	$scope.searchSectionOrSubSectionTags = function (article) {
+
+		var found = false;
+
+		if (!$scope.search9 || !$scope.search9.val || $scope.search9.val == "") {
+			return true;
+		}
+
+		var setFound = function (inContent) {
+			var searchTerm = $scope.search9.val.toLowerCase();
+			if (inContent && inContent.section) jQuery.each(inContent.section, function(index, value){
+
+				if (value) {
+					if (value.tags && value.tags.toLowerCase().indexOf(searchTerm) != -1) {
+						found = true;
+						return false; // return false is equivalent to break loop
+					}
+					if (value && value.sub_section) jQuery.each(value.sub_section, function(index, value) {
+						if (value.tags && value.tags.toLowerCase().indexOf(searchTerm) != -1) {
+							found = true;
+							return false; // return false is equivalent to break loop
+						}
+					});
+					if (found == true) return false;
+				} 
+			});
+		};
+
+		setFound(article.content);
+		if (!found) setFound(article.annotation);
+
+		return found;
+
+	};
+
 	$scope.searchAtTags = function (article) {
 
 		var found = false;
 
-		if (!$scope.search8.val || !$scope.search8.val || $scope.search8.val == "") {
+		if (!$scope.search8 || !$scope.search8.val || $scope.search8.val == "") {
 			return true;
 		}
 

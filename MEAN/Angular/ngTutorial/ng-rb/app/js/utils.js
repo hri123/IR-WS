@@ -79,6 +79,10 @@ var getStructure = function(data) {
 					section.name = currentSection.$.name;
 				}
 
+				if (currentSection.tags) {
+					section.tags = currentSection.tags[0];
+				}
+
 				if (currentSection['sub-section']) { // hyphen is interpreted as minus in javascript, so cannot use currentSection.sub-section
 					var temp_sub_sections = [];
 
@@ -98,6 +102,10 @@ var getStructure = function(data) {
 
 						if (currentSubSection.$) {
 							sub_section.name =currentSubSection.$.name;
+						}
+
+						if (currentSubSection.tags) {
+							sub_section.tags = currentSubSection.tags[0];
 						}
 
 						temp_sub_sections.push(sub_section);

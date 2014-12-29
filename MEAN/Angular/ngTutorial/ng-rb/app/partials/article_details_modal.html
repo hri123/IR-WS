@@ -15,12 +15,14 @@
             
             <li data-ng-repeat="section in articles[currentArticleIndex].content.section">
                 <span>SECTION - {{section.name}}</span><br/>
+                <span>TAGS - {{section.tags}}</span><br/>
                 <p style="white-space: pre-line;">{{section.main}}</p>
 
                 <ol>
                     
                     <li data-ng-repeat="sub_section in section.sub_section">
                         <span>SUB-SECTION - {{sub_section.name}}</span><br/>
+                        <span>TAGS - {{sub_section.tags}}</span><br/>
                         <p style="white-space: pre-line;">{{sub_section.main}}</p>
 
                     </li>
@@ -35,12 +37,14 @@
             
             <li data-ng-repeat="section in articles[currentArticleIndex].annotation.section">
                 <span>SECTION - {{section.name}}</span><br/>
+                <span>TAGS - {{section.tags}}</span><br/>
                 <p style="white-space: pre-line;">{{section.main}}</p>
 
                 <ol>
                     
                     <li data-ng-repeat="sub_section in section.sub_section">
                         <span>SUB-SECTION - {{sub_section.name}}</span><br/>
+                        <span>TAGS - {{sub_section.tags}}</span><br/>
                         <p style="white-space: pre-line;">{{sub_section.main}}</p>
 
                     </li>
