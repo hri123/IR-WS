@@ -116,23 +116,23 @@ rbAppControllers.controller('articleListController', ['$scope', '$http', '$locat
 
 		var setFound = function (inContent) {
 			var searchTerm = $scope.search7.val.toLowerCase();
-			if (inContent && inContent.sections) jQuery.each(inContent.sections, function(index, value){
+			if (inContent && inContent.section) jQuery.each(inContent.section, function(index, value){
 
 				if (value.name && value.name.toLowerCase().indexOf(searchTerm) != -1) {
 					found = true;
 					return false;
 				}
-				if (value.content) {
-					if (value.content.main && value.content.main.toLowerCase().indexOf(searchTerm) != -1) {
+				if (value) {
+					if (value.main && value.main.toLowerCase().indexOf(searchTerm) != -1) {
 						found = true;
 						return false; // return false is equivalent to break loop
 					}
-					if (value.content && value.content.sub_sections) jQuery.each(value.content.sub_sections, function(index, value) {
+					if (value && value.sub_section) jQuery.each(value.sub_section, function(index, value) {
 						if (value.name && value.name.toLowerCase().indexOf(searchTerm) != -1) {
 							found = true;
 							return false;
 						}
-						if (value.content.main && value.content.main.toLowerCase().indexOf(searchTerm) != -1) {
+						if (value.main && value.main.toLowerCase().indexOf(searchTerm) != -1) {
 							found = true;
 							return false; // return false is equivalent to break loop
 						}
@@ -168,15 +168,15 @@ rbAppControllers.controller('articleListController', ['$scope', '$http', '$locat
 		}
 
 		var setFound = function (inContent) {
-			if (inContent && inContent.sections) jQuery.each(inContent.sections, function(index, value){
+			if (inContent && inContent.section) jQuery.each(inContent.section, function(index, value){
 
-				if (value.content) {
-					if (value.content.main && regExp.exec(value.content.main) != null) {
+				if (value) {
+					if (value.main && regExp.exec(value.main) != null) {
 						found = true;
 						return false; // return false is equivalent to break loop
 					}
-					if (value.content && value.content.sub_sections) jQuery.each(value.content.sub_sections, function(index, value) {
-						if (value.content.main && regExp.exec(value.content.main)) {
+					if (value && value.sub_section) jQuery.each(value.sub_section, function(index, value) {
+						if (value.main && regExp.exec(value.main)) {
 							found = true;
 							return false; // return false is equivalent to break loop
 						}
