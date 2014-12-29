@@ -39,15 +39,19 @@ var getStructure = function(data) {
 				var currentSection = data.section[j];
 				
 				var section = {};
-				section.content = {};
 
-				section.content.main = currentSection._;
+				if (typeof currentSection == 'object') {
+					section.main = currentSection._;
+				} else {
+					section.main = currentSection;
+				}
+
 				if (currentSection.$) {
 					section.name = currentSection.$.name;
 				}
 
 				if (currentSection['sub-section']) { // hyphen is interpreted as minus in javascript, so cannot use currentSection.sub-section
-					var sub_sections = [];
+					var temp_sub_sections = [];
 
 					var sub_sectionsLength = currentSection['sub-section'].length;
 
@@ -56,24 +60,28 @@ var getStructure = function(data) {
 						var currentSubSection = currentSection['sub-section'][k];
 						
 						var sub_section = {};
-						sub_section.content = {};
 
-						sub_section.content.main = currentSubSection._;
+						if (typeof currentSubSection == 'object') {
+							sub_section.main = currentSubSection._;
+						} else {
+							sub_section.main = currentSubSection;
+						}
+
 						if (currentSubSection.$) {
 							sub_section.name =currentSubSection.$.name;
 						}
 
-						sub_sections.push(sub_section);
+						temp_sub_sections.push(sub_section);
 					}
 
-					section.content.sub_sections = sub_sections;
+					section.sub_section = temp_sub_sections;
 
 				}
 
 				sections.push(section);
 			}
 
-			returnVal.sections = sections;
+			returnVal.section = sections;
 
 		}
 	} else {

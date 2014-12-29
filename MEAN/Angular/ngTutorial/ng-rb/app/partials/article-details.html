@@ -2,44 +2,6 @@
   <div class="scrollable-content section">
 
     <p style="white-space: pre-line;">CONTENT - {{article.content.main}}</p>
-    <ol>
-        
-        <li data-ng-repeat="section in article.content.sections">
-            <span>SECTION - {{section.name}}</span><br/>
-            <p style="white-space: pre-line;">{{section.content.main}}</p>
-
-            <ol>
-                
-                <li data-ng-repeat="sub_section in section.content.sub_sections">
-                    <span>SUB-SECTION - {{sub_section.name}}</span><br/>
-                    <p style="white-space: pre-line;">{{sub_section.content.main}}</p>
-
-                </li>
-
-            </ol>
-
-        </li>
-
-    </ol>
     <p style="white-space: pre-line;">ANNOTATION - {{article.annotation.main}}</p>
-    <ol>
-        
-        <li data-ng-repeat="section in article.annotation.sections">
-            <span>SECTION - {{section.name}}</span><br/>
-            <p style="white-space: pre-line;">{{section.content.main}}</p>
-
-            <ol>
-                
-                <li data-ng-repeat="sub_section in section.content.sub_sections">
-                    <span>SUB-SECTION - {{sub_section.name}}</span><br/>
-                    <p style="white-space: pre-line;">{{sub_section.content.main}}</p>
-
-                </li>
-
-            </ol>
-
-        </li>
-
-    </ol>
   </div>
 </div>
