@@ -291,9 +291,9 @@ rbAppControllers.controller('metaDataController', ['$scope', 'rbFiles', function
 
 	var findAtTagsInSectionAndSubSections = function (inSectionArray) {
 		if (inSectionArray) jQuery.each(inSectionArray, function(index, value){
-			addToAtTags(value.content.main);
-			if (value.content.sub_sections) jQuery.each(value.content.sub_sections, function(index, value){
-				addToAtTags(value.content.main);
+			addToAtTags(value.main);
+			if (value.sub_section) jQuery.each(value.sub_section, function(index, value){
+				addToAtTags(value.main);
 			});
 		});
 	}
@@ -338,9 +338,9 @@ rbAppControllers.controller('metaDataController', ['$scope', 'rbFiles', function
 				var articleAnnotation = getStructure(currentArticle.annotation[0]);
 
 				addToAtTags(articleContent.main);
-				findAtTagsInSectionAndSubSections(articleContent.sections);
+				findAtTagsInSectionAndSubSections(articleContent.section);
 				addToAtTags(articleAnnotation.main);
-				findAtTagsInSectionAndSubSections(articleAnnotation.sections);
+				findAtTagsInSectionAndSubSections(articleAnnotation.section);
 
 			}
 	   	

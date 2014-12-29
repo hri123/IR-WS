@@ -1,21 +1,25 @@
-<!-- The orderBy only works with Arrays -- See http://docs.angularjs.org/api/ng.filter:orderBy -->
-<ol>
-    
-    <li data-ng-repeat="key in keys(tags) | orderBy: tags[key]"> 
-    	{{key}} - {{tags[key]}}
-    </li>
-</ol>
+<div class="scrollable section">  
+  <div class="scrollable-content">
+	<!-- The orderBy only works with Arrays -- See http://docs.angularjs.org/api/ng.filter:orderBy -->
+	<ol>
+	    
+	    <li data-ng-repeat="key in keys(tags) | orderBy: tags[key]"> 
+	    	{{key}} - {{tags[key]}}
+	    </li>
+	</ol>
 
-<ol>
-    
-    <li data-ng-repeat="regularTag in regularTags track by $index">
-    	{{regularTag}}
-    </li>
-</ol>
+	<ol>
+	    
+	    <li data-ng-repeat="regularTag in regularTags track by $index">
+	    	{{regularTag}}
+	    </li>
+	</ol>
 
-<ol>
-    
-    <li data-ng-repeat="atTag in atTags track by $index">
-    	{{atTag}}
-    </li>
-</ol>
+	<ol>
+	    
+	    <li data-ng-repeat="atTag in atTags track by $index">
+	    	{{atTag}}
+	    </li>
+	</ol>
+  </div>
+</div>
