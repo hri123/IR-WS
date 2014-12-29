@@ -17,12 +17,12 @@ var printCurrentLevel = function (prefix, obj) {
 	    	}
 	    }
 	}
-}
+};
 
 var printNesting = function (data) {
 
 	printCurrentLevel("", data);	
-}
+};
 
 var getStructure = function(data) {
 
@@ -82,7 +82,7 @@ var getStructure = function(data) {
 
 	return returnVal;
 
-}
+};
 
 var rbAppControllers = angular.module('rbAppControllers', []);
 
