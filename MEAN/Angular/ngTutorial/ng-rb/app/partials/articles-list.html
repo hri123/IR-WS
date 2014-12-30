@@ -1,40 +1,48 @@
-<div class="scrollable section">  
-  <legend>FILTERS:(<span style="color: red;">{{filtered.length}}</span>)</legend>
-  <div class="scrollable-content">
-    <ol>
-        <li data-ng-repeat="article in filtered = (articles | filter : search1 : false | filter : search2 : false | filter : search3 : false | filter : search4 : false | filter : search5 : false | filter : search6: false | filter : searchSectionOrSubSection | filter : searchAtTags | filter : searchSectionOrSubSectionTags) ">
-            <!-- <a href="/#/article/{{article.index}}"><p style="white-space: pre-line;">ARTICLE - {{article.summary}}</p></a><br/> -->
-            <a href="" ui-turn-on="article_details_modal" ng-click="setCurrentArticle(article.index)" class="btn btn-default">ARTICLE - {{article.summary}}</a><br/>
-            <span>TAGS - {{article.tags}}</span><br/>
-            <span>RATING - {{article.rating}}</span><br/>
-            <span>FROM - {{article.from}}</span><br/>
-            <p style="white-space: pre-line;">CONTENT - </p>
-            <ol>
-                <li data-ng-repeat="section in article.content.sections">
-                    <span>SECTION - {{section.name}}</span><br/>
-                    <ol>
-                        <li data-ng-repeat="sub_section in section.content.sub_sections">
-                            <span>SUB-SECTION - {{sub_section.name}}</span><br/>
-                        </li>
-                    </ol>
-                </li>
-            </ol>
-            <p style="white-space: pre-line;">ANNOTATION - </p>
-            <ol>
-                <li data-ng-repeat="section in article.annotation.sections">
-                    <span>SECTION - {{section.name}}</span><br/>
-                    <ol>
-                        <li data-ng-repeat="sub_section in section.content.sub_sections">
-                            <span>SUB-SECTION - {{sub_section.name}}</span><br/>
-                        </li>
-                    </ol>
-                </li>
-            </ol>
-        </li>
-    </ol>
-  </div>
+<div class="scrollable section">
+    <legend>FILTERS:(<span style="color: red;">{{filtered.length}}</span>)</legend>
+    <div class="scrollable-content">
+        <ol>
+            <li data-ng-repeat="article in filtered = (articles | filter : search1 : false | filter : search2 : false | filter : search3 : false | filter : search4 : false | filter : search5 : false | filter : search6: false | filter : searchSectionOrSubSection | filter : searchAtTags | filter : searchSectionOrSubSectionTags) ">
+                <!-- <a href="/#/article/{{article.index}}"><p style="white-space: pre-line;">ARTICLE - {{article.summary}}</p></a><br/> -->
+                <a href="" ui-turn-on="article_details_modal" ng-click="setCurrentArticle(article.index)" class="btn btn-default">ARTICLE - {{article.summary}}</a>
+                <br/>
+                <span>TAGS - {{article.tags}}</span>
+                <br/>
+                <span>RATING - {{article.rating}}</span>
+                <br/>
+                <span>FROM - {{article.from}}</span>
+                <br/>
+                <p style="white-space: pre-line;">CONTENT - </p>
+                <ol>
+                    <li data-ng-repeat="section in article.content.sections">
+                        <span>SECTION - {{section.name}}</span>
+                        <br/>
+                        <ol>
+                            <li data-ng-repeat="sub_section in section.content.sub_sections">
+                                <span>SUB-SECTION - {{sub_section.name}}</span>
+                                <br/>
+                            </li>
+                        </ol>
+                    </li>
+                </ol>
+                <p style="white-space: pre-line;">ANNOTATION - </p>
+                <ol>
+                    <li data-ng-repeat="section in article.annotation.sections">
+                        <span>SECTION - {{section.name}}</span>
+                        <br/>
+                        <ol>
+                            <li data-ng-repeat="sub_section in section.content.sub_sections">
+                                <span>SUB-SECTION - {{sub_section.name}}</span>
+                                <br/>
+                            </li>
+                        </ol>
+                    </li>
+                </ol>
+            </li>
+        </ol>
+    </div>
 </div>
 
 <div ui-content-for="modals">
-  <div ng-include="'partials/article_details_modal.html'"></div>
+    <div ng-include="'partials/article_details_modal.html'"></div>
 </div>
