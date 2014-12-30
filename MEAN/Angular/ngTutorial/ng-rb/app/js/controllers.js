@@ -287,9 +287,11 @@ rbAppControllers.controller('metaDataController', ['$scope', 'rbFiles', function
 		for (var j = 0; j < tagArr.length; j++) {
 			var tag = tagArr[j].trim();
 			if ($scope.tags[tag]) {
-				$scope.tags[tag]++;
+				$scope.tags[tag].value++;
 			} else {
-				$scope.tags[tag] = 1;
+				$scope.tags[tag] = {};
+				$scope.tags[tag].value = 1;
+				$scope.tags[tag].name = tag;
 			}
 		}
 

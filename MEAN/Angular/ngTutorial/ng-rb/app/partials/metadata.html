@@ -3,8 +3,8 @@
 	<!-- The orderBy only works with Arrays -- See http://docs.angularjs.org/api/ng.filter:orderBy -->
 	<span>ALL TAGS with Count</span><br/>
 	<ol>
-	    <li data-ng-repeat="key in keys(tags) | orderBy: tags[key]"> 
-	    	{{key}} - {{tags[key]}}
+	    <li data-ng-repeat="elem in tags | orderObjectBy : 'value' "> 
+	    	{{elem.name}} - {{elem.value}}
 	    </li>
 	</ol>
 
