@@ -1,32 +1,54 @@
-<div class="scrollable section">  
-  <div class="scrollable-content">
-	<!-- The orderBy only works with Arrays -- See http://docs.angularjs.org/api/ng.filter:orderBy -->
-	<span>ALL TAGS with Count</span><br/>
-	<ol>
-	    <li data-ng-repeat="elem in tags | orderObjectBy : 'value' "> 
-	    	{{elem.name}} - {{elem.value}}
-	    </li>
-	</ol>
+<div class="scrollable section">
+    <div class="scrollable-content">
+        <!-- The orderBy only works with Arrays -- See http://docs.angularjs.org/api/ng.filter:orderBy -->
+        <div class="container">
+            <div class="row">
+                <div class="col-md-5">
+                    <span>ALL TAGS with Count ordered by number of occurences</span>
+                    <br/>
+                    <ol>
+                        <li data-ng-repeat="elem in tags | orderObjectBy : 'value' ">
+                            {{elem.name}} - {{elem.value}}
+                        </li>
+                    </ol>
+                </div>
+                <div class="col-md-5">
+                    <span>ALL TAGS with Count ordered by name</span>
+                    <br/>
+                    <ol>
+                        <li data-ng-repeat="elem in tags | orderBy : elem.name ">
+                            {{elem.name}} - {{elem.value}}
+                        </li>
+                    </ol>
+                </div>
+            </div>
+        </div>
 
-	<span>Regular Tags</span><br/>
-	<ol>	    
-	    <li data-ng-repeat="regularTag in regularTags track by $index">
-	    	{{regularTag}}
-	    </li>
-	</ol>
+        <span>Regular Tags</span>
+        <br/>
+        <ol>
+            <li data-ng-repeat="regularTag in regularTags track by $index">
+                {{regularTag}}
+            </li>
+        </ol>
 
-	<span>(Sub) Section Tags</span><br/>
-	<ol>	    
-	    <li data-ng-repeat="sectionAndSubSectionTag in sectionAndSubSectionTags track by $index">
-	    	{{sectionAndSubSectionTag}}
-	    </li>
-	</ol>
+        <span>(Sub) Section Tags</span>
+        <br/>
+        <ol>
+            <li data-ng-repeat="sectionAndSubSectionTag in sectionAndSubSectionTags track by $index">
+                {{sectionAndSubSectionTag}}
+            </li>
+        </ol>
 
-	<span>@ Tags</span><br/>
-	<ol>
-	    <li data-ng-repeat="atTag in atTags track by $index">
-	    	{{atTag}}
-	    </li>
-	</ol>
-  </div>
+        <span>@ Tags</span>
+        <br/>
+        <ol>
+            <li data-ng-repeat="atTag in atTags track by $index">
+                {{atTag}}
+            </li>
+        </ol>
+    </div>
+</div>
+<div ui-content-for="title">
+  <span>Metadata</span>
 </div>
