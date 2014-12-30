@@ -101,7 +101,7 @@ var getStructure = function(data) {
 						}
 
 						if (currentSubSection.$) {
-							sub_section.name =currentSubSection.$.name;
+							sub_section.name = currentSubSection.$.name;
 						}
 
 						if (currentSubSection.tags) {

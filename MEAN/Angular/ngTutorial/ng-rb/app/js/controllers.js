@@ -246,6 +246,7 @@ rbAppControllers.controller('metaDataController', ['$scope', 'rbFiles', function
 
 	$scope.tags = {};
 	$scope.regularTags = [];
+	$scope.sectionAndSubSectionTags = [];
 	$scope.atTags = [];
 
 	var addToAtTags = function(inText) {
@@ -258,11 +259,23 @@ rbAppControllers.controller('metaDataController', ['$scope', 'rbFiles', function
 		}
 	};
 
-	var findAtTagsInSectionAndSubSections = function (inSectionArray) {
+	var findTagsInSectionAndSubSections = function (inSectionArray) {
 		if (inSectionArray) jQuery.each(inSectionArray, function(index, value){
 			addToAtTags(value.main);
+
+			if (value.tags) {
+				$scope.sectionAndSubSectionTags.push(value.tags);
+				processArrayOfTags(value.tags);
+			}
+
 			if (value.sub_section) jQuery.each(value.sub_section, function(index, value){
 				addToAtTags(value.main);
+
+				if (value.tags) {
+					$scope.sectionAndSubSectionTags.push(value.tags);
+					processArrayOfTags(value.tags);
+				}
+
 			});
 		});
 	}
@@ -307,9 +320,9 @@ rbAppControllers.controller('metaDataController', ['$scope', 'rbFiles', function
 				var articleAnnotation = getStructure(currentArticle.annotation[0]);
 
 				addToAtTags(articleContent.main);
-				findAtTagsInSectionAndSubSections(articleContent.section);
+				findTagsInSectionAndSubSections(articleContent.section);
 				addToAtTags(articleAnnotation.main);
-				findAtTagsInSectionAndSubSections(articleAnnotation.section);
+				findTagsInSectionAndSubSections(articleAnnotation.section);
 
 			}
 	   	

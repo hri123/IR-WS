@@ -1,22 +1,29 @@
 <div class="scrollable section">  
   <div class="scrollable-content">
 	<!-- The orderBy only works with Arrays -- See http://docs.angularjs.org/api/ng.filter:orderBy -->
+	<span>ALL TAGS with Count</span><br/>
 	<ol>
-	    
 	    <li data-ng-repeat="key in keys(tags) | orderBy: tags[key]"> 
 	    	{{key}} - {{tags[key]}}
 	    </li>
 	</ol>
 
-	<ol>
-	    
+	<span>Regular Tags</span><br/>
+	<ol>	    
 	    <li data-ng-repeat="regularTag in regularTags track by $index">
 	    	{{regularTag}}
 	    </li>
 	</ol>
 
+	<span>(Sub) Section Tags</span><br/>
+	<ol>	    
+	    <li data-ng-repeat="sectionAndSubSectionTag in sectionAndSubSectionTags track by $index">
+	    	{{sectionAndSubSectionTag}}
+	    </li>
+	</ol>
+
+	<span>@ Tags</span><br/>
 	<ol>
-	    
 	    <li data-ng-repeat="atTag in atTags track by $index">
 	    	{{atTag}}
 	    </li>
