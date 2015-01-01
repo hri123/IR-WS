@@ -1,5 +1,7 @@
 bower_components/
 node_modules/
 RB-files/
+passport-sample/
+oauth.js
 
 
