@@ -1,5 +1,11 @@
 Table of Contents
 -----------------
 
-- [Features](#features)
-- [Prerequisites](#prerequisites)
+- [Dependencies](#dependencies)
+
+Dependencies
+----------------
+
+| Package                         | Description   |
+| ------------------------------- |:-------------:|
+| http://mobileangularui.com/     | look and feel |
