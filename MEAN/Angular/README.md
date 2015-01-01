@@ -9,7 +9,7 @@ Getting-Started
 
 - Ref: https://docs.angularjs.org/guide
 
-![](scrsht_ng_guide.png?raw=true)
+![](README_files/scrsht_ng_guide.png?raw=true)
 
 
 Progress
