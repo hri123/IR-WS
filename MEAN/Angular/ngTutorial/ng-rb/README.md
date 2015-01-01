@@ -3,6 +3,7 @@ Table of Contents
 
 - [Start-Here](#start-here)
 - [Dependencies](#dependencies)
+- [References](#references)
 - [TODO](#todo)
 - [Journal](#journal)
 - [Sample-Article-Structure](#sample-article-structure)
@@ -21,6 +22,11 @@ Dependencies
 | ------------------------------- |:-------------:|
 | https://docs.angularjs.org/tutorial | core ui framework, the tutorial has beautiful explanation |
 | http://mobileangularui.com/ | look and feel |
+
+References
+----------
+
+- https://github.com/sahat/hackathon-starter
 
 TODO
 ----
