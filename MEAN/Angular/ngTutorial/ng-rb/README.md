@@ -42,6 +42,7 @@ Journal
 Sample-Article-Structure
 ------------------------
 
+```xml
 <article>
 <tags>sample-article-tag1, sample-article-tag2</tags> -- article.tags
 <rating>sample-article-rating</rating> -- article.rating
@@ -72,3 +73,4 @@ sample-sub-section-main
 </section>
 </annotation>
 </article> 
+```
