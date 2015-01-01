@@ -6,6 +6,7 @@ Table of Contents
 Dependencies
 ----------------
 
-| Package                         | Description   |
+| Package | Description |
 | ------------------------------- |:-------------:|
-| http://mobileangularui.com/     | look and feel |
+| https://docs.angularjs.org/tutorial | core ui framework |
+| http://mobileangularui.com/ | look and feel |
