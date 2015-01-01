@@ -1,0 +1,1 @@
+![](scrsht_ng_guide.png?raw=true)
