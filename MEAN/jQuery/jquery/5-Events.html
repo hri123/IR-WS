@@ -1,0 +1,52 @@
+<!doctype html>
+<html>
+<head>
+<meta charset=utf-8>
+<title></title>
+<link rel="stylesheet" href="styles/5-Events-style.css" />
+<style type="text/css">
+</style>
+</head>
+<body>
+
+	<!-- Using chrome 'DevTools Autosave' plugin to automatically save css and js files -->
+	<!-- https://github.com/NV/chrome-devtools-autosave -->
+
+	<dl>
+		<dt>What are your hours ?</dt>
+		<dd>We are open 24/7.</dd>
+		<dt>What are your hours ?</dt>
+		<dd>We are open 24/7.</dd>
+		<dt>What are your hours ?</dt>
+		<dd>We are open 24/7.</dd>
+		<dt>What are your hours ?</dt>
+		<dd>We are open 24/7.</dd>
+		<dt>What are your hours ?</dt>
+		<dd>We are open 24/7.</dd>
+	</dl>
+
+	<script src="jquery-1.11.1.js"></script>
+	<!-- <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.js"></script> -->
+
+	<script>
+		var $dd = $('dd');
+		// $dd.hide(); hides every dd
+		// $dd.show(); shows every dd
+
+		$dd.filter(':nth-child(n+4)').css('display', 'none');
+
+		// $('dt').on('mouseenter', function() {
+		// 	$(this).next().slideDown(200).siblings('dd').slideUp(200);
+		// });
+		// the above works just fine, but it adds multiple event listeners - as many as the
+		// number of dt present bringing down the performance
+		// similar effect can be done by one event listener
+		
+		$('dl').on('mouseenter', 'dt', function() {
+			$(this).next().slideDown(200).siblings('dd').slideUp(200);
+		});
+		
+	</script>
+
+</body>
+</html>

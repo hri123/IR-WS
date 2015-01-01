@@ -1,0 +1,53 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset=utf-8>
+	<title>jQuery Plugins</title>
+</head>
+<body>
+
+<h1>My Tweets</h1>
+<!--<ul class="tweets"></ul>-->
+<div class="tweets"></div>
+
+<script src="jquery-1.11.1.js"></script>
+<script src="28-searchTwitter.jquery.js"></script>
+
+<script>
+
+// can modify defaults by overriding existing ones
+$.fn.queryTwitter.options.limit= 2;
+
+// $('ul.tweets').queryTwitter('cowboy');
+
+// $('ul.tweets').queryTwitter({
+// 	search: 'cowboy',
+// 	limit: 5,
+// 	refresh: 4000,
+// 	transition: 'slideToggle'
+// });
+
+$('div.tweets').queryTwitter({
+	search: 'cowboy',
+
+	onComplete: function() {
+		console.log(arguments);
+	},
+	refresh: 4000,
+	transition: 'slideToggle'
+});
+
+
+// see - http://api.jquery.com/jquery.data/
+var instance = $.data($('div.tweets')[0], 'queryTwitter');
+console.log(instance);
+
+</script>
+
+
+
+</body>
+</html>
+
+
+

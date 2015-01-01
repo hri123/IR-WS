@@ -1,0 +1,32 @@
+body {
+    width: 500px;
+
+    margin: auto;
+}
+
+dl {
+    text-align: center;
+
+
+}
+
+dt {
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 1.5em;
+    line-height: 2em;
+    background-color: lightgray;
+    border-bottom: 1px solid gray;
+    border-top: 1px solid white;
+}
+
+dd {
+    margin: 0px;
+
+	
+    padding: 1em 0;
+}
+
+dt:nth-last-child(2) {
+	border-bottom: none;
+}

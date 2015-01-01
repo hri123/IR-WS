@@ -1,0 +1,57 @@
+<!doctype html>
+<html>
+<head>
+<meta charset=utf-8>
+<title></title>
+<link rel="stylesheet" href="styles/day.css" />
+<style type="text/css">
+</style>
+</head>
+<body>
+
+	<h1>My Website</h1>
+
+	<div>
+		<!-- custom attribute start with data- -->
+		<button data-file="day">Day</button>
+		<button data-file="night">Night</button>
+	</div>
+	<script src="jquery-1.11.1.js"></script>
+	<!-- <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.js"></script> -->
+
+	<script>
+		// global variable - will be accessible globally through window object
+		var globalVar = "global-hello";
+		console.log(window.globalVar); // can be accessed from anywhere
+
+		// for local variables, need to have a function scope, a dummy function that executes immediately
+		(function() {
+			var localVar = "local-hello";
+			console.log(window.localVar); // will print undefined
+
+			$link = $('link');
+
+			$('button').on('click', function() { // is same as $('button').click(function() {...
+				console.log('clicked');
+				// inside this function 'this' will refer to the button that was clicked
+				// but directly using this will not have access to jQuery methods
+				// so need to wrap this inside jQuery
+				var $this = $(this);
+				// var stylesheet = $this.text().toLowerCase();
+				// var stylesheet = $this.attr('data-file');
+				var stylesheet = $this.data('file');
+				$link.attr('href', 'styles/' + stylesheet + '.css');
+				
+				$this
+					.siblings()
+					.removeAttr('disabled') // remove disable attribute on siblings
+					.end() // stop working on the siblings and go back to this
+					.attr('disabled', 'disabled'); // disabled the button
+
+			});
+
+		})();
+	</script>
+
+</body>
+</html>

@@ -1,0 +1,73 @@
+<html>
+
+<head>
+
+  <meta charset="utf-8">
+  <style type="text/css">
+  body {
+    width: 600px;
+    margin: 100px auto 0;
+  }
+  * {
+    margin: 0;
+    padding: 0;
+  }
+  </style>
+
+  <link rel="stylesheet" type="text/css" href="./styles/15-Prototypal-Inheritance.css">
+
+
+</head>
+
+
+<body>
+
+  <div class="slider">
+
+    <ul>
+      <li>
+        <img src="./images/img1.gif" alt="images">
+      </li>
+      <li>
+        <img src="./images/img2.gif" alt="images">
+      </li>
+      <li>
+        <img src="./images/img3.gif" alt="images">
+      </li>
+      <li>
+        <img src="./images/img4.gif" alt="images">
+      </li>
+
+    </ul>
+
+
+  </div>
+
+  <div class="slider-nav">
+
+    <button data-direction="prev">Prev</button>
+
+    <button data-direction="next">Next</button>
+
+  </div>
+
+  <script type="text/javascript" src="./jquery-1.11.1.js"></script>
+
+  <script type="text/javascript" src="./js/15-Prototypal-Inheritance.js"></script>
+
+  <script type="text/javascript">
+
+  $('div.slider').css('overflow', 'hidden');
+  var slider = new Slider($('div.slider ul'), $('.slider-nav'));
+
+  slider.nav.show().find('button').on('click', function() {
+    slider.setCurrent($(this).data('direction'));
+    slider.transition();
+  });
+  </script>
+
+</body>
+
+
+
+</html>
