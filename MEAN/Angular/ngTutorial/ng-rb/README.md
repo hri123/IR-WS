@@ -22,6 +22,7 @@ Dependencies
 | ------------------------------- |:-------------:|
 | https://docs.angularjs.org/tutorial | core ui framework, the tutorial has beautiful explanation |
 | http://mobileangularui.com/ | look and feel |
+| http://passportjs.org/ | authentication for node |
 
 References
 ----------
