@@ -2,7 +2,7 @@ var express = require('express');
 var app = express();
 
 var passport = require('passport');
-var DropboxStrategy = require('passport-dropbox').Strategy;
+var DropboxStrategy = require('passport-dropbox-oauth2').Strategy;
 
 // for the app - rBookApp (Register your application (or in this case a dummy application) with all of the OAuth providers you want to use, except Google - as Google uses OpenID)
 
@@ -26,13 +26,16 @@ passport.deserializeUser(function(obj, done) {
     done(null, obj);
 });
 
+var accessTokenGlobal = {};
 // config
 passport.use(new DropboxStrategy({
-        consumerKey: config.dropbox.clientID, // "--insert-dropbox-app-key-here--"
-        consumerSecret: config.dropbox.clientSecret, //"--insert-dropbox-app-secret-here--";
+        clientID: config.dropbox.clientID, // "--insert-dropbox-app-key-here--"
+        clientSecret: config.dropbox.clientSecret, //"--insert-dropbox-app-secret-here--";
         callbackURL: config.dropbox.callbackURL
     },
     function(accessToken, refreshToken, profile, done) {
+    	accessTokenGlobal[profile.uid] = accessToken;
+    	// console.log("profile: " + JSON.stringify(profile));
         process.nextTick(function() {
             return done(null, profile);
         });
@@ -49,7 +52,7 @@ var parser = new xml2js.Parser();
 
 app.configure(function() {
     app.set("view options", {layout: false});
-    app.use(express.logger());
+    // app.use(express.logger()); // prints too much log
     app.use(express.cookieParser());
     app.use(express.bodyParser());
     app.use(express.methodOverride());
@@ -74,10 +77,14 @@ app.get('/', function(req, res) {
 });
 
 app.get('/auth/dropbox',
-    passport.authenticate('dropbox'),
+    passport.authenticate('dropbox-oauth2'),
     function(req, res) {});
+
+// Error : Invalid redirect_uri: "http://localhost:3000/auth/dropbox/callback".
+// for OAuth2, the above URL needs to be registered with the app in dropbox app configuration page under OAuth2 - Redirect URIs
+
 app.get('/auth/dropbox/callback',
-    passport.authenticate('dropbox', {
+    passport.authenticate('dropbox-oauth2', {
         failureRedirect: '/'
     }),
     function(req, res) {
@@ -99,7 +106,57 @@ function ensureAuthenticated(req, res, next) {
 
 var rbFileNames = ['01-First-AnalysisParalysis.xml','02-BIY-PastMistakes.xml','03-BelieveInYourself.xml','04-Bhashya.xml','05-Brave.xml','06-Fabric.xml','07-Goals.xml','08-Guiltyfeeling.xml','09-Health.xml','10-Office.xml','11-Optimism.xml','12-Preface.xml','13-Present.xml','14-RelaxationResponse.xml','15-SacrificeFromOthers.xml','16-Last-Sacrifice.xml'];
 
+var Dropbox = require("dropbox");
+
 app.get('/sampleJSON', function(req, res) {
+
+	// console.log("req.user: " + JSON.stringify(req.user));
+
+	var client = new Dropbox.Client({
+	    key: config.dropbox.clientID,
+	    secret: config.dropbox.clientSecret,
+	    token: accessTokenGlobal[req.user.uid],
+	    sandbox:false
+	});
+
+	// Error: Dropbox API error 401 from GET https://api11.dropbox.com/1/account/info :: {"error": "The given OAuth 2 access token doesn't exist or has expired."}
+	// problem was passing OAuth1 token gotten from passport-dropbox to dropbox, then upgraded to passport-dropbox-oauth2 package
+	if (client.isAuthenticated()) {
+    	client.getAccountInfo(function(error, accountInfo) {
+    	    if (error) {
+    	        console.log(error); // Something went wrong.
+    	    }
+    	    // console.log("accountInfo: " + JSON.stringify(accountInfo));
+    	});
+
+    	client.readdir("/", function(error, entries) {
+    	    if (error) {
+    	        console.log(error); // Something went wrong.
+    	    }
+
+    	    console.log("Your Dropbox contains " + entries.join(", "));
+    	});
+    	client.readFile('./RB-files/' + "15-SacrificeFromOthers.xml", function(error, data) { // data has the file's contents
+    	    
+    	    var articles = [];
+
+    	    if (error) {
+    	        console.log(error); // Something went wrong.
+    	    } else {
+	    	    parser.parseString(data, function(err, result) {
+
+	    	        articles = result.file.article;
+	    	    });    	    	
+    	    }
+    	    
+    	    res.send(articles);
+    	});
+
+    }
+  
+});
+
+/* app.get('/sampleJSON', function(req, res) {
 
 
 	var index = 0;
@@ -156,6 +213,8 @@ app.get('/exportForVerification', function(req, res) {
 	res.send("done!");
   
 });
+
+*/
 
 var massageArticleForExport = function (inArticle) {
 
