@@ -34,8 +34,8 @@ passport.use(new DropboxStrategy({
         callbackURL: config.dropbox.callbackURL
     },
     function(accessToken, refreshToken, profile, done) {
-    	accessTokenGlobal[profile.uid] = accessToken;
-    	// console.log("profile: " + JSON.stringify(profile));
+    	accessTokenGlobal['id_' + profile.id] = accessToken;
+    	console.log("profile: " + JSON.stringify(profile));
         process.nextTick(function() {
             return done(null, profile);
         });
@@ -110,12 +110,15 @@ var Dropbox = require("dropbox");
 
 app.get('/sampleJSON', function(req, res) {
 
-	// console.log("req.user: " + JSON.stringify(req.user));
+	console.log("req.user: " + JSON.stringify(req.user));
+	console.log("accessTokenGlobal: " + JSON.stringify(accessTokenGlobal));
+	
+	console.log("accessTokenGlobal['id_' + req.user.id]: " + accessTokenGlobal['id_' + req.user.id]);
 
 	var client = new Dropbox.Client({
 	    key: config.dropbox.clientID,
 	    secret: config.dropbox.clientSecret,
-	    token: accessTokenGlobal[req.user.uid],
+	    token: accessTokenGlobal['id_' + req.user.id],
 	    sandbox:false
 	});
 
@@ -126,7 +129,7 @@ app.get('/sampleJSON', function(req, res) {
     	    if (error) {
     	        console.log(error); // Something went wrong.
     	    }
-    	    // console.log("accountInfo: " + JSON.stringify(accountInfo));
+    	    console.log("accountInfo: " + JSON.stringify(accountInfo));
     	});
 
     	client.readdir("/", function(error, entries) {
