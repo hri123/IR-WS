@@ -19,7 +19,7 @@ Start-Here
 Testing
 ----------
 
-- TODO
+- npm test
 
 Dependencies
 ------------
