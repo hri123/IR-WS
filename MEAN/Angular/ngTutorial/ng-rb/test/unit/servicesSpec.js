@@ -3,10 +3,10 @@
 describe('service', function() {
 
   // load modules
-  beforeEach(module('phonecatApp'));
+  beforeEach(module('rbApp'));
 
   // Test service availability
-  it('check the existence of Phone factory', inject(function(Phone) {
-      expect(Phone).toBeDefined();
+  it('check the existence of rbFiles factory', inject(function(rbFiles) {
+      expect(rbFiles).toBeDefined();
     }));
 });
