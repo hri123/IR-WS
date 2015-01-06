@@ -39,14 +39,10 @@ References
 TODO
 ----
 
-- testing pending
-- Connect to dropbox from the back end passing userid / pwd of dropbox using OAuth and load the RB files from there
-- Host it on bluemix with passport.js authentication
-- need to restructure the @tags so that it becomes useful
-- identify articles without tags, without summary
+- protractor testing pending
+- Host it on bluemix / heroku
 - use 'requirejs' instead of <script src="js/utils.js"></script>
-- add tagCloud for the metadata html file
-- restructure app - launch page - login, once login, landing page - choose categories (like in things app - RB, Tech, etc), once category, open the Single page app with navigation on left and search that slides down from top, add a bread crumb for the chosen search criteria
+- restructure app - launch page - login, once login, landing page - choose categories (like in 'things for ios' app - RB, Tech, etc), once category, open the Single page app with navigation on left and search that slides down from top, add a bread crumb for the chosen search criteria like in myntra
 
 Journal
 -------
