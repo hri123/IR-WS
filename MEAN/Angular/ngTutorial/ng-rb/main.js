@@ -35,7 +35,7 @@ passport.use(new DropboxStrategy({
     },
     function(accessToken, refreshToken, profile, done) {
     	accessTokenGlobal['id_' + profile.id] = accessToken;
-    	console.log("profile: " + JSON.stringify(profile));
+    	// console.log("profile: " + JSON.stringify(profile));
         process.nextTick(function() {
             return done(null, profile);
         });
@@ -110,10 +110,10 @@ var Dropbox = require("dropbox");
 
 app.get('/sampleJSON', function(req, res) {
 
-	console.log("req.user: " + JSON.stringify(req.user));
-	console.log("accessTokenGlobal: " + JSON.stringify(accessTokenGlobal));
+	// console.log("req.user: " + JSON.stringify(req.user));
+	// console.log("accessTokenGlobal: " + JSON.stringify(accessTokenGlobal));
 	
-	console.log("accessTokenGlobal['id_' + req.user.id]: " + accessTokenGlobal['id_' + req.user.id]);
+	// console.log("accessTokenGlobal['id_' + req.user.id]: " + accessTokenGlobal['id_' + req.user.id]);
 
 	var client = new Dropbox.Client({
 	    key: config.dropbox.clientID,
@@ -129,7 +129,7 @@ app.get('/sampleJSON', function(req, res) {
     	    if (error) {
     	        console.log(error); // Something went wrong.
     	    }
-    	    console.log("accountInfo: " + JSON.stringify(accountInfo));
+    	    // console.log("accountInfo: " + JSON.stringify(accountInfo));
     	});
 
     	client.readdir("/", function(error, entries) {
@@ -137,7 +137,7 @@ app.get('/sampleJSON', function(req, res) {
     	        console.log(error); // Something went wrong.
     	    }
 
-    	    console.log("Your Dropbox contains " + entries.join(", "));
+    	    // console.log("Your Dropbox contains " + entries.join(", "));
     	});
     	client.readFile('./RB-files/' + "15-SacrificeFromOthers.xml", function(error, data) { // data has the file's contents
     	    
