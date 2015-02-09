@@ -80,7 +80,7 @@ app.get('/auth/dropbox',
     passport.authenticate('dropbox-oauth2'),
     function(req, res) {});
 
-// Error : Invalid redirect_uri: "http://localhost:3000/auth/dropbox/callback".
+// Error : Invalid redirect_uri: "http://localhost:3000/auth/dropbox/callback" (https://ng-rb.mybluemix.net/auth/dropbox/callback).
 // for OAuth2, the above URL needs to be registered with the app in dropbox app configuration page under OAuth2 - Redirect URIs
 
 app.get('/auth/dropbox/callback',
@@ -238,4 +238,5 @@ var massageArticleForExport = function (inArticle) {
 };
 
 // spin up server
-app.listen(3000, '0.0.0.0')
+// app.listen(3000, '0.0.0.0')
+app.listen(process.env.VCAP_APP_PORT || 3000); // VCAP for bluemix compatibility
