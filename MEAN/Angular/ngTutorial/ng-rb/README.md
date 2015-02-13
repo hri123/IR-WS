@@ -8,6 +8,7 @@ Table of Contents
 - [TODO](#todo)
 - [Journal](#journal)
 - [Sample-Article-Structure](#sample-article-structure)
+- [Cloud-Hosting](#cloud-hosting)
 
 Start-Here
 ----------
@@ -84,3 +85,11 @@ Sample-Article-Structure
   </annotation>
 </article> 
 ```
+
+Cloud-Hosting
+-------------
+
+- cf api https://api.ng.bluemix.net
+- cf login -u hrishikesh.kumar@in.ibm.com
+- cf target -o hrishikesh.kumar@in.ibm.com -s dev
+- cf push ng-rb
