@@ -11,7 +11,7 @@ var DropboxStrategy = require('passport-dropbox-oauth2').Strategy;
 //     dropbox: {
 //         clientID: 'get_your_own',
 //         clientSecret: 'get_your_own',
-//         callbackURL: 'http://127.0.0.1:1337/auth/facebook/callback'
+//         callbackURL: 'http://localhost:3000/auth/dropbox/callback'
 //     }
 // }
 // module.exports = ids
