@@ -40,10 +40,10 @@ References
 TODO
 ----
 
+- instant search should be the core value add with this application
 - protractor testing pending
-- Host it on bluemix / heroku
 - use 'requirejs' instead of <script src="js/utils.js"></script>
-- restructure app - launch page - login, once login, landing page - choose categories (like in 'things for ios' app - RB, Tech, etc), once category, open the Single page app with navigation on left and search that slides down from top, add a bread crumb for the chosen search criteria like in myntra
+- restructure app - launch page - login, once login, landing page - choose Areas (like in 'things for ios' app - Artistic, Attitude, Career, Education, Family, Financial, Physical, Pleasure, Public-Service), once category, create projects - RB, Tech, etc, under suitable category, open the Single page app with navigation on left and search that slides down from top, add a bread crumb for the chosen search criteria like in myntra
 
 Journal
 -------
