@@ -9,7 +9,7 @@ Table of Contents
 - [Journal](#journal)
 - [Sample-Article-Structure](#sample-article-structure)
 - [Cloud-Hosting](#cloud-hosting)
-- [Database-Design](IR-WS/edit/master/MEAN/Angular/ngTutorial/ng-rb/README_files/database_design.md)
+- [Database-Design](README_files/database_design.md)
 
 Start-Here
 ----------
