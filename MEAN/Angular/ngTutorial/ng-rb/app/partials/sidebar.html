@@ -3,36 +3,43 @@
   <div class="scrollable-content section">
     <div class=""> <!-- ui-turn-off='uiSidebarLeft' -->
       <div class="form-group">
-        <label>Article tag 1</label>
-        <input data-ng-model="search1.tags" class="form-control">
+        <label>Article</label>
+        <div class="has-feedback">
+          <input data-ng-model="search1.tags" class="form-control hasclear" placeholder="tag 1...">
+          <span class="clearer glyphicon glyphicon-remove-circle form-control-feedback" style="display: block; top: 0px;" ng-click="clearInputTags(search1)"></span>
+        </div>
+        <br>
+        <div class="has-feedback">
+          <input data-ng-model="search2.tags" class="form-control" placeholder="tag 2...">
+          <span class="clearer glyphicon glyphicon-remove-circle form-control-feedback" style="display: block; top: 0px;" ng-click="clearInputTags(search2)"></span>
+        </div>
+        <br>
+        <div class="has-feedback">
+          <input data-ng-model="search3.tags" class="form-control" placeholder="tag 3...">
+          <span class="clearer glyphicon glyphicon-remove-circle form-control-feedback" style="display: block; top: 0px;" ng-click="clearInputTags(search3)"></span>
+        <br>
+        <input data-ng-model="search4.summary" class="form-control" placeholder="summary...">
+        <br>
+        <input data-ng-model="search5.content.main" class="form-control" placeholder="main content...">
       </div>
       <div class="form-group">
-        <label>Article tag 2</label>
-        <input data-ng-model="search2.tags" class="form-control">
-      </div>
-      <div class="form-group">
-        <label>Article tag 3</label>
-        <input data-ng-model="search3.tags" class="form-control">
-      </div>
-      <div class="form-group">
-        <label>Article Summary</label>
-        <input data-ng-model="search4.summary" class="form-control">
-      </div>
-      <div class="form-group">
-        <label>Article Content Main</label>
-        <input data-ng-model="search5.content.main" class="form-control">
-      </div>
-      <div class="form-group">
-        <label>(Sub) Section Tags</label>
-        <input data-ng-model="search9.val" class="form-control">
-      </div>
-      <div class="form-group">
-        <label>(Sub) Section Name / Main</label>
-        <input data-ng-model="search7.val" class="form-control">
+        <label>(Sub) Section</label>
+        <div class="has-feedback">
+          <input data-ng-model="search9.val" class="form-control" placeholder="tag...">
+          <span class="clearer glyphicon glyphicon-remove-circle form-control-feedback" style="display: block; top: 0px;" ng-click="clearInputVal(search9)"></span>
+        </div>
+        <br>
+        <div class="has-feedback">
+          <input data-ng-model="search7.val" class="form-control" placeholder="name / main...">
+          <span class="clearer glyphicon glyphicon-remove-circle form-control-feedback" style="display: block; top: 0px;" ng-click="clearInputVal(search7)"></span>
+        </div>
       </div>
       <div class="form-group">
         <label>@tags</label>
-        <input data-ng-model="search8.val" class="form-control">
+        <div class="has-feedback">
+          <input data-ng-model="search8.val" class="form-control">
+          <span class="clearer glyphicon glyphicon-remove-circle form-control-feedback" style="display: block; top: 0px;" ng-click="clearInputVal(search8)"></span>
+        </div>
       </div>
       <div class="form-group">
         <label>Article Annotation Main</label>

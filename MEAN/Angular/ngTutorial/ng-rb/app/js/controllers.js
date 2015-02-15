@@ -57,6 +57,14 @@ rbAppControllers.controller('mainAppController', ['$scope', function($scope) {
 		val: ''
 	};
 
+	$scope.clearInputTags = function (inputVar) {
+		inputVar.tags = '';
+	};
+
+	$scope.clearInputVal = function (inputVar) {
+		inputVar.val = '';
+	};
+
 }]);
 
 rbAppControllers.controller('articleListController', ['$scope', '$http', '$location', '$routeParams', 'sharedArticles', 'rbFiles', function($scope, $http, $location, $routeParams, sharedArticles, rbFiles) {
