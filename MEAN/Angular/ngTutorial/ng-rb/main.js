@@ -11,7 +11,8 @@ var DropboxStrategy = require('passport-dropbox-oauth2').Strategy;
 //     dropbox: {
 //         clientID: 'get_your_own',
 //         clientSecret: 'get_your_own',
-//         callbackURL: 'http://localhost:3000/auth/dropbox/callback'
+//         callbackURLLocal: 'http://localhost:3000/auth/dropbox/callback',
+//         callbackURLBluemix: 'https://ng-rb.mybluemix.net/auth/dropbox/callback'
 //     }
 // }
 // module.exports = ids
@@ -27,11 +28,16 @@ passport.deserializeUser(function(obj, done) {
 });
 
 var accessTokenGlobal = {};
+
+var tempCallbackURL = config.dropbox.callbackURLLocal;
+if (process.env.VCAP_APP_PORT) // if on bluemix
+    tempCallbackURL = config.dropbox.callbackURLBluemix;
+
 // config
 passport.use(new DropboxStrategy({
         clientID: config.dropbox.clientID, // "--insert-dropbox-app-key-here--"
         clientSecret: config.dropbox.clientSecret, //"--insert-dropbox-app-secret-here--";
-        callbackURL: config.dropbox.callbackURL
+        callbackURL: tempCallbackURL
     },
     function(accessToken, refreshToken, profile, done) {
     	accessTokenGlobal['id_' + profile.id] = accessToken;
