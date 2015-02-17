@@ -1,4 +1,4 @@
-var rbApp = angular.module('rbApp', ['ngRoute', 'rbAppControllers', 'rbAppServices', 'mobile-angular-ui']);
+var rbApp = angular.module('rbApp', ['ngRoute', 'rbAppControllers', 'rbAppServices', 'rbAppDirectives', 'mobile-angular-ui', 'xeditable']);
 
 rbApp.filter('orderObjectBy', function(){
  return function(input, attribute) {

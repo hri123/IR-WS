@@ -1,60 +1,105 @@
-
 <div class="modal modal-overlay" ui-if='article_details_modal' ui-state='article_details_modal'>
   <div class="modal-dialog scrollable">
     <div class="modal-content scrollable-content">
       <div class="modal-header">
-        <button class="close"
-                ui-turn-off="article_details_modal">&times;</button>
-        <h4 class="modal-title">{{articles[currentArticleIndex].summary}}</h4>
+        <button class="close" ui-turn-off="article_details_modal">&times;</button>
+        <h4 class="modal-title"><a href="#" editable-text="currentArticle.summary">{{ currentArticle.summary || 'empty summary' }}</a></h4>
       </div>
 
+      <!-- http://stackoverflow.com/questions/17470370/how-to-implement-a-scrollspy-in-angular-js-the-right-way -->
       <div class="modal-body">
 
-        <p style="white-space: pre-line;">CONTENT - {{articles[currentArticleIndex].content.main}}</p>
-        <ol>
-            
-            <li data-ng-repeat="section in articles[currentArticleIndex].content.section">
-                <span>SECTION - {{section.name}}</span><br/>
-                <span>TAGS - {{section.tags}}</span><br/>
-                <p style="white-space: pre-line;">{{section.main}}</p>
+        <div class="row">
 
-                <ol>
-                    
+          <div class="col-xs-3">
+            <ul id="navPills" class="nav nav-pills nav-stacked affix">
+              <li class="active">
+                <a href="#section1" prevent-default="" scroll-to="section1">Main Content</a>
+              </li>
+              <li class="">
+                <a href="#section2" prevent-default="" scroll-to="section2">Annotation</a>
+              </li>
+            </ul>
+          </div>
+          <!-- TODO: height:400px is hardcoded for scrollspy to work, BAD responsive design -->
+          <div class="col-xs-9" scroll-spy="" data-target="#navPills" data-scroll-offset="10" style="height:400px; overflow:auto;">
+            <section id="section1">
+              <span>CONTENT - 
+                <a href="#" editable-textarea="currentArticle.content.main" e-rows="20" e-cols="60">
+                  <pre>{{ currentArticle.content.main || 'empty content main' }}</pre>
+                </a>
+              </span>
+
+              <ol>
+
+                <li data-ng-repeat="section in articles[currentArticleIndex].content.section">
+                  <span>SECTION - <a href="#" editable-text="section.name">{{ section.name || 'empty section name' }}</a></span>
+                  <br/>
+                  <span>TAGS - <a href="#" editable-text="section.tags">{{ section.tags || 'empty section tags' }}</a></span>
+                  <br/>
+                  <!-- TODO: BAD responsive design - hardcoding rows and columns -->
+                  <a href="#" editable-textarea="section.main" e-rows="20" e-cols="60">
+                    <pre>{{ section.main || 'empty section main' }}</pre>
+                  </a>
+
+                  <ol>
+
                     <li data-ng-repeat="sub_section in section.sub_section">
-                        <span>SUB-SECTION - {{sub_section.name}}</span><br/>
-                        <span>TAGS - {{sub_section.tags}}</span><br/>
-                        <p style="white-space: pre-line;">{{sub_section.main}}</p>
+                      <span>SUB-SECTION - <a href="#" editable-text="sub_section.name">{{ sub_section.name || 'empty sub_section name' }}</a></span>
+                      <br/>
+                      <span>TAGS - <a href="#" editable-text="sub_section.tags">{{ sub_section.tags || 'empty sub_section tags' }}</a></span>
+                      <br/>
+                      <a href="#" editable-textarea="sub_section.main" e-rows="20" e-cols="60">
+                        <pre>{{ sub_section.main || 'empty sub_section main' }}</pre>
+                      </a>
 
                     </li>
 
-                </ol>
+                  </ol>
 
-            </li>
+                </li>
 
-        </ol>
-        <p style="white-space: pre-line;">ANNOTATION - {{articles[currentArticleIndex].annotation.main}}</p>
-        <ol>
-            
-            <li data-ng-repeat="section in articles[currentArticleIndex].annotation.section">
-                <span>SECTION - {{section.name}}</span><br/>
-                <span>TAGS - {{section.tags}}</span><br/>
-                <p style="white-space: pre-line;">{{section.main}}</p>
+              </ol>
+            </section>
+            <section id="section2">
+              <span>ANNOTATION - 
+                <a href="#" editable-textarea="currentArticle.annotation.main" e-rows="20" e-cols="60">
+                  <pre>{{ currentArticle.annotation.main || 'empty annotation main' }}</pre>
+                </a>
+              </span>
 
-                <ol>
-                    
+              <ol>
+
+                <li data-ng-repeat="section in articles[currentArticleIndex].annotation.section">
+                  <span>SECTION - <a href="#" editable-text="section.name">{{ section.name || 'empty section name' }}</a></span>
+                  <br/>
+                  <span>TAGS - <a href="#" editable-text="section.tags">{{ section.tags || 'empty section tags' }}</a></span>
+                  <br/>
+                  <!-- TODO: BAD responsive design - hardcoding rows and columns -->
+                  <a href="#" editable-textarea="section.main" e-rows="20" e-cols="60">
+                    <pre>{{ section.main || 'empty section main' }}</pre>
+                  </a>
+
+                  <ol>
+
                     <li data-ng-repeat="sub_section in section.sub_section">
-                        <span>SUB-SECTION - {{sub_section.name}}</span><br/>
-                        <span>TAGS - {{sub_section.tags}}</span><br/>
-                        <p style="white-space: pre-line;">{{sub_section.main}}</p>
+                      <span>SUB-SECTION - <a href="#" editable-text="sub_section.name">{{ sub_section.name || 'empty sub_section name' }}</a></span>
+                      <br/>
+                      <span>TAGS - <a href="#" editable-text="sub_section.tags">{{ sub_section.tags || 'empty sub_section tags' }}</a></span>
+                      <br/>
+                      <a href="#" editable-textarea="sub_section.main" e-rows="20" e-cols="60">
+                        <pre>{{ sub_section.main || 'empty sub_section main' }}</pre>
+                      </a>
 
                     </li>
 
-                </ol>
+                  </ol>
+                </li>
 
-            </li>
-
-        </ol>
-
+              </ol>
+            </section>
+          </div>
+        </div> <!-- row -->
       </div>
       <div class="modal-footer">
         <button ui-turn-off="article_details_modal" class="btn btn-default">Close</button>
