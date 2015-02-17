@@ -114,7 +114,7 @@ rbAppControllers.controller('articleListController', ['$scope', '$http', '$locat
 
 	$scope.setCurrentArticle = function (currentArticleIndex) {
 		$scope.currentArticleIndex = currentArticleIndex;
-		$scope.currentArticle = sharedArticles.articles[currentArticleIndex];
+		$scope.currentArticle = $scope.articles[currentArticleIndex];
 	};
 
 	$scope.searchSectionOrSubSection = function (article) {
