@@ -30,23 +30,22 @@
               </div>
               <div href="#" editable-text="currentArticle.from">{{ currentArticle.from || 'empty from' }}</a>
               </div>
-              <br/>
-              <div class="row">
-                <div class="col-xs-3">
-                  <button class="form-control btn btn-success" ng-click="createNewSection('new')">
-                    <span class="glyphicon glyphicon-plus"></span>  New Content Section
-                  </button>
-                </div>
-              </div>
               <div>
                 <a href="#" editable-textarea="currentArticle.content.main" e-rows="20" e-cols="60">
                   <pre>{{ currentArticle.content.main || 'empty content main' }}</pre>
                 </a>
               </div>
+              <div class="row">
+                <div class="col-xs-3">
+                  <button class="form-control btn btn-success" ng-click="createNewSection('content')">
+                    <span class="glyphicon glyphicon-plus"></span>  New Content Section
+                  </button>
+                </div>
+              </div>
 
               <ol>
 
-                <li data-ng-repeat="section in articles[currentArticleIndex].content.section">
+                <li data-ng-repeat="section in currentArticle.content.section">
                   <span>SECTION - <a href="#" editable-text="section.name">{{ section.name || 'empty section name' }}</a></span>
                   <br/>
                   <span>TAGS - <a href="#" editable-text="section.tags">{{ section.tags || 'empty section tags' }}</a></span>
@@ -76,24 +75,22 @@
               </ol>
             </section>
             <section id="section2">
-              <br/>
-              <div class="row">
-                <div class="col-xs-3">
-                  <button class="form-control btn btn-success" ng-click="createNewSection('new')">
-                    <span class="glyphicon glyphicon-plus"></span>  New Annotation Section
-                  </button>
-                </div>
-              </div>
-
               <span>
                 <a href="#" editable-textarea="currentArticle.annotation.main" e-rows="20" e-cols="60">
                   <pre>{{ currentArticle.annotation.main || 'empty annotation main' }}</pre>
                 </a>
               </span>
+              <div class="row">
+                <div class="col-xs-3">
+                  <button class="form-control btn btn-success" ng-click="createNewSection('annotation')">
+                    <span class="glyphicon glyphicon-plus"></span>  New Annotation Section
+                  </button>
+                </div>
+              </div>
 
               <ol>
 
-                <li data-ng-repeat="section in articles[currentArticleIndex].annotation.section">
+                <li data-ng-repeat="section in currentArticle.annotation.section">
                   <span>SECTION - <a href="#" editable-text="section.name">{{ section.name || 'empty section name' }}</a></span>
                   <br/>
                   <span>TAGS - <a href="#" editable-text="section.tags">{{ section.tags || 'empty section tags' }}</a></span>
