@@ -45,7 +45,7 @@ TODO
 - instant search should be the core value add with this application
 - protractor testing pending
 - use 'requirejs' instead of <script src="js/utils.js"></script>
-- restructure app - launch page - login, once login, landing page - choose Areas (like in 'things for ios' app - Artistic, Attitude, Career, Education, Family, Financial, Physical, Pleasure, Public-Service), once category, create projects - RB, Tech, etc, under suitable category, open the Single page app with navigation on left and search that slides down from top, add a bread crumb for the chosen search criteria like in myntra
+- restructure app - launch page - login, once login, landing page - choose Project Areas (like in 'things for ios' app - Artistic, Attitude, Career, Education, Family, Financial, Physical, Pleasure, Public-Service), once category, create projects - RB, Tech, etc, under suitable category, open the Single page app with navigation on left and search that slides down from top, add a bread crumb for the chosen search criteria like in myntra; 3 * 3 matrix for the selection of project area (like in the http://www.ellucian.com/ home page, followed by some nice interface to select the projects.
 
 Journal
 -------

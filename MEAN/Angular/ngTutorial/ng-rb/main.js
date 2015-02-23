@@ -1,10 +1,14 @@
+// http://stackoverflow.com/questions/1911015/how-to-debug-node-js-applications
+
 var express = require('express');
 var app = express();
 
 var passport = require('passport');
 var DropboxStrategy = require('passport-dropbox-oauth2').Strategy;
 
-// for the app - rBookApp (Register your application (or in this case a dummy application) with all of the OAuth providers you want to use, except Google - as Google uses OpenID)
+var shortId = require('shortid');
+
+// for the app - rBookApp (Register your application with all of the OAuth providers you want to use, except Google - as Google uses OpenID)
 
 // Put the keys and secrets in a file called oauth.js in the same directory as main.js
 // var ids = {
@@ -17,7 +21,8 @@ var DropboxStrategy = require('passport-dropbox-oauth2').Strategy;
 // }
 // module.exports = ids
 
-var config = require('./oauth.js');
+var config = require('./app/js/server/oauth.js');
+var myDropboxUtils = require('./app/js/server/dropbox.js');
 
 // serialize and deserialize
 passport.serializeUser(function(user, done) {
@@ -114,6 +119,116 @@ var rbFileNames = ['01-First-AnalysisParalysis.xml','02-BIY-PastMistakes.xml','0
 
 var Dropbox = require("dropbox");
 
+
+var tempTempArticle;
+app.get('/writeJSON', ensureAuthenticated, function(req, res) {
+
+    var client = new Dropbox.Client({
+        key: config.dropbox.clientID,
+        secret: config.dropbox.clientSecret,
+        token: accessTokenGlobal['id_' + req.user.id],
+        sandbox:false
+    });
+
+    if (client.isAuthenticated()) {
+
+        var selectedArea = req.query.area;
+        var selectedProject = req.query.project;
+
+        // TODO: if the selectedArea and/or selectedProject does not exist, need to create it instead of throwing error
+        client.readdir("/" + selectedArea + "/" + selectedProject, function(error, entries, stat) {
+            if (error) {
+                console.log("error during readdir: " + error); // Something went wrong.
+                res.send(500);
+            } else {
+                console.log("Your Dropbox contains " + entries);
+
+                // TODO: extract the first tag of the article instead of sacrifice-from-others, if not present, unknown
+                client.writeFile("/" + selectedArea + "/" + selectedProject + "/" + "sacrifice-from-others" + "/" + shortId.generate() + ".json",
+                    JSON.stringify(tempTempArticle),
+                    {},
+                    function(error) {
+                        console.log("error during write file: " + error); // Something went wrong.
+                        res.send(500);
+                });
+                
+                res.send(200);
+            }
+        });
+
+    } else {
+        console.log('dropbox client is not authenticated'); // Something went wrong.
+        res.send(500);
+    }
+  
+});
+
+app.get('/readJSON', ensureAuthenticated, function(req, res) {
+
+    var client = new Dropbox.Client({
+        key: config.dropbox.clientID,
+        secret: config.dropbox.clientSecret,
+        token: accessTokenGlobal['id_' + req.user.id],
+        sandbox:false
+    });
+
+    myDropboxUtils.resetProjectAreas(client, myDropboxUtils.projectAreas);
+
+    if (client.isAuthenticated()) {
+
+        var selectedArea = req.query.area;
+        var selectedProject = req.query.project;
+
+        client.readdir("/" + selectedArea + "/" + selectedProject, function(error, entries, stat) {
+            if (error) {
+                console.log("error during readdir: " + error); // Something went wrong.
+                res.send(500);
+            } else {
+                console.log("Your Dropbox contains " + entries);
+
+                var totalNumOfFiles = 0;
+                var articles = [];
+
+                for (var i = 0; i < entries.length; i++) {
+                    var dirName = "/" + selectedArea + "/" + selectedProject + "/" + entries[i];
+                    // scope is required because the dirName would have got updated before all the files in the folder dirName are read
+                    // error during readFile:Dropbox API error 404 from GET https://api-content.dropbox.com/1/files/auto/attitude/rb/sacrifice-
+                    // from-others%20-%20Copy%20%289%29/Q1elgkjw.json :: {"error": "File not found"}
+                    (function(dirName) {
+                        client.readdir(dirName, function(error, sub_entries) {
+                            if (error) {
+                                console.log("error during readdir: " + error); // Something went wrong.
+                                res.send(500);
+                            } else {
+                                totalNumOfFiles += sub_entries.length;
+                                for (var j = 0; j < sub_entries.length; j++) {
+                                    client.readFile(dirName + '/' + sub_entries[j], function(error, data) { // data has the file's contents
+                                        if (error) {
+                                            console.log("error during readFile:" + error); // Something went wrong.
+                                            res.send(500);
+                                        } else {
+                                            articles.push(JSON.parse(data));
+                                            totalNumOfFiles -= 1;
+                                            // res.send should be after loading all the files
+                                            if (totalNumOfFiles == 0)
+                                                res.send(articles);
+                                        }
+                                    });
+                                }
+                            }
+                        });
+                    })(dirName);
+                }
+            }
+        });
+
+    } else {
+        console.log('dropbox client is not authenticated'); // Something went wrong.
+        res.send(500);
+    }
+  
+});
+
 app.get('/sampleJSON', function(req, res) {
 
 	// console.log("req.user: " + JSON.stringify(req.user));
@@ -155,6 +270,7 @@ app.get('/sampleJSON', function(req, res) {
 	    	    parser.parseString(data, function(err, result) {
 
 	    	        articles = result.file.article;
+                    tempTempArticle = articles[0];
 	    	    });    	    	
     	    }
     	    
@@ -234,7 +350,7 @@ var massageArticleForExport = function (inArticle) {
 	outArticle.summary = inArticle.summary;
 	outArticle.from = inArticle.from;
 
-	var utils = require('./app/js/utils.js');
+	var utils = require('./app/js/common/utils.js');
 
 	outArticle.content = utils.getStructure(inArticle.content[0]);
 	outArticle.annotation = utils.getStructure(inArticle.annotation[0]);

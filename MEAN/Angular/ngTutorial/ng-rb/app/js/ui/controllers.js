@@ -93,8 +93,6 @@ rbAppControllers.controller('articleListController', ['$scope', '$http', '$locat
 				article.content = getStructure(currentArticle.content[0]);
 				article.annotation = getStructure(currentArticle.annotation[0]);
 
-				article.index = $scope.articles.length;
-
 	   			$scope.articles.push(article);
 			}
 			sharedArticles.articles = $scope.articles;
@@ -112,9 +110,9 @@ rbAppControllers.controller('articleListController', ['$scope', '$http', '$locat
 	}
 
 
-	$scope.setCurrentArticle = function (currentArticleIndex) {
-		$scope.currentArticleIndex = currentArticleIndex;
-		$scope.currentArticle = $scope.articles[currentArticleIndex];
+	$scope.setCurrentArticle = function (currentArticle) {
+		// $scope.currentArticleIndex = currentArticleIndex;
+		$scope.currentArticle = currentArticle;
 	};
 
 	$scope.searchSectionOrSubSection = function (article) {
@@ -236,6 +234,14 @@ rbAppControllers.controller('articleListController', ['$scope', '$http', '$locat
 		if (!found) setFound(article.annotation);
 
 		return found;
+
+	};
+
+	$scope.createNewArticle = function() {
+
+		var article = new newArticle();
+
+		$scope.articles.unshift(article);
 
 	};
 
