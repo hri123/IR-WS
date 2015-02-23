@@ -264,6 +264,10 @@ rbAppControllers.controller('articleListController', ['$scope', '$http', '$locat
 
     };
 
+    $scope.saveArticle = function() {
+    	console.log('hi');
+    };
+
 
 }]);
 
