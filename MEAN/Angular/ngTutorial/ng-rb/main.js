@@ -135,44 +135,35 @@ var articleSaveAndUpdate = function(req, res, isNew) {
         var selectedArea = req.query.area;
         var selectedProject = req.query.project;
 
-        // TODO: if the selectedArea and/or selectedProject does not exist, need to create it instead of throwing error
-        client.readdir("/" + selectedArea + "/" + selectedProject, function(error, entries, stat) {
-            if (error) {
-                console.log("error during readdir: " + error); // Something went wrong.
-                res.send(500);
-            } else {
+        var fileName = "";
+        var articleToSave = JSON.parse(JSON.stringify(req.body));
+        if (isNew) {
+            fileName = shortId.generate() + ".json";
+            articleToSave.fileName = fileName;
+        } else {
+            fileName = req.params.fileName;
+        }
 
-                var fileName = "";
-                var articleToSave = JSON.parse(JSON.stringify(req.body));
-                if (isNew) {
-                    fileName = shortId.generate() + ".json";
-                    articleToSave.fileName = fileName;
-                } else {
-                    fileName = req.params.fileName;
+        var subProjectName = "unknown";
+        var endIndexOfFirstTag = articleToSave.tags.indexOf(",");
+        if (endIndexOfFirstTag > 0) { // has tags
+            subProjectName = articleToSave.tags.substr(0, endIndexOfFirstTag);
+        } else if (articleToSave.tags.length > 0) { // has only one tag, no ","
+            subProjectName = articleToSave.tags;
+        }
+
+        var writeFilePath = "/" + selectedArea + "/" + selectedProject + "/" + subProjectName + "/" + fileName;
+        var fileString = JSON.stringify(articleToSave);
+        client.writeFile(writeFilePath,
+            fileString, {},
+            function(error) {
+                if (error) {
+                    console.log("error during write file: " + error); // Something went wrong.
+                    res.send(500);                            
                 }
+            });
 
-                var subProjectName = "unknown";
-                var endIndexOfFirstTag = articleToSave.tags.indexOf(",");
-                if (endIndexOfFirstTag > 0) { // has tags
-                    subProjectName = articleToSave.tags.substr(0, endIndexOfFirstTag);
-                } else if (articleToSave.tags.length > 0) { // has only one tag, no ","
-                    subProjectName = articleToSave.tags;
-                }
-
-                var writeFilePath = "/" + selectedArea + "/" + selectedProject + "/" + subProjectName + "/" + fileName;
-                var fileString = JSON.stringify(articleToSave);
-                client.writeFile(writeFilePath,
-                    fileString, {},
-                    function(error) {
-                        if (error) {
-                            console.log("error during write file: " + error); // Something went wrong.
-                            res.send(500);                            
-                        }
-                    });
-
-                res.send(articleToSave);
-            }
-        });
+        res.send(articleToSave);
 
     } else {
         console.log('dropbox client is not authenticated'); // Something went wrong.
