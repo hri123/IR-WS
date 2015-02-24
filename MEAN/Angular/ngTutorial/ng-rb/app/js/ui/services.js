@@ -12,10 +12,10 @@ rbAppServices.service('sharedArticles', function() {
 // }]);
 
 rbAppServices.factory('rbFiles', ['$resource', function($resource) {
-    return $resource('/api/articles/:id', {area: 'attitude', project: 'rb'}, {
+    return $resource('/api/articles/:id', {area: 'attitude', project: 'rb'} /* params common across all methods go here */, {
         query: {
             method: 'GET',
-            params: {},
+            params: {}, /* params specific to the methods go here */
             isArray: true
         },
         save: {
