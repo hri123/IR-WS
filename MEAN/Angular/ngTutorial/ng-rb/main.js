@@ -81,11 +81,11 @@ app.configure(function() {
     app.use('/bower_components', express.static(__dirname + '/bower_components'));
 });
 
-app.get('/home', ensureAuthenticated, function(req, res) {
+app.get('/', ensureAuthenticated, function(req, res) {
     res.sendfile(__dirname + '/app' + '/' + 'index.html');
 });
 
-app.get('/', function(req, res) {
+app.get('/login', function(req, res) {
     res.sendfile(__dirname + '/app' + '/' + 'login.html');
 });
 
@@ -98,15 +98,15 @@ app.get('/auth/dropbox',
 
 app.get('/auth/dropbox/callback',
     passport.authenticate('dropbox-oauth2', {
-        failureRedirect: '/'
+        failureRedirect: '/login'
     }),
     function(req, res) {
-        res.redirect('/home');
+        res.redirect('/');
     });
 
 app.get('/logout', function(req, res) {
     req.logout();
-    res.redirect('/');
+    res.redirect('/login');
 });
 
 // test authentication
@@ -114,7 +114,7 @@ function ensureAuthenticated(req, res, next) {
     if (req.isAuthenticated()) {
         return next();
     }
-    res.redirect('/')
+    res.redirect('/login')
 }
 
 var rbFileNames = ['01-First-AnalysisParalysis.xml', '02-BIY-PastMistakes.xml', '03-BelieveInYourself.xml', '04-Bhashya.xml', '05-Brave.xml', '06-Fabric.xml', '07-Goals.xml', '08-Guiltyfeeling.xml', '09-Health.xml', '10-Office.xml', '11-Optimism.xml', '12-Preface.xml', '13-Present.xml', '14-RelaxationResponse.xml', '15-SacrificeFromOthers.xml', '16-Last-Sacrifice.xml'];
