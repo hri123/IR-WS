@@ -75,7 +75,7 @@ rbAppControllers.controller('articleListController', ['$scope', '$http', '$locat
 
     $scope.articles = [];
 
-    var indexId = $routeParams.indexId;
+    var indexId = $routeParams.indexId; // picking value from the url in angular
 
     var invokeReadFile = function(param) {
         var data = rbFiles.query(param, function(data) {
@@ -87,17 +87,22 @@ rbAppControllers.controller('articleListController', ['$scope', '$http', '$locat
 
                 var currentArticle = data[i];
 
-                var article = {};
+                // TODO: the below conversion is required only for the xml to json conversion
+                // var article = {};
 
-                article.tags = currentArticle.tags[0];
-                article.summary = currentArticle.summary[0];
-                article.rating = currentArticle.rating[0];
-                article.from = currentArticle.from[0];
+                // article.tags = currentArticle.tags[0];
+                // article.summary = currentArticle.summary[0];
+                // article.rating = currentArticle.rating[0];
+                // article.from = currentArticle.from[0];
 
-                article.content = getStructure(currentArticle.content[0]);
-                article.annotation = getStructure(currentArticle.annotation[0]);
+                // article.content = getStructure(currentArticle.content[0]);
+                // article.annotation = getStructure(currentArticle.annotation[0]);
 
-                $scope.articles.push(article);
+                // article.fileName = currentArticle.fileName;
+
+                // jQuery.extend(currentArticle, article); // mixin
+
+                $scope.articles.push(currentArticle); // passing currentArticle instead of article as it has the $save, etc methods
             }
             sharedArticles.articles = $scope.articles;
         });
@@ -256,16 +261,54 @@ rbAppControllers.controller('articleListController', ['$scope', '$http', '$locat
 
         var section = new newSection();
 
+        var temp = null;
         if (type == 'content') {
-            $scope.currentArticle.content.section.unshift(section);
+            temp = $scope.currentArticle.content;
         } else {
-            $scope.currentArticle.annotation.section.unshift(section);
+            temp = $scope.currentArticle.annotation;
         }
+
+        if (!temp.section) {
+            temp.section = [];
+        }
+
+        temp.section.unshift(section);
+
+    };
+
+    $scope.createNewSubSection = function(section) {
+
+        var subSection = new newSubSection();
+
+        if (!section.sub_section) {
+            section.sub_section = [];
+        }
+
+        section.sub_section.unshift(subSection);
 
     };
 
     $scope.saveArticle = function() {
-    	console.log('hi');
+
+        if (!$scope.currentArticle.fileName || $scope.currentArticle.fileName == "") { // create new
+
+        	// $scope.currentArticle.$save can be used too
+        	// using two different ways to call the Rest APIs on the server for demonstration
+        	(function(toSaveArticle) {
+        	    rbFiles.save($scope.currentArticle, function(savedArticle) {
+        	        //data saved. do something here.
+        	        // mixin is required to add the $update method for the next save
+        	        jQuery.extend(toSaveArticle, savedArticle); // mixin
+        	    });
+        	})($scope.currentArticle);
+
+        } else { // update
+
+            $scope.currentArticle.$update(function() {
+                //updated in the backend
+            });
+        }
+
     };
 
 

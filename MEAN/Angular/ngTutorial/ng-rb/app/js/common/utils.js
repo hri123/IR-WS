@@ -11,6 +11,7 @@ var newArticle = function() {
         main: "",
         section: []
     };
+    this.fileName = "";
 };
 
 var newSection = function() {

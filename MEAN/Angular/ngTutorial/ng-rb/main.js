@@ -45,8 +45,8 @@ passport.use(new DropboxStrategy({
         callbackURL: tempCallbackURL
     },
     function(accessToken, refreshToken, profile, done) {
-    	accessTokenGlobal['id_' + profile.id] = accessToken;
-    	// console.log("profile: " + JSON.stringify(profile));
+        accessTokenGlobal['id_' + profile.id] = accessToken;
+        // console.log("profile: " + JSON.stringify(profile));
         process.nextTick(function() {
             return done(null, profile);
         });
@@ -62,7 +62,9 @@ fs = require('fs');
 var parser = new xml2js.Parser();
 
 app.configure(function() {
-    app.set("view options", {layout: false});
+    app.set("view options", {
+        layout: false
+    });
     // app.use(express.logger()); // prints too much log
     app.use(express.cookieParser());
     app.use(express.bodyParser());
@@ -73,10 +75,10 @@ app.configure(function() {
     app.use(passport.initialize());
     app.use(passport.session());
     app.use(app.router);
-	
-	app.use(express.static(__dirname + '/app'));
-	// app.use('/', express.static(__dirname + '/bower_components/mobile-angular-ui')); // http://localhost:3000/demo/#/ will take you to the mobile angular ui demo on local
-	app.use('/bower_components', express.static(__dirname + '/bower_components'));
+
+    app.use(express.static(__dirname + '/app'));
+    // app.use('/', express.static(__dirname + '/bower_components/mobile-angular-ui')); // http://localhost:3000/demo/#/ will take you to the mobile angular ui demo on local
+    app.use('/bower_components', express.static(__dirname + '/bower_components'));
 });
 
 app.get('/home', ensureAuthenticated, function(req, res) {
@@ -115,19 +117,17 @@ function ensureAuthenticated(req, res, next) {
     res.redirect('/')
 }
 
-var rbFileNames = ['01-First-AnalysisParalysis.xml','02-BIY-PastMistakes.xml','03-BelieveInYourself.xml','04-Bhashya.xml','05-Brave.xml','06-Fabric.xml','07-Goals.xml','08-Guiltyfeeling.xml','09-Health.xml','10-Office.xml','11-Optimism.xml','12-Preface.xml','13-Present.xml','14-RelaxationResponse.xml','15-SacrificeFromOthers.xml','16-Last-Sacrifice.xml'];
+var rbFileNames = ['01-First-AnalysisParalysis.xml', '02-BIY-PastMistakes.xml', '03-BelieveInYourself.xml', '04-Bhashya.xml', '05-Brave.xml', '06-Fabric.xml', '07-Goals.xml', '08-Guiltyfeeling.xml', '09-Health.xml', '10-Office.xml', '11-Optimism.xml', '12-Preface.xml', '13-Present.xml', '14-RelaxationResponse.xml', '15-SacrificeFromOthers.xml', '16-Last-Sacrifice.xml'];
 
 var Dropbox = require("dropbox");
 
-
-var tempTempArticle;
-app.get('/writeJSON', ensureAuthenticated, function(req, res) {
+var articleSaveAndUpdate = function(req, res, isNew) {
 
     var client = new Dropbox.Client({
         key: config.dropbox.clientID,
         secret: config.dropbox.clientSecret,
         token: accessTokenGlobal['id_' + req.user.id],
-        sandbox:false
+        sandbox: false
     });
 
     if (client.isAuthenticated()) {
@@ -141,18 +141,36 @@ app.get('/writeJSON', ensureAuthenticated, function(req, res) {
                 console.log("error during readdir: " + error); // Something went wrong.
                 res.send(500);
             } else {
-                console.log("Your Dropbox contains " + entries);
 
-                // TODO: extract the first tag of the article instead of sacrifice-from-others, if not present, unknown
-                client.writeFile("/" + selectedArea + "/" + selectedProject + "/" + "sacrifice-from-others" + "/" + shortId.generate() + ".json",
-                    JSON.stringify(tempTempArticle),
-                    {},
+                var fileName = "";
+                var articleToSave = JSON.parse(JSON.stringify(req.body));
+                if (isNew) {
+                    fileName = shortId.generate() + ".json";
+                    articleToSave.fileName = fileName;
+                } else {
+                    fileName = req.params.fileName;
+                }
+
+                var subProjectName = "unknown";
+                var endIndexOfFirstTag = articleToSave.tags.indexOf(",");
+                if (endIndexOfFirstTag > 0) { // has tags
+                    subProjectName = articleToSave.tags.substr(0, endIndexOfFirstTag);
+                } else if (articleToSave.tags.length > 0) { // has only one tag, no ","
+                    subProjectName = articleToSave.tags;
+                }
+
+                var writeFilePath = "/" + selectedArea + "/" + selectedProject + "/" + subProjectName + "/" + fileName;
+                var fileString = JSON.stringify(articleToSave);
+                client.writeFile(writeFilePath,
+                    fileString, {},
                     function(error) {
-                        console.log("error during write file: " + error); // Something went wrong.
-                        res.send(500);
-                });
-                
-                res.send(200);
+                        if (error) {
+                            console.log("error during write file: " + error); // Something went wrong.
+                            res.send(500);                            
+                        }
+                    });
+
+                res.send(articleToSave);
             }
         });
 
@@ -160,16 +178,28 @@ app.get('/writeJSON', ensureAuthenticated, function(req, res) {
         console.log('dropbox client is not authenticated'); // Something went wrong.
         res.send(500);
     }
-  
+
+}
+
+app.put('/api/articles/:fileName', ensureAuthenticated, function(req, res) {
+
+    articleSaveAndUpdate(req, res, false);
+
 });
 
-app.get('/readJSON', ensureAuthenticated, function(req, res) {
+app.post('/api/articles', ensureAuthenticated, function(req, res) {
+
+    articleSaveAndUpdate(req, res, true);
+
+});
+
+app.get('/api/articles', ensureAuthenticated, function(req, res) {
 
     var client = new Dropbox.Client({
         key: config.dropbox.clientID,
         secret: config.dropbox.clientSecret,
         token: accessTokenGlobal['id_' + req.user.id],
-        sandbox:false
+        sandbox: false
     });
 
     myDropboxUtils.resetProjectAreas(client, myDropboxUtils.projectAreas);
@@ -184,7 +214,7 @@ app.get('/readJSON', ensureAuthenticated, function(req, res) {
                 console.log("error during readdir: " + error); // Something went wrong.
                 res.send(500);
             } else {
-                console.log("Your Dropbox contains " + entries);
+                // console.log("Your Dropbox contains " + entries);
 
                 var totalNumOfFiles = 0;
                 var articles = [];
@@ -202,12 +232,14 @@ app.get('/readJSON', ensureAuthenticated, function(req, res) {
                             } else {
                                 totalNumOfFiles += sub_entries.length;
                                 for (var j = 0; j < sub_entries.length; j++) {
-                                    client.readFile(dirName + '/' + sub_entries[j], function(error, data) { // data has the file's contents
+                                    client.readFile(dirName + '/' + sub_entries[j], function(error, data, stat) { // data has the file's contents
                                         if (error) {
                                             console.log("error during readFile:" + error); // Something went wrong.
                                             res.send(500);
                                         } else {
-                                            articles.push(JSON.parse(data));
+                                            var article = JSON.parse(data);
+                                            article.fileName = stat.name;
+                                            articles.push(article);
                                             totalNumOfFiles -= 1;
                                             // res.send should be after loading all the files
                                             if (totalNumOfFiles == 0)
@@ -226,79 +258,78 @@ app.get('/readJSON', ensureAuthenticated, function(req, res) {
         console.log('dropbox client is not authenticated'); // Something went wrong.
         res.send(500);
     }
-  
+
 });
 
 app.get('/sampleJSON', function(req, res) {
 
-	// console.log("req.user: " + JSON.stringify(req.user));
-	// console.log("accessTokenGlobal: " + JSON.stringify(accessTokenGlobal));
-	
-	// console.log("accessTokenGlobal['id_' + req.user.id]: " + accessTokenGlobal['id_' + req.user.id]);
+    // console.log("req.user: " + JSON.stringify(req.user));
+    // console.log("accessTokenGlobal: " + JSON.stringify(accessTokenGlobal));
 
-	var client = new Dropbox.Client({
-	    key: config.dropbox.clientID,
-	    secret: config.dropbox.clientSecret,
-	    token: accessTokenGlobal['id_' + req.user.id],
-	    sandbox:false
-	});
+    // console.log("accessTokenGlobal['id_' + req.user.id]: " + accessTokenGlobal['id_' + req.user.id]);
 
-	// Error: Dropbox API error 401 from GET https://api11.dropbox.com/1/account/info :: {"error": "The given OAuth 2 access token doesn't exist or has expired."}
-	// problem was passing OAuth1 token gotten from passport-dropbox to dropbox, then upgraded to passport-dropbox-oauth2 package
-	if (client.isAuthenticated()) {
-    	client.getAccountInfo(function(error, accountInfo) {
-    	    if (error) {
-    	        console.log(error); // Something went wrong.
-    	    }
-    	    // console.log("accountInfo: " + JSON.stringify(accountInfo));
-    	});
+    var client = new Dropbox.Client({
+        key: config.dropbox.clientID,
+        secret: config.dropbox.clientSecret,
+        token: accessTokenGlobal['id_' + req.user.id],
+        sandbox: false
+    });
 
-    	client.readdir("/", function(error, entries) {
-    	    if (error) {
-    	        console.log(error); // Something went wrong.
-    	    }
+    // Error: Dropbox API error 401 from GET https://api11.dropbox.com/1/account/info :: {"error": "The given OAuth 2 access token doesn't exist or has expired."}
+    // problem was passing OAuth1 token gotten from passport-dropbox to dropbox, then upgraded to passport-dropbox-oauth2 package
+    if (client.isAuthenticated()) {
+        client.getAccountInfo(function(error, accountInfo) {
+            if (error) {
+                console.log(error); // Something went wrong.
+            }
+            // console.log("accountInfo: " + JSON.stringify(accountInfo));
+        });
 
-    	    // console.log("Your Dropbox contains " + entries.join(", "));
-    	});
-    	client.readFile('./RB-files/' + "15-SacrificeFromOthers.xml", function(error, data) { // data has the file's contents
-    	    
-    	    var articles = [];
+        client.readdir("/", function(error, entries) {
+            if (error) {
+                console.log(error); // Something went wrong.
+            }
 
-    	    if (error) {
-    	        console.log(error); // Something went wrong.
-    	    } else {
-	    	    parser.parseString(data, function(err, result) {
+            // console.log("Your Dropbox contains " + entries.join(", "));
+        });
+        client.readFile('./RB-files/' + "15-SacrificeFromOthers.xml", function(error, data) { // data has the file's contents
 
-	    	        articles = result.file.article;
-                    tempTempArticle = articles[0];
-	    	    });    	    	
-    	    }
-    	    
-    	    res.send(articles);
-    	});
+            var articles = [];
+
+            if (error) {
+                console.log(error); // Something went wrong.
+            } else {
+                parser.parseString(data, function(err, result) {
+
+                    articles = result.file.article;
+                });
+            }
+
+            res.send(articles);
+        });
 
     }
-  
+
 });
 
 /* app.get('/sampleJSON', function(req, res) {
 
 
-	var index = 0;
+    var index = 0;
 
-	if (req.query.index) {
-		index = req.query.index;
-	}
-	var data = fs.readFileSync( './RB-files/' + rbFileNames[index] );
+    if (req.query.index) {
+        index = req.query.index;
+    }
+    var data = fs.readFileSync( './RB-files/' + rbFileNames[index] );
 
-	var articles = [];
-	// by default it is sync (not async)
-	parser.parseString(data, function (err, result) {
+    var articles = [];
+    // by default it is sync (not async)
+    parser.parseString(data, function (err, result) {
 
-		articles = result.file.article;
-	});
+        articles = result.file.article;
+    });
 
-	res.send(articles);
+    res.send(articles);
   
 });
 
@@ -306,56 +337,56 @@ app.get('/sampleJSON', function(req, res) {
 app.get('/exportForVerification', function(req, res) {
 
 
-	var index = 0;
+    var index = 0;
 
-	if (req.query.index) {
-		index = req.query.index;
-	}
-	var data = fs.readFileSync( './RB-files/' + rbFileNames[index] );
+    if (req.query.index) {
+        index = req.query.index;
+    }
+    var data = fs.readFileSync( './RB-files/' + rbFileNames[index] );
 
-	var articles = [];
-	// by default it is sync (not async)
-	parser.parseString(data, function (err, result) {
+    var articles = [];
+    // by default it is sync (not async)
+    parser.parseString(data, function (err, result) {
 
-		articles = result.file.article;
-	});
+        articles = result.file.article;
+    });
 
-	var file = {};
+    var file = {};
 
-	file.article = [];
+    file.article = [];
 
-	var articlesLength = articles.length;
-	for (var i = 0; i < articlesLength; i++) {
-		file.article.push(massageArticleForExport(articles[i]));
-	}
+    var articlesLength = articles.length;
+    for (var i = 0; i < articlesLength; i++) {
+        file.article.push(massageArticleForExport(articles[i]));
+    }
 
-	fs.writeFile(rbFileNames[index], js2xmlparser("file", file), function (err) {
-  		if (err) throw err;
-  	});
+    fs.writeFile(rbFileNames[index], js2xmlparser("file", file), function (err) {
+        if (err) throw err;
+    });
 
-	// console.log(js2xmlparser("file", file));
+    // console.log(js2xmlparser("file", file));
 
-	res.send("done!");
+    res.send("done!");
   
 });
 
 */
 
-var massageArticleForExport = function (inArticle) {
+var massageArticleForExport = function(inArticle) {
 
-	var outArticle = {};
+    var outArticle = {};
 
-	outArticle.tags = inArticle.tags;
-	outArticle.rating = inArticle.rating;
-	outArticle.summary = inArticle.summary;
-	outArticle.from = inArticle.from;
+    outArticle.tags = inArticle.tags;
+    outArticle.rating = inArticle.rating;
+    outArticle.summary = inArticle.summary;
+    outArticle.from = inArticle.from;
 
-	var utils = require('./app/js/common/utils.js');
+    var utils = require('./app/js/common/utils.js');
 
-	outArticle.content = utils.getStructure(inArticle.content[0]);
-	outArticle.annotation = utils.getStructure(inArticle.annotation[0]);
-	
-	return outArticle;
+    outArticle.content = utils.getStructure(inArticle.content[0]);
+    outArticle.annotation = utils.getStructure(inArticle.annotation[0]);
+
+    return outArticle;
 
 };
 

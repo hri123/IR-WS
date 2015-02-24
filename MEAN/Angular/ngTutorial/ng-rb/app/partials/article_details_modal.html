@@ -30,50 +30,58 @@
               </div>
               <div href="#" editable-text="currentArticle.from">{{ currentArticle.from || 'empty from' }}</a>
               </div>
-              <div>
-                <a href="#" editable-textarea="currentArticle.content.main" e-rows="20" e-cols="60">
-                  <pre>{{ currentArticle.content.main || 'empty content main' }}</pre>
-                </a>
-              </div>
-              <div class="row">
-                <div class="col-xs-3">
-                  <button class="form-control btn btn-success" ng-click="createNewSection('content')">
-                    <span class="glyphicon glyphicon-plus"></span>  New Content Section
-                  </button>
-                </div>
-              </div>
-
-              <ol>
-
-                <li data-ng-repeat="section in currentArticle.content.section">
-                  <span>SECTION - <a href="#" editable-text="section.name">{{ section.name || 'empty section name' }}</a></span>
-                  <br/>
-                  <span>TAGS - <a href="#" editable-text="section.tags">{{ section.tags || 'empty section tags' }}</a></span>
-                  <br/>
-                  <!-- TODO: BAD responsive design - hardcoding rows and columns -->
-                  <a href="#" editable-textarea="section.main" e-rows="20" e-cols="60">
-                    <pre>{{ section.main || 'empty section main' }}</pre>
-                  </a>
-
-                  <ol>
-
-                    <li data-ng-repeat="sub_section in section.sub_section">
-                      <span>SUB-SECTION - <a href="#" editable-text="sub_section.name">{{ sub_section.name || 'empty sub_section name' }}</a></span>
-                      <br/>
-                      <span>TAGS - <a href="#" editable-text="sub_section.tags">{{ sub_section.tags || 'empty sub_section tags' }}</a></span>
-                      <br/>
-                      <a href="#" editable-textarea="sub_section.main" e-rows="20" e-cols="60">
-                        <pre>{{ sub_section.main || 'empty sub_section main' }}</pre>
-                      </a>
-
-                    </li>
-
-                  </ol>
-
-                </li>
-
-              </ol>
             </section>
+            <div>
+              <a href="#" editable-textarea="currentArticle.content.main" e-rows="20" e-cols="60">
+                <pre>{{ currentArticle.content.main || 'empty content main' }}</pre>
+              </a>
+            </div>
+            <div class="row">
+              <div class="col-xs-3">
+                <button class="form-control btn btn-success" ng-click="createNewSection('content')">
+                  <span class="glyphicon glyphicon-plus"></span>  New Content Section
+                </button>
+              </div>
+            </div>
+
+            <ol>
+
+              <li data-ng-repeat="section in currentArticle.content.section">
+                <span>SECTION - <a href="#" editable-text="section.name">{{ section.name || 'empty section name' }}</a></span>
+                <br/>
+                <span>TAGS - <a href="#" editable-text="section.tags">{{ section.tags || 'empty section tags' }}</a></span>
+                <br/>
+                <!-- TODO: BAD responsive design - hardcoding rows and columns -->
+                <a href="#" editable-textarea="section.main" e-rows="20" e-cols="60">
+                  <pre>{{ section.main || 'empty section main' }}</pre>
+                </a>
+
+                <div class="row">
+                  <div class="col-xs-3">
+                    <button class="form-control btn btn-success" ng-click="createNewSubSection(section)">
+                      <span class="glyphicon glyphicon-plus"></span>  New Sub Section
+                    </button>
+                  </div>
+                </div>
+                <ol>
+
+                  <li data-ng-repeat="sub_section in section.sub_section">
+                    <span>SUB-SECTION - <a href="#" editable-text="sub_section.name">{{ sub_section.name || 'empty sub_section name' }}</a></span>
+                    <br/>
+                    <span>TAGS - <a href="#" editable-text="sub_section.tags">{{ sub_section.tags || 'empty sub_section tags' }}</a></span>
+                    <br/>
+                    <a href="#" editable-textarea="sub_section.main" e-rows="20" e-cols="60">
+                      <pre>{{ sub_section.main || 'empty sub_section main' }}</pre>
+                    </a>
+
+                  </li>
+
+                </ol>
+
+              </li>
+
+            </ol>
+
             <section id="section2">
               <span>
                 <a href="#" editable-textarea="currentArticle.annotation.main" e-rows="20" e-cols="60">
@@ -87,37 +95,45 @@
                   </button>
                 </div>
               </div>
-
-              <ol>
-
-                <li data-ng-repeat="section in currentArticle.annotation.section">
-                  <span>SECTION - <a href="#" editable-text="section.name">{{ section.name || 'empty section name' }}</a></span>
-                  <br/>
-                  <span>TAGS - <a href="#" editable-text="section.tags">{{ section.tags || 'empty section tags' }}</a></span>
-                  <br/>
-                  <!-- TODO: BAD responsive design - hardcoding rows and columns -->
-                  <a href="#" editable-textarea="section.main" e-rows="20" e-cols="60">
-                    <pre>{{ section.main || 'empty section main' }}</pre>
-                  </a>
-
-                  <ol>
-
-                    <li data-ng-repeat="sub_section in section.sub_section">
-                      <span>SUB-SECTION - <a href="#" editable-text="sub_section.name">{{ sub_section.name || 'empty sub_section name' }}</a></span>
-                      <br/>
-                      <span>TAGS - <a href="#" editable-text="sub_section.tags">{{ sub_section.tags || 'empty sub_section tags' }}</a></span>
-                      <br/>
-                      <a href="#" editable-textarea="sub_section.main" e-rows="20" e-cols="60">
-                        <pre>{{ sub_section.main || 'empty sub_section main' }}</pre>
-                      </a>
-
-                    </li>
-
-                  </ol>
-                </li>
-
-              </ol>
             </section>
+
+            <ol>
+
+              <li data-ng-repeat="section in currentArticle.annotation.section">
+                <span>SECTION - <a href="#" editable-text="section.name">{{ section.name || 'empty section name' }}</a></span>
+                <br/>
+                <span>TAGS - <a href="#" editable-text="section.tags">{{ section.tags || 'empty section tags' }}</a></span>
+                <br/>
+                <!-- TODO: BAD responsive design - hardcoding rows and columns -->
+                <a href="#" editable-textarea="section.main" e-rows="20" e-cols="60">
+                  <pre>{{ section.main || 'empty section main' }}</pre>
+                </a>
+                <div class="row">
+                  <div class="col-xs-3">
+                    <button class="form-control btn btn-success" ng-click="createNewSubSection(section)">
+                      <span class="glyphicon glyphicon-plus"></span>  New Sub Section
+                    </button>
+                  </div>
+                </div>
+
+                <ol>
+
+                  <li data-ng-repeat="sub_section in section.sub_section">
+                    <span>SUB-SECTION - <a href="#" editable-text="sub_section.name">{{ sub_section.name || 'empty sub_section name' }}</a></span>
+                    <br/>
+                    <span>TAGS - <a href="#" editable-text="sub_section.tags">{{ sub_section.tags || 'empty sub_section tags' }}</a></span>
+                    <br/>
+                    <a href="#" editable-textarea="sub_section.main" e-rows="20" e-cols="60">
+                      <pre>{{ sub_section.main || 'empty sub_section main' }}</pre>
+                    </a>
+
+                  </li>
+
+                </ol>
+              </li>
+
+            </ol>
+
           </div>
         </div>
         <!-- row -->
