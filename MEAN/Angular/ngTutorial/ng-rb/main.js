@@ -85,6 +85,10 @@ app.get('/', ensureAuthenticated, function(req, res) {
     res.sendfile(__dirname + '/app' + '/' + 'index.html');
 });
 
+app.get('/select', ensureAuthenticated, function(req, res) {
+    res.sendfile(__dirname + '/app' + '/' + 'select.html');
+});
+
 app.get('/login', function(req, res) {
     res.sendfile(__dirname + '/app' + '/' + 'login.html');
 });
@@ -101,7 +105,7 @@ app.get('/auth/dropbox/callback',
         failureRedirect: '/login'
     }),
     function(req, res) {
-        res.redirect('/');
+        res.redirect('/select');
     });
 
 app.get('/logout', function(req, res) {

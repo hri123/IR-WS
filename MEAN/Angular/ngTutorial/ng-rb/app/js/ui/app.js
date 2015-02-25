@@ -29,8 +29,8 @@ rbApp.filter('orderObjectBy', function(){
 // 
 
 rbApp.config(['$routeProvider', function($routeProvider) { $routeProvider.
-  when('/articles', { templateUrl: 'partials/articles-list.html', controller: 'articleListController', reloadOnSearch: false }).
+  when('/articles/:area/:project', { templateUrl: 'partials/articles-list.html', controller: 'articleListController', reloadOnSearch: false }).
   when('/article/:articleId', { templateUrl: 'partials/article-details.html', controller: 'articleDetailsController', reloadOnSearch: false }).
   when('/metadata', { templateUrl: 'partials/metadata.html', controller: 'metaDataController', reloadOnSearch: false }).
-  otherwise({ redirectTo: '/articles' });
+  otherwise({ redirectTo: '/articles/attitude/rb' });
 }]);

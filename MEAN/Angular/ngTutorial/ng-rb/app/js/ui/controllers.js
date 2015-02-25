@@ -73,9 +73,15 @@ rbAppControllers.controller('mainAppController', ['$scope', function($scope) {
 
 rbAppControllers.controller('articleListController', ['$scope', '$http', '$location', '$routeParams', 'sharedArticles', 'rbFiles', function($scope, $http, $location, $routeParams, sharedArticles, rbFiles) {
 
+    // this method was called twice - http://stackoverflow.com/a/24519817/512126 - in index.html
+    // <div ng-include="'partials/sidebar.html'" 
+    //     ui-track-as-search-param='true'
+    //     class="sidebar sidebar-left" ng-controller='articleListController'></div>
+
     $scope.articles = [];
 
-    var indexId = $routeParams.indexId; // picking value from the url in angular
+    $scope.projectArea = $routeParams.area; // picking value from the url in angular
+    $scope.projectName = $routeParams.project;
 
     var invokeReadFile = function(param) {
         var data = rbFiles.query(param, function(data) {
@@ -109,19 +115,7 @@ rbAppControllers.controller('articleListController', ['$scope', '$http', '$locat
 
     };
 
-    if (indexId == -1) {
-        for (var index = 0; index < 16; index++) {
-            var param = {
-                fileIndex: index
-            };
-            invokeReadFile(param);
-        }
-    } else {
-        invokeReadFile({
-            fileIndex: indexId
-        });
-    }
-
+    invokeReadFile({area: $scope.projectArea, project: $scope.projectName});
 
     $scope.setCurrentArticle = function(currentArticle) {
         $scope.currentArticle = currentArticle;
@@ -295,7 +289,7 @@ rbAppControllers.controller('articleListController', ['$scope', '$http', '$locat
         	// $scope.currentArticle.$save can be used too
         	// using two different ways to call the Rest APIs on the server for demonstration
         	(function(toSaveArticle) {
-        	    rbFiles.save($scope.currentArticle, function(savedArticle) {
+        	    rbFiles.save({area: $scope.projectArea, project: $scope.projectName}, $scope.currentArticle, function(savedArticle) {
         	        //data saved. do something here.
         	        // mixin is required to add the $update method for the next save
         	        jQuery.extend(toSaveArticle, savedArticle); // mixin
@@ -304,7 +298,7 @@ rbAppControllers.controller('articleListController', ['$scope', '$http', '$locat
 
         } else { // update
 
-            $scope.currentArticle.$update(function() {
+            $scope.currentArticle.$update({area: $scope.projectArea, project: $scope.projectName}, function() {
                 //updated in the backend
             });
         }
