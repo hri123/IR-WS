@@ -121,7 +121,7 @@ function ensureAuthenticated(req, res, next) {
     res.redirect('/login')
 }
 
-var rbFileNames = ['01-First-AnalysisParalysis.xml', '02-BIY-PastMistakes.xml', '03-BelieveInYourself.xml', '04-Bhashya.xml', '05-Brave.xml', '06-Fabric.xml', '07-Goals.xml', '08-Guiltyfeeling.xml', '09-Health.xml', '10-Office.xml', '11-Optimism.xml', '12-Preface.xml', '13-Present.xml', '14-RelaxationResponse.xml', '15-SacrificeFromOthers.xml', '16-Last-Sacrifice.xml'];
+var rbFileNames = ['01-F.xml', '02-B.xml', '03-B.xml'];
 
 var Dropbox = require("dropbox");
 
