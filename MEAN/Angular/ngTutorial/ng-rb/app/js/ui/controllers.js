@@ -83,6 +83,25 @@ rbAppControllers.controller('articleListController', ['$scope', '$http', '$locat
     $scope.projectArea = $routeParams.area; // picking value from the url in angular
     $scope.projectName = $routeParams.project;
 
+
+    // one way to load the articles is the regular way - make a get call to the server, where the server
+    // reads the article files one by one from dropbox, and after all the articles are read, returns the array
+    // as the payload in one shot. The disadvantage with this approach is that the client needs to wait until 
+    // all the articles are loaded from dropbox, which might be a lot of time.
+
+    // searching over the internet to find a solution for this problem - possibly to send articles back 
+    // to the client as and when an article is read from dropbox and updating the UI with whatever articles have
+    // been read - which kinda gives an impression that it is not slow
+
+    // possible solutions - long polling, ajax looping, web sockets, Server send events
+    // *****http://stackoverflow.com/questions/11077857/what-are-long-polling-websockets-server-sent-events-sse-and-comet
+    // http://www.quora.com/How-do-I-implement-Angular-JS-three-way-data-binding-without-Firebase-and-just-using-Spring-Hibernate-stack
+
+    // HTML5 server send events seem to the the appropriate solution for this problem. But first, let me start solving
+    // this problem with the websockets way, which is more common and eventually shift to SSE
+
+
+    // an implementation for getting the articles - straight forward way using GET / query / $resource
     var invokeReadFile = function(param) {
         var data = rbFiles.query(param, function(data) {
 
