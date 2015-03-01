@@ -97,7 +97,8 @@ rbAppControllers.controller('articleListController', ['$scope', '$http', '$locat
     // *****http://stackoverflow.com/questions/11077857/what-are-long-polling-websockets-server-sent-events-sse-and-comet
     // http://www.quora.com/How-do-I-implement-Angular-JS-three-way-data-binding-without-Firebase-and-just-using-Spring-Hibernate-stack
 
-    // HTML5 server send events seem to the the appropriate solution for this problem. But first, let me start solving
+    // HTML5 server send events seem to the the appropriate solution for this problem as for our problem we do not require
+    // a two way communication, all we need is to send data from server to client. But first, let me start solving
     // this problem with the websockets way, which is more common and eventually shift to SSE
 
 
