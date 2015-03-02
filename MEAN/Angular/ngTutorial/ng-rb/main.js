@@ -3,6 +3,10 @@
 var express = require('express');
 var app = express();
 
+var server = require('http').Server(app); // for socket.io, this is how it needs to be used
+
+var io = require('socket.io')(server);
+
 var passport = require('passport');
 var DropboxStrategy = require('passport-dropbox-oauth2').Strategy;
 
@@ -33,6 +37,7 @@ passport.deserializeUser(function(obj, done) {
 });
 
 var accessTokenGlobal = {};
+var socketsGlobal = {};
 
 var tempCallbackURL = config.dropbox.callbackURLLocal;
 if (process.env.VCAP_APP_PORT) // if on bluemix
@@ -190,6 +195,7 @@ app.post('/api/articles', ensureAuthenticated, function(req, res) {
 
 app.get('/api/articles', ensureAuthenticated, function(req, res) {
 
+    // TODO: make sure the user cannot send a different user's userid in the request, i.e, the req.user.id must not be tampered with
     var client = new Dropbox.Client({
         key: config.dropbox.clientID,
         secret: config.dropbox.clientSecret,
@@ -203,6 +209,8 @@ app.get('/api/articles', ensureAuthenticated, function(req, res) {
 
         var selectedArea = req.query.area;
         var selectedProject = req.query.project;
+        var socket_id = req.query.socket_id;
+        var socket = socketsGlobal[socket_id];
 
         client.readdir("/" + selectedArea + "/" + selectedProject, function(error, entries, stat) {
             if (error) {
@@ -234,11 +242,18 @@ app.get('/api/articles', ensureAuthenticated, function(req, res) {
                                         } else {
                                             var article = JSON.parse(data);
                                             article.fileName = stat.name;
-                                            articles.push(article);
-                                            totalNumOfFiles -= 1;
-                                            // res.send should be after loading all the files
-                                            if (totalNumOfFiles == 0)
-                                                res.send(articles);
+
+                                            socket.emit('receive_article', article);
+
+                                            // the articles were sent once everything was loaded from dropbox, which used to give a slow response feeling to the user
+                                            // so, using websockets to return the articles as soon as it is read from dropbox
+                                            // if the datastore was a nosql database, may be this could have been used
+                                            // articles.push(article);
+                                            // totalNumOfFiles -= 1;
+                                            // // res.send should be after loading all the files
+                                            // if (totalNumOfFiles == 0) {
+                                            //     res.send(articles);
+                                            // }
                                         }
                                     });
                                 }
@@ -246,6 +261,7 @@ app.get('/api/articles', ensureAuthenticated, function(req, res) {
                         });
                     })(dirName);
                 }
+                res.send([]); // empty reponse is sent for the get all, which return immediately and then the web sockets take over and return the articles one by one, as and when they get loaded
             }
         });
 
@@ -385,6 +401,17 @@ var massageArticleForExport = function(inArticle) {
 
 };
 
+// TODO: should we close the connection once done ?
+// TODO: security make sure the socket.emit here does not send the articles to a different user
+io.on('connection', function (socket) {
+  socketsGlobal[socket.id] = socket;
+  socket.emit('connect_success', { socket_id: socket.id });
+});
+
+
+
 // spin up server
 // app.listen(3000, '0.0.0.0')
-app.listen(process.env.VCAP_APP_PORT || 3000); // VCAP for bluemix compatibility
+// app.listen(process.env.VCAP_APP_PORT || 3000); // VCAP for bluemix compatibility
+
+server.listen(process.env.VCAP_APP_PORT || 3000); // for socket.io, this is how it needs to be used

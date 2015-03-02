@@ -79,6 +79,7 @@ rbAppControllers.controller('articleListController', ['$scope', '$http', '$locat
     //     class="sidebar sidebar-left" ng-controller='articleListController'></div>
 
     $scope.articles = [];
+    sharedArticles.articles = $scope.articles;
 
     $scope.projectArea = $routeParams.area; // picking value from the url in angular
     $scope.projectName = $routeParams.project;
@@ -96,46 +97,73 @@ rbAppControllers.controller('articleListController', ['$scope', '$http', '$locat
     // possible solutions - long polling, ajax looping, web sockets, Server send events
     // *****http://stackoverflow.com/questions/11077857/what-are-long-polling-websockets-server-sent-events-sse-and-comet
     // http://www.quora.com/How-do-I-implement-Angular-JS-three-way-data-binding-without-Firebase-and-just-using-Spring-Hibernate-stack
+    // http://www.html5rocks.com/en/tutorials/frameworks/angular-websockets/
+    // http://www.smartjava.org/content/html5-server-sent-events-angularjs-nodejs-and-expressjs
+    // http://www.html5rocks.com/en/tutorials/eventsource/basics/
+    // http://dsheiko.com/weblog/websockets-vs-sse-vs-long-polling/
+    // http://www.futureinsights.com/home/real-time-the-easy-way-with-eventsource-angularjs-and-nodejs.html
+    // http://html5doctor.com/server-sent-events/#api
 
     // HTML5 server send events seem to the the appropriate solution for this problem as for our problem we do not require
     // a two way communication, all we need is to send data from server to client. But first, let me start solving
     // this problem with the websockets way, which is more common and eventually shift to SSE
-
+    // Even though socket.io supports two way communication, we do not need to send anything from client as of now
 
     // an implementation for getting the articles - straight forward way using GET / query / $resource
-    var invokeReadFile = function(param) {
-        var data = rbFiles.query(param, function(data) {
+    // will get articles using sockets
+    // var invokeReadFile = function(param) {
+    //     var data = rbFiles.query(param, function(data) {
 
-            // $http.get('sampleJSON?index=' + index).success(function(data) { // use services (rbFiles.query) instead
+    //         // $http.get('sampleJSON?index=' + index).success(function(data) { // use services (rbFiles.query) instead
 
-            var articlesLength = data.length;
-            for (var i = 0; i < articlesLength; i++) {
+    //         var articlesLength = data.length;
+    //         for (var i = 0; i < articlesLength; i++) {
 
-                var currentArticle = data[i];
+    //             var currentArticle = data[i];
 
-                // TODO: the below conversion is required only for the xml to json conversion
-                // var article = {};
+    //             // TODO: the below conversion is required only for the xml to json conversion
+    //             // var article = {};
 
-                // article.tags = currentArticle.tags[0];
-                // article.summary = currentArticle.summary[0];
-                // article.rating = currentArticle.rating[0];
-                // article.from = currentArticle.from[0];
+    //             // article.tags = currentArticle.tags[0];
+    //             // article.summary = currentArticle.summary[0];
+    //             // article.rating = currentArticle.rating[0];
+    //             // article.from = currentArticle.from[0];
 
-                // article.content = getStructure(currentArticle.content[0]);
-                // article.annotation = getStructure(currentArticle.annotation[0]);
+    //             // article.content = getStructure(currentArticle.content[0]);
+    //             // article.annotation = getStructure(currentArticle.annotation[0]);
 
-                // article.fileName = currentArticle.fileName;
+    //             // article.fileName = currentArticle.fileName;
 
-                // jQuery.extend(currentArticle, article); // mixin
+    //             // jQuery.extend(currentArticle, article); // mixin
 
-                $scope.articles.push(currentArticle); // passing currentArticle instead of article as it has the $save, etc methods
-            }
-            sharedArticles.articles = $scope.articles;
+    //             $scope.articles.push(currentArticle); // passing currentArticle instead of article as it has the $save, etc methods
+    //         }
+    //     });
+
+    // };
+
+    // invokeReadFile({area: $scope.projectArea, project: $scope.projectName});
+
+    var socket = io.connect($location.$$protocol + "://" + $location.$$host + ":" + $location.$$port);
+    socket.on('connect_success', function(data) {
+
+        var data = rbFiles.query({
+            area: $scope.projectArea,
+            project: $scope.projectName,
+            socket_id: data.socket_id
+        }, function(data) {
+            // nothing here, the server sends data using sockets
         });
+    });
+    socket.on('receive_article', function(data) {
 
-    };
-
-    invokeReadFile({area: $scope.projectArea, project: $scope.projectName});
+        // $scope.apply is required to trigger the 2 way data binding of angular between model and view
+        // if this is not done, the view is not getting updated
+        // http://stackoverflow.com/questions/21658490/angular-websocket-and-rootscope-apply
+        $scope.$apply(function() {
+            $scope.articles.push(data);
+        });
+    });
 
     $scope.setCurrentArticle = function(currentArticle) {
         $scope.currentArticle = currentArticle;
@@ -306,21 +334,39 @@ rbAppControllers.controller('articleListController', ['$scope', '$http', '$locat
 
         if (!$scope.currentArticle.fileName || $scope.currentArticle.fileName == "") { // create new
 
-        	// $scope.currentArticle.$save can be used too
-        	// using two different ways to call the Rest APIs on the server for demonstration
-        	(function(toSaveArticle) {
-        	    rbFiles.save({area: $scope.projectArea, project: $scope.projectName}, $scope.currentArticle, function(savedArticle) {
-        	        //data saved. do something here.
-        	        // mixin is required to add the $update method for the next save
-        	        jQuery.extend(toSaveArticle, savedArticle); // mixin
-        	    });
-        	})($scope.currentArticle);
+            // $scope.currentArticle.$save can be used too
+            // using two different ways to call the Rest APIs on the server for demonstration
+            (function(toSaveArticle) {
+                rbFiles.save({
+                    area: $scope.projectArea,
+                    project: $scope.projectName
+                }, $scope.currentArticle, function(savedArticle) {
+                    //data saved. do something here.
+                    // mixin is required to add the $update method for the next save
+                    jQuery.extend(toSaveArticle, savedArticle); // mixin
+                });
+            })($scope.currentArticle);
 
         } else { // update
 
-            $scope.currentArticle.$update({area: $scope.projectArea, project: $scope.projectName}, function() {
-                //updated in the backend
-            });
+            // the $update will not work after using websockets as we are using sockets to load the articles
+            // previously the $resource usage would mixin the $update method to the returned articles
+            // $scope.currentArticle.$update({
+            //     area: $scope.projectArea,
+            //     project: $scope.projectName
+            // }, function() {
+            //     //updated in the backend
+            // });
+            (function(toSaveArticle) {
+                rbFiles.update({
+                    area: $scope.projectArea,
+                    project: $scope.projectName
+                }, $scope.currentArticle, function(savedArticle) {
+                    //data saved. do something here.
+                    // mixin is required to add the $update method for the next save
+                    jQuery.extend(toSaveArticle, savedArticle); // mixin
+                });
+            })($scope.currentArticle);
         }
 
     };
