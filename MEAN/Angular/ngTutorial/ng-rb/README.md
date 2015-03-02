@@ -33,6 +33,7 @@ Dependencies
 | http://passportjs.org/ | authentication for node |
 | Jasmine, Karma, Protractor | testing |
 | node-inspector, nodemon | running node in debug mode, watch for changes and restart automatically, respectively |
+| socket.io | websockets for keeping an open connection to load the articles |
 
 References
 ----------
