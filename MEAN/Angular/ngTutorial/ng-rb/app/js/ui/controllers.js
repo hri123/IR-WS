@@ -121,21 +121,6 @@ rbAppControllers.controller('articleListController', ['$scope', '$http', '$locat
 
     //             var currentArticle = data[i];
 
-    //             // TODO: the below conversion is required only for the xml to json conversion
-    //             // var article = {};
-
-    //             // article.tags = currentArticle.tags[0];
-    //             // article.summary = currentArticle.summary[0];
-    //             // article.rating = currentArticle.rating[0];
-    //             // article.from = currentArticle.from[0];
-
-    //             // article.content = getStructure(currentArticle.content[0]);
-    //             // article.annotation = getStructure(currentArticle.annotation[0]);
-
-    //             // article.fileName = currentArticle.fileName;
-
-    //             // jQuery.extend(currentArticle, article); // mixin
-
     //             $scope.articles.push(currentArticle); // passing currentArticle instead of article as it has the $save, etc methods
     //         }
     //     });

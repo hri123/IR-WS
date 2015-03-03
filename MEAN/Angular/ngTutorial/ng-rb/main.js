@@ -191,7 +191,6 @@ app.post('/api/articles', ensureAuthenticated, function(req, res) {
 
 app.get('/api/articles', ensureAuthenticated, function(req, res) {
 
-    // TODO: make sure the user cannot send a different user's userid in the request, i.e, the req.user.id must not be tampered with
     var client = new Dropbox.Client({
         key: config.dropbox.clientID,
         secret: config.dropbox.clientSecret,
@@ -319,7 +318,9 @@ app.get('/sampleJSON', function(req, res) {
 
 });
 
-/* app.get('/exportForVerification', function(req, res) {
+/* 
+
+  app.get('/exportForVerification', function(req, res) {
 
 
     var index = 0;
@@ -355,8 +356,6 @@ app.get('/sampleJSON', function(req, res) {
   
 });
 
-*/
-
 var massageArticleForExport = function(inArticle) {
 
     var outArticle = {};
@@ -375,12 +374,31 @@ var massageArticleForExport = function(inArticle) {
 
 };
 
+                // var article = {};
+
+                // article.tags = currentArticle.tags[0];
+                // article.summary = currentArticle.summary[0];
+                // article.rating = currentArticle.rating[0];
+                // article.from = currentArticle.from[0];
+
+                // article.content = getStructure(currentArticle.content[0]);
+                // article.annotation = getStructure(currentArticle.annotation[0]);
+
+                // article.fileName = currentArticle.fileName;
+
+                // jQuery.extend(currentArticle, article); // mixin
+
+*/
+
 
 var server = require('http').Server(app); // for socket.io, this is how it needs to be used
 
 var io = require('socket.io')(server);
 // TODO: should we close the connection once done ?
-// TODO: security make sure the socket.emit here does not send the articles to a different user
+// TODO: security testing - all possible tests / hacks to make sure one user's data cannot be accessed by another user
+// e.g.: 
+// make sure the socket.emit does not send the articles to a different user
+// make sure the user cannot pass a different user's userid in the request, i.e, the req.user.id must not be tampered with
 io.on('connection', function (socket) {
   socketsGlobal[socket.id] = socket;
   socket.emit('connect_success', { socket_id: socket.id });
