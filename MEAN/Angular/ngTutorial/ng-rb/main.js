@@ -122,8 +122,6 @@ function ensureAuthenticated(req, res, next) {
     res.redirect('/login')
 }
 
-var rbFileNames = ['01-F.xml', '02-B.xml', '03-B.xml'];
-
 var Dropbox = require("dropbox");
 
 var articleSaveAndUpdate = function(req, res, isNew) {
@@ -177,18 +175,21 @@ var articleSaveAndUpdate = function(req, res, isNew) {
 
 }
 
+// REST: PUT - update existing
 app.put('/api/articles/:fileName', ensureAuthenticated, function(req, res) {
 
     articleSaveAndUpdate(req, res, false);
 
 });
 
+// REST: POST - save new
 app.post('/api/articles', ensureAuthenticated, function(req, res) {
 
     articleSaveAndUpdate(req, res, true);
 
 });
 
+// REST: Query - get all
 app.get('/api/articles', ensureAuthenticated, function(req, res) {
 
     var client = new Dropbox.Client({
@@ -200,6 +201,8 @@ app.get('/api/articles', ensureAuthenticated, function(req, res) {
 
     myDropboxUtils.resetProjectAreas(client, myDropboxUtils.projectAreas);
 
+    // Error: Dropbox API error 401 from GET https://api11.dropbox.com/1/account/info :: {"error": "The given OAuth 2 access token doesn't exist or has expired."}
+    // problem was passing OAuth1 token gotten from passport-dropbox to dropbox, then upgraded to passport-dropbox-oauth2 package
     if (client.isAuthenticated()) {
 
         var selectedArea = req.query.area;
@@ -271,6 +274,8 @@ app.get('/api/articles', ensureAuthenticated, function(req, res) {
 
 });
 
+/* 
+
 app.get('/sampleJSON', function(req, res) {
 
     // console.log("req.user: " + JSON.stringify(req.user));
@@ -285,8 +290,6 @@ app.get('/sampleJSON', function(req, res) {
         sandbox: false
     });
 
-    // Error: Dropbox API error 401 from GET https://api11.dropbox.com/1/account/info :: {"error": "The given OAuth 2 access token doesn't exist or has expired."}
-    // problem was passing OAuth1 token gotten from passport-dropbox to dropbox, then upgraded to passport-dropbox-oauth2 package
     if (client.isAuthenticated()) {
         client.getAccountInfo(function(error, accountInfo) {
             if (error) {
@@ -322,9 +325,9 @@ app.get('/sampleJSON', function(req, res) {
 
 });
 
-/* 
+var rbFileNames = ['01-F.xml', '02-B.xml', '03-B.xml'];
 
-  app.get('/exportForVerification', function(req, res) {
+app.get('/exportForVerification', function(req, res) {
 
 
     var index = 0;
