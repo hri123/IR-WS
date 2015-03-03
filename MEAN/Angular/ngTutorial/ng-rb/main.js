@@ -238,17 +238,21 @@ app.get('/api/articles', ensureAuthenticated, function(req, res) {
                                             var article = JSON.parse(data);
                                             article.fileName = stat.name;
 
-                                            socket.emit('receive_article', article);
-
                                             // the articles were sent once everything was loaded from dropbox, which used to give a slow response feeling to the user
                                             // so, using websockets to return the articles as soon as it is read from dropbox
                                             // if the datastore was a nosql database, may be this could have been used
                                             // articles.push(article);
-                                            // totalNumOfFiles -= 1;
-                                            // // res.send should be after loading all the files
-                                            // if (totalNumOfFiles == 0) {
-                                            //     res.send(articles);
-                                            // }
+                                            socket.emit('receive_article', article);
+
+                                            totalNumOfFiles -= 1;
+                                            // below actions should be after loading all the files
+                                            if (totalNumOfFiles == 0) {
+                                                // res.send(articles);
+                                                
+                                                // close / disconnect the connection
+                                                delete socketsGlobal[socket_id];
+                                                socket.disconnect();
+                                            }
                                         }
                                     });
                                 }
@@ -394,7 +398,6 @@ var massageArticleForExport = function(inArticle) {
 var server = require('http').Server(app); // for socket.io, this is how it needs to be used
 
 var io = require('socket.io')(server);
-// TODO: should we close the connection once done ?
 // TODO: security testing - all possible tests / hacks to make sure one user's data cannot be accessed by another user
 // e.g.: 
 // make sure the socket.emit does not send the articles to a different user
