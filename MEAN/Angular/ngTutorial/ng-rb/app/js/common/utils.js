@@ -110,5 +110,5 @@ try {
     module.exports.newSection = newSection;
     module.exports.newSubSection = newSubSection;
 } catch (err) {
-    console.log('this file is shared between angular and node.')
+    console.log('This file is shared between angular and node, ignore this error if you see it on angular side.')
 }

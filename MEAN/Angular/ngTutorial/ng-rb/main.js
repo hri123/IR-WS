@@ -3,10 +3,6 @@
 var express = require('express');
 var app = express();
 
-var server = require('http').Server(app); // for socket.io, this is how it needs to be used
-
-var io = require('socket.io')(server);
-
 var passport = require('passport');
 var DropboxStrategy = require('passport-dropbox-oauth2').Strategy;
 
@@ -323,29 +319,7 @@ app.get('/sampleJSON', function(req, res) {
 
 });
 
-/* app.get('/sampleJSON', function(req, res) {
-
-
-    var index = 0;
-
-    if (req.query.index) {
-        index = req.query.index;
-    }
-    var data = fs.readFileSync( './RB-files/' + rbFileNames[index] );
-
-    var articles = [];
-    // by default it is sync (not async)
-    parser.parseString(data, function (err, result) {
-
-        articles = result.file.article;
-    });
-
-    res.send(articles);
-  
-});
-
-
-app.get('/exportForVerification', function(req, res) {
+/* app.get('/exportForVerification', function(req, res) {
 
 
     var index = 0;
@@ -401,14 +375,16 @@ var massageArticleForExport = function(inArticle) {
 
 };
 
+
+var server = require('http').Server(app); // for socket.io, this is how it needs to be used
+
+var io = require('socket.io')(server);
 // TODO: should we close the connection once done ?
 // TODO: security make sure the socket.emit here does not send the articles to a different user
 io.on('connection', function (socket) {
   socketsGlobal[socket.id] = socket;
   socket.emit('connect_success', { socket_id: socket.id });
 });
-
-
 
 // spin up server
 // app.listen(3000, '0.0.0.0')
