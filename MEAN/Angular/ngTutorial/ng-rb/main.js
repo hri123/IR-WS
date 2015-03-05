@@ -212,8 +212,9 @@ app.get('/api/articles', ensureAuthenticated, function(req, res) {
 
         client.readdir("/" + selectedArea + "/" + selectedProject, function(error, entries, stat) {
             if (error) {
-                console.log("error during readdir: " + error); // Something went wrong.
-                res.send(500);
+                var errorResponse = "error during readdir: " + error + "\nLooks like there are no folder: " + selectedProject + " inside the area: " + selectedArea + ". Create a folder with the project name in dropbox or create an article here to automatically create the folder."; // Something went wrong.
+                console.log(errorResponse);
+                res.status(500).send(errorResponse);
             } else {
                 // console.log("Your Dropbox contains " + entries);
 
