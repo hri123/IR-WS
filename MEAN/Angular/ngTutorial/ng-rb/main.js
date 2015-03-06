@@ -135,6 +135,13 @@ var articleSaveAndUpdate = function(req, res, isNew) {
 
     if (client.isAuthenticated()) {
 
+        // client.getAccountInfo(function(error, accountInfo) {
+        //     if (error) {
+        //         console.log(error); // Something went wrong.
+        //     }
+        //     console.log("accountInfo: " + JSON.stringify(accountInfo));
+        // });
+
         var selectedArea = req.query.area;
         var selectedProject = req.query.project;
 
@@ -222,6 +229,7 @@ app.get('/api/articles', ensureAuthenticated, function(req, res) {
                 var articles = [];
 
                 for (var i = 0; i < entries.length; i++) {
+                    // TODO: if entries[i] is not a folder, continue
                     var dirName = "/" + selectedArea + "/" + selectedProject + "/" + entries[i];
                     // scope is required because the dirName would have got updated before all the files in the folder dirName are read
                     // error during readFile:Dropbox API error 404 from GET https://api-content.dropbox.com/1/files/auto/attitude/rb/sacrifice-
@@ -230,6 +238,9 @@ app.get('/api/articles', ensureAuthenticated, function(req, res) {
                         client.readdir(dirName, function(error, sub_entries) {
                             if (error) {
                                 console.log("error during readdir: " + error); // Something went wrong.
+                                res.send(500);
+                            } else if (!sub_entries) {
+                                console.log("no sub-entries: " + error); // Something went wrong.
                                 res.send(500);
                             } else {
                                 totalNumOfFiles += sub_entries.length;
