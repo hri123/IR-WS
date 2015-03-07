@@ -163,7 +163,7 @@ var articleSaveAndUpdate = function(req, res, isNew) {
         }
 
         var writeFilePath = "/" + selectedArea + "/" + selectedProject + "/" + subProjectName + "/" + fileName;
-        var fileString = JSON.stringify(articleToSave);
+        var fileString = JSON.stringify(articleToSave, null, 2); // pretty print - formatted print
         client.writeFile(writeFilePath,
             fileString, {},
             function(error) {

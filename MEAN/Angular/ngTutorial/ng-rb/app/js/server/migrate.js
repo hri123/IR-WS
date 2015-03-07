@@ -19,29 +19,54 @@ var massageArticleForExport = function(inArticle) {
 xml2js = require('xml2js');
 var parser = new xml2js.Parser();
 
-fs = require('fs');
+var fs = require('fs'),
+    path = require("path"),
+    shortId = require('shortid');
 
-var shortId = require('shortid');
+var p = 'H:/H/H/HP/Dropbox/Kaizen/Hhh100204/';
+fs.readdir(p, function(err, files) {
+    if (err) {
+        throw err;
+    }
 
-var articles = [];
+    files.map(function(file) {
+        return path.join(p, file);
+    }).filter(function(file) {
+        return fs.statSync(file).isFile();
+    }).forEach(function(file) {
+        if (path.extname(file) == ".xml") {
+            var articles = [];
 
-var rbFileNames = ['01-First-AnalysisParalysis.xml'];
+            var data = fs.readFileSync(file);
+            // by default it is sync (not async)
+            parser.parseString(data, function(err, result) {
+                articles = result.file.article;
+            });
 
-var index = 0;
+            var articlesLength = articles.length;
+            for (var i = 0; i < articlesLength; i++) {
 
-var data = fs.readFileSync('H:/H/H/HP/Dropbox/Kaizen/Hhh100204/' + rbFileNames[index]);
+                var articleToSave = massageArticleForExport(articles[i]);
 
-// by default it is sync (not async)
-parser.parseString(data, function(err, result) {
+                var subProjectName = "unknown";
+                var endIndexOfFirstTag = articleToSave.tags.indexOf(",");
+                if (endIndexOfFirstTag > 0) { // has tags
+                    subProjectName = articleToSave.tags.substr(0, endIndexOfFirstTag);
+                } else if (articleToSave.tags.length > 0) { // has only one tag, no ","
+                    subProjectName = articleToSave.tags;
+                }
 
-    articles = result.file.article;
-});
+                var outdir = './RB-files/' + subProjectName;
 
-var articlesLength = articles.length;
-for (var i = 0; i < articlesLength; i++) {
+                if (!fs.existsSync(outdir)) {
+                    fs.mkdirSync(outdir);
+                }
 
-    fs.writeFile(shortId.generate() + ".json", JSON.stringify(massageArticleForExport(articles[i])), function(err) {
-        if (err) throw err;
+                fs.writeFile(outdir + '/' + shortId.generate() + ".json", JSON.stringify(articleToSave, null, 2), function(err) {
+                    if (err) throw err;
+                });
+
+            }
+        }
     });
-
-}
+});
