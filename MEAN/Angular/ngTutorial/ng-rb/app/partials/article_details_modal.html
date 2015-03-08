@@ -1,18 +1,23 @@
-<div class="modal modal-overlay" ui-if='article_details_modal' ui-state='article_details_modal'>
-  <div class="modal-dialog scrollable">
-    <div class="modal-content scrollable-content">
-      <div class="modal-header">
+<div class="modal modal-overlay" ui-if='article_details_modal' ui-state='article_details_modal' style="background: rgba(255, 255, 255, 1.0)">
+  <div class="modal-dialog" style="margin: 0px;">
+    <div class="modal-content">
+<!--       <div class="modal-header">
         <button class="close" ui-turn-off="article_details_modal">&times;</button>
-        <h4 class="modal-title"><a href="#" editable-text="currentArticle.summary">{{ currentArticle.summary || 'empty summary' }}</a></h4>
       </div>
-
+ -->
       <!-- http://stackoverflow.com/questions/17470370/how-to-implement-a-scrollspy-in-angular-js-the-right-way -->
       <div class="modal-body">
 
         <div class="row">
 
-          <div class="col-xs-3">
-            <ul id="navPills" class="nav nav-pills nav-stacked affix">
+          <div class="col-md-2">
+            <ul id="navPills" class="nav nav-pills nav-stacked">
+              <li>
+                <div class="row">
+                <button ui-turn-off="article_details_modal" class="btn btn-default">Close</button>
+                <button ui-turn-off="article_details_modal" class="btn btn-primary" ng-click="saveArticle()">Save changes</button>
+                </div>
+              </li>
               <li class="active">
                 <a href="#section1" prevent-default="" scroll-to="section1">Main Content</a>
               </li>
@@ -21,9 +26,10 @@
               </li>
             </ul>
           </div>
-          <!-- TODO: height:400px is hardcoded for scrollspy to work, BAD responsive design -->
-          <div class="col-xs-9" scroll-spy="" data-target="#navPills" data-scroll-offset="10" style="height:400px; overflow:auto;">
+          <!-- max-height to be specified for scrollspy to work, if it is mentioned in px, it will be BAD responsive design, so using calc & vh -->
+          <div class="col-md-10 scroll-spy-article" scroll-spy="" data-target="#navPills" data-scroll-offset="10">
             <section id="section1">
+              <div><a href="#" editable-text="currentArticle.summary">{{ currentArticle.summary || 'empty summary' }}</a></div>
               <div href="#" editable-text="currentArticle.tags">{{ currentArticle.tags || 'empty tags' }}</a>
               </div>
               <div href="#" editable-text="currentArticle.rating">{{ currentArticle.rating || 'empty rating' }}</a>
@@ -37,7 +43,7 @@
               </a>
             </div>
             <div class="row">
-              <div class="col-xs-3">
+              <div class="col-md-3">
                 <button class="form-control btn btn-success" ng-click="createNewSection('content')">
                   <span class="glyphicon glyphicon-plus"></span>  New Content Section
                 </button>
@@ -57,7 +63,7 @@
                 </a>
 
                 <div class="row">
-                  <div class="col-xs-3">
+                  <div class="col-md-3">
                     <button class="form-control btn btn-success" ng-click="createNewSubSection(section)">
                       <span class="glyphicon glyphicon-plus"></span>  New Sub Section
                     </button>
@@ -138,10 +144,9 @@
         </div>
         <!-- row -->
       </div>
-      <div class="modal-footer">
-        <button ui-turn-off="article_details_modal" class="btn btn-default">Close</button>
-        <button ui-turn-off="article_details_modal" class="btn btn-primary" ng-click="saveArticle()">Save changes</button>
-      </div>
+<!--       <div class="modal-footer">
+
+      </div> -->
     </div>
   </div>
 </div>

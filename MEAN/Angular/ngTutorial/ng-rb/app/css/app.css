@@ -1,0 +1,12 @@
+.scroll-spy-article {
+    max-height: calc(95vh);
+    overflow-y: auto;
+}
+
+/* 992px is medium device responsive breakpoint in bootstrap 3 */
+@media screen and (max-width: 992px) {
+    .scroll-spy-article {
+        max-height: calc(95vh - 150px); /* 150 px to accommodate the save and close button */
+        /* TODO: we shall hide the scroll-to section */
+    }
+}
