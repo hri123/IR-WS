@@ -1,7 +1,7 @@
 <div class="modal modal-overlay" ui-if='article_details_modal' ui-state='article_details_modal' style="background: rgba(255, 255, 255, 1.0)">
   <div class="modal-dialog" style="margin: 0px;">
     <div class="modal-content">
-<!--       <div class="modal-header">
+      <!--       <div class="modal-header">
         <button class="close" ui-turn-off="article_details_modal">&times;</button>
       </div>
  -->
@@ -11,13 +11,15 @@
         <div class="row">
 
           <div class="col-md-2">
-            <ul id="navPills" class="nav nav-pills nav-stacked">
-              <li>
-                <div class="row">
+            <div class="row">
+              <div class="col-xs-4">
                 <button ui-turn-off="article_details_modal" class="btn btn-default">Close</button>
+              </div>
+              <div class="col-xs-3">
                 <button ui-turn-off="article_details_modal" class="btn btn-primary" ng-click="saveArticle()">Save changes</button>
-                </div>
-              </li>
+              </div>
+            </div>
+            <ul id="navPills" class="nav nav-pills nav-stacked margin-top-10">
               <li class="active">
                 <a href="#section1" prevent-default="" scroll-to="section1">Main Content</a>
               </li>
@@ -29,7 +31,8 @@
           <!-- max-height to be specified for scrollspy to work, if it is mentioned in px, it will be BAD responsive design, so using calc & vh -->
           <div class="col-md-10 scroll-spy-article" scroll-spy="" data-target="#navPills" data-scroll-offset="10">
             <section id="section1">
-              <div><a href="#" editable-text="currentArticle.summary">{{ currentArticle.summary || 'empty summary' }}</a></div>
+              <div><a href="#" editable-text="currentArticle.summary">{{ currentArticle.summary || 'empty summary' }}</a>
+              </div>
               <div href="#" editable-text="currentArticle.tags">{{ currentArticle.tags || 'empty tags' }}</a>
               </div>
               <div href="#" editable-text="currentArticle.rating">{{ currentArticle.rating || 'empty rating' }}</a>
@@ -144,7 +147,7 @@
         </div>
         <!-- row -->
       </div>
-<!--       <div class="modal-footer">
+      <!--       <div class="modal-footer">
 
       </div> -->
     </div>
