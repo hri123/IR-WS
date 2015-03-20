@@ -1,4 +1,9 @@
 // http://stackoverflow.com/questions/1911015/how-to-debug-node-js-applications
+// node-debug main.js
+
+// Usage
+// node main.js local
+// node main.js 
 
 var express = require('express');
 var app = express();
@@ -23,6 +28,20 @@ var shortId = require('shortid');
 
 var config = require('./app/js/server/oauth.js');
 var myDropboxUtils = require('./app/js/server/dropbox.js');
+
+var storageFactory = require('./app/js/server/storageFactory.js');
+
+var skipDropboxAuth = false;
+if (process.argv[2] == 'local') {
+    skipDropboxAuth = true;
+}
+
+var storageClient;
+if (skipDropboxAuth) { // read from command line args
+    storageClient = storageFactory.getStorageClient('LocalFileSystem');
+} else {
+    storageClient = storageFactory.getStorageClient();
+}
 
 // serialize and deserialize
 passport.serializeUser(function(user, done) {
@@ -58,7 +77,6 @@ passport.use(new DropboxStrategy({
 var js2xmlparser = require('js2xmlparser'); // using diff module for js to xml to make sure nothing is lost during conversion
 
 xml2js = require('xml2js');
-fs = require('fs');
 
 var parser = new xml2js.Parser();
 
@@ -116,20 +134,18 @@ app.get('/logout', function(req, res) {
 
 // test authentication
 function ensureAuthenticated(req, res, next) {
-    if (req.isAuthenticated()) {
+    if (skipDropboxAuth || req.isAuthenticated()) {
         return next();
     }
     res.redirect('/login')
 }
 
-var Dropbox = require("dropbox");
-
 var articleSaveAndUpdate = function(req, res, isNew) {
 
-    var client = new Dropbox.Client({
+    var client = new storageClient({
         key: config.dropbox.clientID,
         secret: config.dropbox.clientSecret,
-        token: accessTokenGlobal['id_' + req.user.id],
+        token: getAccessTokenFromGlobal(req),
         sandbox: false
     });
 
@@ -162,7 +178,7 @@ var articleSaveAndUpdate = function(req, res, isNew) {
             subProjectName = articleToSave.tags;
         }
 
-        var writeFilePath = "/" + selectedArea + "/" + selectedProject + "/" + subProjectName + "/" + fileName;
+        var writeFilePath = (client.baseDirectory || "/") + selectedArea + "/" + selectedProject + "/" + subProjectName + "/" + fileName;
         var fileString = JSON.stringify(articleToSave, null, 2); // pretty print - formatted print
         client.writeFile(writeFilePath,
             fileString, {},
@@ -196,13 +212,21 @@ app.post('/api/articles', ensureAuthenticated, function(req, res) {
 
 });
 
+var getAccessTokenFromGlobal = function(req) {
+    if (skipDropboxAuth) {
+        return "";
+    } else {
+        return accessTokenGlobal['id_' + req.user.id];
+    }
+}
+
 // REST: Query - get all
 app.get('/api/articles', ensureAuthenticated, function(req, res) {
 
-    var client = new Dropbox.Client({
+    var client = new storageClient({
         key: config.dropbox.clientID,
         secret: config.dropbox.clientSecret,
-        token: accessTokenGlobal['id_' + req.user.id],
+        token: getAccessTokenFromGlobal(req),
         sandbox: false
     });
 
@@ -217,7 +241,7 @@ app.get('/api/articles', ensureAuthenticated, function(req, res) {
         var socket_id = req.query.socket_id;
         var socket = socketsGlobal[socket_id];
 
-        client.readdir("/" + selectedArea + "/" + selectedProject, function(error, entries, stat) {
+        client.readdir((client.baseDirectory || "/") + selectedArea + "/" + selectedProject, function(error, entries, stat) {
             if (error) {
                 var errorResponse = "error during readdir: " + error + "\nLooks like there are no folder: " + selectedProject + " inside the area: " + selectedArea + ". Create a folder with the project name in dropbox or create an article here to automatically create the folder."; // Something went wrong.
                 console.log(errorResponse);
@@ -230,7 +254,7 @@ app.get('/api/articles', ensureAuthenticated, function(req, res) {
 
                 for (var i = 0; i < entries.length; i++) {
                     // TODO: if entries[i] is not a folder, continue
-                    var dirName = "/" + selectedArea + "/" + selectedProject + "/" + entries[i];
+                    var dirName = (client.baseDirectory || "/") + selectedArea + "/" + selectedProject + "/" + entries[i];
                     // scope is required because the dirName would have got updated before all the files in the folder dirName are read
                     // error during readFile:Dropbox API error 404 from GET https://api-content.dropbox.com/1/files/auto/attitude/rb/sacrifice-
                     // from-others%20-%20Copy%20%289%29/Q1elgkjw.json :: {"error": "File not found"}
@@ -251,7 +275,10 @@ app.get('/api/articles', ensureAuthenticated, function(req, res) {
                                             res.send(500);
                                         } else {
                                             var article = JSON.parse(data);
-                                            article.fileName = stat.name;
+
+                                            if (!article.fileName) {
+                                               article.fileName = stat.name; // this works for dropbox client, stat not available for local file system client 
+                                            }
 
                                             // the articles were sent once everything was loaded from dropbox, which used to give a slow response feeling to the user
                                             // so, using websockets to return the articles as soon as it is read from dropbox

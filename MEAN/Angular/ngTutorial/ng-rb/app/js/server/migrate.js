@@ -48,6 +48,10 @@ fs.readdir(p, function(err, files) {
 
                 var articleToSave = massageArticleForExport(articles[i]);
 
+                articleFileName = shortId.generate() + ".json";
+
+                articleToSave.fileName = articleFileName;
+
                 var subProjectName = "unknown";
                 var endIndexOfFirstTag = articleToSave.tags.indexOf(",");
                 if (endIndexOfFirstTag > 0) { // has tags
@@ -56,13 +60,13 @@ fs.readdir(p, function(err, files) {
                     subProjectName = articleToSave.tags;
                 }
 
-                var outdir = './RB-files/' + subProjectName;
+                var outdir = './RB-files/attitude/rb/' + subProjectName;
 
                 if (!fs.existsSync(outdir)) {
                     fs.mkdirSync(outdir);
                 }
 
-                fs.writeFile(outdir + '/' + shortId.generate() + ".json", JSON.stringify(articleToSave, null, 2), function(err) {
+                fs.writeFile(outdir + '/' + articleFileName, JSON.stringify(articleToSave, null, 2), function(err) {
                     if (err) throw err;
                 });
 
