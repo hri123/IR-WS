@@ -22,3 +22,9 @@
 	width: 95%;
 	height: 500px;
 }
+
+.nav-pills > li.active > a,
+.nav-pills > li.active > a:focus {
+  color: #ffffff;
+  background-color: #BEBEBE;
+}
