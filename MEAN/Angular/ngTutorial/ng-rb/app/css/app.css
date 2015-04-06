@@ -14,3 +14,11 @@
 .margin-top-10 {
 	margin-top: 10px;
 }
+
+/* Make inline editables take the full width of their parents */
+.editable-textarea,
+.editable-textarea .form-group,
+.editable-textarea .form-group textarea {
+	width: 95%;
+	height: 500px;
+}
