@@ -28,3 +28,11 @@
   color: #ffffff;
   background-color: #BEBEBE;
 }
+
+/* http://stackoverflow.com/questions/24230990/how-to-make-an-ordered-list-with-twitter-bootstrap-component */
+.list-group {
+    margin-left: 40px;
+}
+.list-group-item {
+    display: list-item;
+}

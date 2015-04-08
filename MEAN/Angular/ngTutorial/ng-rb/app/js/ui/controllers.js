@@ -30,7 +30,7 @@ var rbAppControllers = angular.module('rbAppControllers', []);
 rbAppControllers.controller('mainAppController', ['$scope', function($scope) {
 
     $scope.search1 = {
-        tags: ''
+        tags: '',
     };
     $scope.search2 = {
         tags: ''
@@ -67,6 +67,11 @@ rbAppControllers.controller('mainAppController', ['$scope', function($scope) {
 
     $scope.clearInputVal = function(inputVar) {
         inputVar.val = '';
+    };
+
+    // filteredOuter is required, else does not work in global scope
+    $scope.filteredOuter = {
+        filtered: []
     };
 
 }]);
