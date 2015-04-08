@@ -26,11 +26,11 @@
         <br/>
         <p style="white-space: pre-line;">CONTENT - </p>
         <ol>
-          <li data-ng-repeat="section in article.content.sections">
+          <li data-ng-repeat="section in article.content.section">
             <span>SECTION - {{section.name}}</span>
             <br/>
             <ol>
-              <li data-ng-repeat="sub_section in section.content.sub_sections">
+              <li data-ng-repeat="sub_section in section.sub_section">
                 <span>SUB-SECTION - {{sub_section.name}}</span>
                 <br/>
               </li>
@@ -39,11 +39,11 @@
         </ol>
         <p style="white-space: pre-line;">ANNOTATION - </p>
         <ol>
-          <li data-ng-repeat="section in article.annotation.sections">
+          <li data-ng-repeat="section in article.annotation.section">
             <span>SECTION - {{section.name}}</span>
             <br/>
             <ol>
-              <li data-ng-repeat="sub_section in section.content.sub_sections">
+              <li data-ng-repeat="sub_section in section.sub_section">
                 <span>SUB-SECTION - {{sub_section.name}}</span>
                 <br/>
               </li>
