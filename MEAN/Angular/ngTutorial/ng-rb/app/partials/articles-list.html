@@ -1,20 +1,7 @@
-<div class="scrollable section">
-  <div class="row">
-    <div class="col-xs-3">
-      <button class="form-control btn btn-success" ng-click="createNewArticle('new')">
-        <span class="glyphicon glyphicon-file"></span>  New Article
-      </button>
-    </div>
-    <div class="col-xs-3">
-      <button class="btn btn-default" type="button">
-        Filtered <span class="badge">{{filtered.length}}</span>
-      </button>
-    </div>
-  </div>
-
-  <div class="scrollable-content margin-top-10">
-    <ol>
-      <li data-ng-repeat="article in filtered = (articles | filter : search1 : false | filter : search2 : false | filter : search3 : false | filter : search4 : false | filter : search5 : false | filter : search6: false | filter : searchSectionOrSubSection | filter : searchAtTags | filter : searchSectionOrSubSectionTags) ">
+<div class="container-fluid" style="height:100%; background:white;">
+  <div class="row-fluid margin-top-10" style="height:100%; overflow:auto;">
+    <ol class="list-group">
+      <li class="list-group-item" data-ng-repeat="article in filteredOuter.filtered = (articles | filter : search1 : false | filter : search2 : false | filter : search3 : false | filter : search4 : false | filter : search5 : false | filter : search6: false | filter : searchSectionOrSubSection | filter : searchAtTags | filter : searchSectionOrSubSectionTags) ">
         <!-- <a href="/#/article/{{article.index}}"><p style="white-space: pre-line;">ARTICLE - {{article.summary}}</p></a><br/> -->
         <a href="" ui-turn-on="article_details_modal" ng-click="setCurrentArticle(article)" class="btn btn-primary">ARTICLE</a> - {{article.summary}}
         <br/>
@@ -59,5 +46,5 @@
   <div ng-include="'partials/article_details_modal.html'"></div>
 </div>
 <div ui-content-for="title">
-  <span>Articles</span>
+  <a href="" ng-click="createNewArticle('new')" class="btn btn-success" style="line-height:1.5;"><span class="glyphicon glyphicon-plus"></span>&nbsp;<span>New</span>&nbsp;</a><span class="badge" style="vertical-align:middle;">{{filteredOuter.filtered.length}}</span>
 </div>
