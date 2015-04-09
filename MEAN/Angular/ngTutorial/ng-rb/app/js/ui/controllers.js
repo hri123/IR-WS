@@ -68,6 +68,14 @@ rbAppControllers.controller('mainAppController', ['$scope', function($scope) {
     $scope.clearInputVal = function(inputVar) {
         inputVar.val = '';
     };
+    
+    $scope.clearInputSummary = function(inputVar) {
+        inputVar.summary = '';
+    };
+
+    $scope.clearInputMain = function(inputVar) {
+        inputVar.main = '';
+    };
 
     // filteredOuter is required, else does not work in global scope
     $scope.filteredOuter = {
