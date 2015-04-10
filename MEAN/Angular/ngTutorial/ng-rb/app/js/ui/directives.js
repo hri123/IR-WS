@@ -7,7 +7,11 @@ rbAppDirectives.directive('scrollSpy', function($timeout){
             var offset = parseInt(attr.scrollOffset, 10)
             if(!offset) offset = 10;
             console.log("offset:  " + offset);
-            elem.scrollspy({ "offset" : offset});
+            // do not call scrollspy here, let the functionality be initiated once 
+            // the view template gets replaced with the actual data
+            // so, call the scrollspy only when the $watch triggers the event on domNode change
+            // debug into bootstrap in js to get more clarity
+            // elem.scrollspy({ "offset" : offset});
             scope.$watch(attr.scrollSpy, function(value) {
                 $timeout(function() { 
                   elem.scrollspy('refresh', { "offset" : offset})

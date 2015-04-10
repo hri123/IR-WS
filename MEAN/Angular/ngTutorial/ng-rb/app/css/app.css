@@ -25,8 +25,16 @@
 
 .nav-pills > li.active > a,
 .nav-pills > li.active > a:focus {
-  color: #ffffff;
-  background-color: #BEBEBE;
+  color: #563d7c;
+  background-color: #ffffff;
+  border-left: 2px solid #563d7c;
+  border-radius: 0px;
+  font-weight: 900;
+}
+
+.nav-pills > li > a {
+  color: #767676;
+  font-weight: 400;
 }
 
 /* http://stackoverflow.com/questions/24230990/how-to-make-an-ordered-list-with-twitter-bootstrap-component */
