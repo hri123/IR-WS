@@ -37,6 +37,10 @@
   font-weight: 400;
 }
 
+.nav > li > a {
+  padding: 0px 0px 0px 5px;
+}
+
 /* http://stackoverflow.com/questions/24230990/how-to-make-an-ordered-list-with-twitter-bootstrap-component */
 .list-group {
     margin-left: 40px;
@@ -44,3 +48,9 @@
 .list-group-item {
     display: list-item;
 }
+
+ul {
+    list-style-type: none;
+    margin-left
+}
+
