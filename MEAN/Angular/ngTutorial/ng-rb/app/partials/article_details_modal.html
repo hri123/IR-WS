@@ -47,7 +47,7 @@
               </div>
             </div>
             <div>
-              <a href="#" editable-textarea="currentArticle.content.main">
+              <a href="#" editable-textarea="currentArticle.content.main" e-style="color:green;">
                 <pre>{{ currentArticle.content.main || 'empty content main' }}</pre>
               </a>
             </div>
@@ -66,7 +66,6 @@
                   <h2><span>SECTION - <a href="#" editable-text="section.name">{{ section.name || 'empty section name' }}</a></span></h2>
                   <span>TAGS - <a href="#" editable-text="section.tags">{{ section.tags || 'empty section tags' }}</a></span>
                   <br/>
-                  <!-- TODO: BAD responsive design - hardcoding rows and columns -->
                   <a href="#" editable-textarea="section.main">
                     <pre>{{ section.main || 'empty section main' }}</pre>
                   </a>
