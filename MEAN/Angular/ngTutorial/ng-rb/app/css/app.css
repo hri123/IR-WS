@@ -54,3 +54,10 @@ ul {
     margin-left
 }
 
+pre {
+  background-color: #ffffff;
+  color: #333333;
+  font-size: 15px;
+  font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+}
+
