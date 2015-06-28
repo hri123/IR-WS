@@ -29,10 +29,12 @@ var newSubSection = function() {
 
 var getStructure = function(data) {
 
-    var returnVal = {};
+    var returnVal = {main:''};
 
     if (typeof data == 'object') {
-        returnVal.main = data._;
+        if (data._) {
+            returnVal.main = data._;
+        }
         if (data.section) {
             var sections = [];
 

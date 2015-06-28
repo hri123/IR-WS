@@ -2,6 +2,9 @@
 // node-debug main.js
 
 // Usage
+// npm install
+// add the path where git.exe (installed by GitHub) to environment path var
+// ./app/js/server/oauth.js
 // node main.js local
 // node main.js 
 
@@ -15,7 +18,7 @@ var shortId = require('shortid');
 
 // for the app - rBookApp (Register your application with all of the OAuth providers you want to use, except Google - as Google uses OpenID)
 
-// Put the keys and secrets in a file called oauth.js in the same directory as main.js
+// Put the keys and secrets in a file called oauth.js
 // var ids = {
 //     dropbox: {
 //         clientID: 'get_your_own',
