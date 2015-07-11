@@ -378,7 +378,7 @@ rbAppControllers.controller('articleDetailsController', ['$scope', '$http', '$lo
 
 }]);
 
-rbAppControllers.controller('metaDataController', ['$scope', 'rbFiles', function($scope, rbFiles) {
+rbAppControllers.controller('metaDataController', ['$scope', 'rbFiles', 'sharedArticles', function($scope, rbFiles, sharedArticles) {
 
     $scope.keys = function(obj) {
         return obj ? Object.keys(obj) : [];
@@ -436,42 +436,27 @@ rbAppControllers.controller('metaDataController', ['$scope', 'rbFiles', function
 
     };
 
-    for (var index = 0; index < 16; index++) {
+    var articlesLength = sharedArticles.articles.length;
+    for (var i = 0; i < articlesLength; i++) {
 
-        var param = {
-            fileIndex: index
-        };
+        var currentArticle = sharedArticles.articles[i];
 
-        rbFiles.query(param, (function(data) {
+        if (currentArticle.tags) {
 
-            // printNesting(data); // for testing purposes only
+            $scope.regularTags.push(currentArticle.tags);
+            processArrayOfTags(currentArticle.tags);
 
-            var articlesLength = data.length;
-            for (var i = 0; i < articlesLength; i++) {
-
-                var currentArticle = data[i];
-
-                if (currentArticle.tags[0]) {
-
-                    $scope.regularTags.push(currentArticle.tags[0]);
-                    processArrayOfTags(currentArticle.tags[0]);
-
-                }
+        }
 
 
-                var articleContent = getStructure(currentArticle.content[0]);
-                var articleAnnotation = getStructure(currentArticle.annotation[0]);
+        var articleContent = currentArticle.content;
+        var articleAnnotation = currentArticle.annotation;
 
-                addToAtTags(articleContent.main);
-                findTagsInSectionAndSubSections(articleContent.section);
-                addToAtTags(articleAnnotation.main);
-                findTagsInSectionAndSubSections(articleAnnotation.section);
+        addToAtTags(articleContent.main);
+        findTagsInSectionAndSubSections(articleContent.section);
+        addToAtTags(articleAnnotation.main);
+        findTagsInSectionAndSubSections(articleAnnotation.section);
 
-            }
-
-        }));
     }
-
-
 
 }]);
