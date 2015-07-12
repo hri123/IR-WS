@@ -44,6 +44,7 @@ References
 TODO
 ----
 
+- Article list page should look like this - http://www.flipkart.com/all-categories/pr?sid=search.flipkart.com&filterNone=true
 - instant search should be the core value add with this application
 - protractor testing pending
 - use 'requirejs' instead of <script src="js/utils.js"></script>
