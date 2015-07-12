@@ -27,7 +27,9 @@ var printNesting = function(data) {
 var rbAppControllers = angular.module('rbAppControllers', []);
 
 // sharing variables between sidebar and the main body
-rbAppControllers.controller('mainAppController', ['$scope', function($scope) {
+rbAppControllers.controller('mainAppController', ['$scope', 'sharedArticles', function($scope, sharedArticles) {
+
+    $scope.articles = sharedArticles.articles = [];
 
     $scope.search1 = {
         tags: '',
@@ -91,8 +93,12 @@ rbAppControllers.controller('articleListController', ['$scope', '$http', '$locat
     //     ui-track-as-search-param='true'
     //     class="sidebar sidebar-left" ng-controller='articleListController'></div>
 
-    $scope.articles = [];
-    sharedArticles.articles = $scope.articles;
+    $scope.articles = sharedArticles.articles;
+
+        // empty the array
+    while (sharedArticles.articles.length > 0) {
+        sharedArticles.articles.pop();
+    }
 
     $scope.projectArea = $routeParams.area; // picking value from the url in angular
     $scope.projectName = $routeParams.project;
