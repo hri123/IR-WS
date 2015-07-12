@@ -142,7 +142,8 @@ rbAppControllers.controller('articleListController', ['$scope', '$http', '$locat
 
     // invokeReadFile({area: $scope.projectArea, project: $scope.projectName});
 
-    var socket = io.connect($location.$$protocol + "://" + $location.$$host + ":" + $location.$$port);
+    // http://stackoverflow.com/a/7504015
+    var socket = io.connect($location.$$protocol + "://" + $location.$$host + ":" + $location.$$port, {'force new connection': true});
     socket.on('connect_success', function(data) {
 
         var data = rbFiles.query({
@@ -385,16 +386,22 @@ rbAppControllers.controller('metaDataController', ['$scope', 'rbFiles', 'sharedA
     };
 
     $scope.tags = {};
+    $scope.selectedTags = [];
     $scope.regularTags = [];
     $scope.sectionAndSubSectionTags = [];
     $scope.atTags = [];
+
+    $scope.isLast = function(check) {
+        var cssClass = check ? 'active' : null;
+        return cssClass;
+    };
 
     var addToAtTags = function(inText) {
         var regExp = /@tags\(([^)]+)\)/g; // to extract @tags
         var myArray;
         while ((myArray = regExp.exec(inText)) !== null) {
             $scope.atTags.push(myArray[1]);
-            processArrayOfTags(myArray[1]);
+            processArrayOfTags(myArray[1], $scope.tags);
         }
     };
 
@@ -404,7 +411,7 @@ rbAppControllers.controller('metaDataController', ['$scope', 'rbFiles', 'sharedA
 
             if (value.tags) {
                 $scope.sectionAndSubSectionTags.push(value.tags);
-                processArrayOfTags(value.tags);
+                processArrayOfTags(value.tags, $scope.tags);
             }
 
             if (value.sub_section) jQuery.each(value.sub_section, function(index, value) {
@@ -412,25 +419,38 @@ rbAppControllers.controller('metaDataController', ['$scope', 'rbFiles', 'sharedA
 
                 if (value.tags) {
                     $scope.sectionAndSubSectionTags.push(value.tags);
-                    processArrayOfTags(value.tags);
+                    processArrayOfTags(value.tags, $scope.tags);
                 }
 
             });
         });
-    }
+    };
 
-    var processArrayOfTags = function(value) {
+    $scope.addToSelectedTags = function (selectedTag) {
+
+        if (jQuery.inArray(selectedTag, $scope.selectedTags) == -1) {
+            $scope.selectedTags.push(selectedTag);
+            filterArticleTags();
+        }
+    };
+
+    $scope.removeFromSelectedTags = function (selectedTag) {
+        $scope.selectedTags.splice($scope.selectedTags.indexOf(selectedTag), 1);
+        filterArticleTags();
+    };
+
+    var processArrayOfTags = function(value, tagCountArray) {
 
         var tagArr = value.split(",");
 
         for (var j = 0; j < tagArr.length; j++) {
             var tag = tagArr[j].trim();
-            if ($scope.tags[tag]) {
-                $scope.tags[tag].value++;
+            if (tagCountArray[tag]) {
+                tagCountArray[tag].value++;
             } else {
-                $scope.tags[tag] = {};
-                $scope.tags[tag].value = 1;
-                $scope.tags[tag].name = tag;
+                tagCountArray[tag] = {};
+                tagCountArray[tag].value = 1;
+                tagCountArray[tag].name = tag;
             }
         }
 
@@ -444,10 +464,9 @@ rbAppControllers.controller('metaDataController', ['$scope', 'rbFiles', 'sharedA
         if (currentArticle.tags) {
 
             $scope.regularTags.push(currentArticle.tags);
-            processArrayOfTags(currentArticle.tags);
+            processArrayOfTags(currentArticle.tags, $scope.tags);
 
         }
-
 
         var articleContent = currentArticle.content;
         var articleAnnotation = currentArticle.annotation;
@@ -457,6 +476,43 @@ rbAppControllers.controller('metaDataController', ['$scope', 'rbFiles', 'sharedA
         addToAtTags(articleAnnotation.main);
         findTagsInSectionAndSubSections(articleAnnotation.section);
 
-    }
+    };
+
+    $scope.filteredTags = {};
+    var filterArticleTags = function () {
+
+        // reinitialize
+        $scope.filteredTags = {};
+
+        var articlesLength = sharedArticles.articles.length;
+        for (var i = 0; i < articlesLength; i++) {
+
+            var currentArticle = sharedArticles.articles[i];
+            var isApplicable = true;
+
+            if (currentArticle.tags) {
+
+                var selectedTagsLength = $scope.selectedTags.length;
+                if ($scope.selectedTags.length != 0) {
+
+                    for (var j = 0; j < selectedTagsLength; j++) {
+                        var selectedTag = $scope.selectedTags[j];
+                        if (currentArticle.tags.indexOf(selectedTag) == -1) {
+                            isApplicable = false;
+                            break;
+                        }
+                    }
+                }
+
+                if (isApplicable) {
+
+                    processArrayOfTags(currentArticle.tags, $scope.filteredTags);
+
+                }
+
+            }
+        }
+    };
+    filterArticleTags();
 
 }]);

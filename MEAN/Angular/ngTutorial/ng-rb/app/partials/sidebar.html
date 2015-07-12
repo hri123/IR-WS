@@ -1,61 +1,105 @@
 <div class="scrollable">
   <h1 class="scrollable-header app-name">RB <small>0.1</small></h1>
   <div class="scrollable-content section">
-    <div class="">
-      <!-- ui-turn-off='uiSidebarLeft' -->
-      <div class="form-group">
-        <label>Article</label>
-        <div class="has-feedback">
-          <input data-ng-model="search1.tags" class="form-control hasclear" placeholder="tag 1...">
-          <span class="clearer glyphicon glyphicon-remove-circle form-control-feedback" style="display: block; top: 0px; cursor: pointer;" ng-click="clearInputTags(search1)"></span>
+    <div class="panel-group" id="accordion">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">Input Search</a>
+                </h4>
+            </div>
+            <div id="collapseOne" class="panel-collapse collapse">
+                <div class="panel-body">
+                  <div class="">
+                    <!-- ui-turn-off='uiSidebarLeft' -->
+                    <div class="form-group">
+                      <label>Article</label>
+                      <div class="has-feedback">
+                        <input data-ng-model="search1.tags" class="form-control hasclear" placeholder="tag 1...">
+                        <span class="clearer glyphicon glyphicon-remove-circle form-control-feedback" style="display: block; top: 0px; cursor: pointer;" ng-click="clearInputTags(search1)"></span>
+                      </div>
+                      <br>
+                      <div class="has-feedback">
+                        <input data-ng-model="search2.tags" class="form-control" placeholder="tag 2...">
+                        <span class="clearer glyphicon glyphicon-remove-circle form-control-feedback" style="display: block; top: 0px; cursor: pointer;" ng-click="clearInputTags(search2)"></span>
+                      </div>
+                      <br>
+                      <div class="has-feedback">
+                        <input data-ng-model="search3.tags" class="form-control" placeholder="tag 3...">
+                        <span class="clearer glyphicon glyphicon-remove-circle form-control-feedback" style="display: block; top: 0px; cursor: pointer;" ng-click="clearInputTags(search3)"></span>
+                      </div>
+                      <br>
+                      <div class="has-feedback">
+                        <input data-ng-model="search4.summary" class="form-control" placeholder="summary...">
+                        <span class="clearer glyphicon glyphicon-remove-circle form-control-feedback" style="display: block; top: 0px; cursor: pointer;" ng-click="clearInputSummary(search4)"></span>
+                      </div>
+                      <br>
+                      <div class="has-feedback">
+                        <input data-ng-model="search5.content.main" class="form-control" placeholder="main content...">
+                        <span class="clearer glyphicon glyphicon-remove-circle form-control-feedback" style="display: block; top: 0px; cursor: pointer;" ng-click="clearInputMain(search5.content)"></span>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label>(Sub) Section</label>
+                      <div class="has-feedback">
+                        <input data-ng-model="search9.val" class="form-control" placeholder="tag...">
+                        <span class="clearer glyphicon glyphicon-remove-circle form-control-feedback" style="display: block; top: 0px; cursor: pointer;" ng-click="clearInputVal(search9)"></span>
+                      </div>
+                      <br>
+                      <div class="has-feedback">
+                        <input data-ng-model="search7.val" class="form-control" placeholder="name / main...">
+                        <span class="clearer glyphicon glyphicon-remove-circle form-control-feedback" style="display: block; top: 0px; cursor: pointer;" ng-click="clearInputVal(search7)"></span>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label>@tags</label>
+                      <div class="has-feedback">
+                        <input data-ng-model="search8.val" class="form-control">
+                        <span class="clearer glyphicon glyphicon-remove-circle form-control-feedback" style="display: block; top: 0px; cursor: pointer;" ng-click="clearInputVal(search8)"></span>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label>Article Annotation Main</label>
+                      <div class="has-feedback">
+                        <input data-ng-model="search6.annotation.main" class="form-control">
+                        <span class="clearer glyphicon glyphicon-remove-circle form-control-feedback" style="display: block; top: 0px; cursor: pointer;" ng-click="clearInputMain(search6.annotation)"></span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+            </div>
         </div>
-        <br>
-        <div class="has-feedback">
-          <input data-ng-model="search2.tags" class="form-control" placeholder="tag 2...">
-          <span class="clearer glyphicon glyphicon-remove-circle form-control-feedback" style="display: block; top: 0px; cursor: pointer;" ng-click="clearInputTags(search2)"></span>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">Tag Cloud Search</a>
+                </h4>
+            </div>
+            <div id="collapseTwo" class="panel-collapse collapse in">
+                <div class="panel-body">
+                  <div class="container">
+                      <div class="row">
+                          <div class="col-md-2">
+                              <ul class="breadcrumb">
+                                  <li data-ng-repeat="elem in selectedTags" ng-class="isLast($last)">
+                                      <a href="" ng-click="removeFromSelectedTags(elem)" >{{elem}}</a>
+                                  </li>
+                              </ul>
+                          </div>
+                      </div>
+                      <div class="row">
+                          <div class="col-md-2">
+                              <ul class="list-inline">
+                                  <li data-ng-repeat="elem in filteredTags | orderObjectBy : 'value' ">
+                                      <a href="" ng-click="addToSelectedTags(elem.name)" class="btn btn-link">{{elem.name}} - {{elem.value}}</a>
+                                  </li>
+                              </ul>
+                          </div>
+                      </div>
+                          </div>
+                      </div>
+            </div>
         </div>
-        <br>
-        <div class="has-feedback">
-          <input data-ng-model="search3.tags" class="form-control" placeholder="tag 3...">
-          <span class="clearer glyphicon glyphicon-remove-circle form-control-feedback" style="display: block; top: 0px; cursor: pointer;" ng-click="clearInputTags(search3)"></span>
-        </div>
-        <br>
-        <div class="has-feedback">
-          <input data-ng-model="search4.summary" class="form-control" placeholder="summary...">
-          <span class="clearer glyphicon glyphicon-remove-circle form-control-feedback" style="display: block; top: 0px; cursor: pointer;" ng-click="clearInputSummary(search4)"></span>
-        </div>
-        <br>
-        <div class="has-feedback">
-          <input data-ng-model="search5.content.main" class="form-control" placeholder="main content...">
-          <span class="clearer glyphicon glyphicon-remove-circle form-control-feedback" style="display: block; top: 0px; cursor: pointer;" ng-click="clearInputMain(search5.content)"></span>
-        </div>
-      </div>
-      <div class="form-group">
-        <label>(Sub) Section</label>
-        <div class="has-feedback">
-          <input data-ng-model="search9.val" class="form-control" placeholder="tag...">
-          <span class="clearer glyphicon glyphicon-remove-circle form-control-feedback" style="display: block; top: 0px; cursor: pointer;" ng-click="clearInputVal(search9)"></span>
-        </div>
-        <br>
-        <div class="has-feedback">
-          <input data-ng-model="search7.val" class="form-control" placeholder="name / main...">
-          <span class="clearer glyphicon glyphicon-remove-circle form-control-feedback" style="display: block; top: 0px; cursor: pointer;" ng-click="clearInputVal(search7)"></span>
-        </div>
-      </div>
-      <div class="form-group">
-        <label>@tags</label>
-        <div class="has-feedback">
-          <input data-ng-model="search8.val" class="form-control">
-          <span class="clearer glyphicon glyphicon-remove-circle form-control-feedback" style="display: block; top: 0px; cursor: pointer;" ng-click="clearInputVal(search8)"></span>
-        </div>
-      </div>
-      <div class="form-group">
-        <label>Article Annotation Main</label>
-        <div class="has-feedback">
-          <input data-ng-model="search6.annotation.main" class="form-control">
-          <span class="clearer glyphicon glyphicon-remove-circle form-control-feedback" style="display: block; top: 0px; cursor: pointer;" ng-click="clearInputMain(search6.annotation)"></span>
-        </div>
-      </div>
     </div>
   </div>
 </div>
