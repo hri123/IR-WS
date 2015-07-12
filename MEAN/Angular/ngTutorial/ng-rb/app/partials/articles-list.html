@@ -1,7 +1,7 @@
 <div class="container-fluid" style="height:100%; background:white;">
   <div class="row-fluid margin-top-10" style="height:100%; overflow:auto;">
     <ol class="list-group">
-      <li class="list-group-item" data-ng-repeat="article in filteredOuter.filtered = (articles | filter : search1 : false | filter : search2 : false | filter : search3 : false | filter : search4 : false | filter : search5 : false | filter : search6: false | filter : searchSectionOrSubSection | filter : searchAtTags | filter : searchSectionOrSubSectionTags) ">
+      <li class="list-group-item" data-ng-repeat="article in filteredOuter.filtered = (articles | filter : search1 : false | filter : search2 : false | filter : search3 : false | filter : search4 : false | filter : search5 : false | filter : search6: false | filter : searchSectionOrSubSection | filter : searchAtTags | filter : searchSectionOrSubSectionTags | filter : searchTagCloud) ">
         <!-- <a href="/#/article/{{article.index}}"><p style="white-space: pre-line;">ARTICLE - {{article.summary}}</p></a><br/> -->
         <a href="" ui-turn-on="article_details_modal" ng-click="setCurrentArticle(article)" class="btn btn-primary">ARTICLE</a> - {{article.summary}}
         <br/>

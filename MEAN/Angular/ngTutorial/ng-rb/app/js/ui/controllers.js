@@ -27,9 +27,9 @@ var printNesting = function(data) {
 var rbAppControllers = angular.module('rbAppControllers', []);
 
 // sharing variables between sidebar and the main body
-rbAppControllers.controller('mainAppController', ['$scope', 'sharedArticles', function($scope, sharedArticles) {
+rbAppControllers.controller('mainAppController', ['$scope', 'sharedVars', function($scope, sharedVars) {
 
-    $scope.articles = sharedArticles.articles = [];
+    $scope.articles = sharedVars.articles = [];
 
     $scope.search1 = {
         tags: '',
@@ -84,20 +84,92 @@ rbAppControllers.controller('mainAppController', ['$scope', 'sharedArticles', fu
         filtered: []
     };
 
+    sharedVars.processArrayOfTags = function(value, tagCountArray) {
+
+        var tagArr = value.split(",");
+
+        for (var j = 0; j < tagArr.length; j++) {
+            var tag = tagArr[j].trim();
+            if (tagCountArray[tag]) {
+                tagCountArray[tag].value++;
+            } else {
+                tagCountArray[tag] = {};
+                tagCountArray[tag].value = 1;
+                tagCountArray[tag].name = tag;
+            }
+        }
+
+    };
+
+    $scope.isLast = function(check) {
+        var cssClass = check ? 'active' : null;
+        return cssClass;
+    };
+
+    $scope.addToSelectedTags = function (selectedTag) {
+
+        if (jQuery.inArray(selectedTag, $scope.selectedTags) == -1) {
+            $scope.selectedTags.push(selectedTag);
+            $scope.filterArticleTags();
+        }
+    };
+
+    $scope.removeFromSelectedTags = function (selectedTag) {
+        $scope.selectedTags.splice($scope.selectedTags.indexOf(selectedTag), 1);
+        $scope.filterArticleTags();
+    };
+
+    $scope.selectedTags = [];
+    $scope.filteredTags = {};
+    $scope.filterArticleTags = function () {
+
+        // reinitialize
+        $scope.filteredTags = {};
+
+        var articlesLength = sharedVars.articles.length;
+        for (var i = 0; i < articlesLength; i++) {
+
+            var currentArticle = sharedVars.articles[i];
+            var isApplicable = true;
+
+            if (currentArticle.tags) {
+
+                var selectedTagsLength = $scope.selectedTags.length;
+                if ($scope.selectedTags.length != 0) {
+
+                    for (var j = 0; j < selectedTagsLength; j++) {
+                        var selectedTag = $scope.selectedTags[j];
+                        if (currentArticle.tags.indexOf(selectedTag) == -1) {
+                            isApplicable = false;
+                            break;
+                        }
+                    }
+                }
+
+                if (isApplicable) {
+
+                    sharedVars.processArrayOfTags(currentArticle.tags, $scope.filteredTags);
+
+                }
+
+            }
+        }
+    };
+
 }]);
 
-rbAppControllers.controller('articleListController', ['$scope', '$http', '$location', '$routeParams', 'sharedArticles', 'rbFiles', function($scope, $http, $location, $routeParams, sharedArticles, rbFiles) {
+rbAppControllers.controller('articleListController', ['$scope', '$http', '$location', '$routeParams', 'sharedVars', 'rbFiles', function($scope, $http, $location, $routeParams, sharedVars, rbFiles) {
 
     // this method was called twice - http://stackoverflow.com/a/24519817/512126 - in index.html
     // <div ng-include="'partials/sidebar.html'" 
     //     ui-track-as-search-param='true'
     //     class="sidebar sidebar-left" ng-controller='articleListController'></div>
 
-    $scope.articles = sharedArticles.articles;
+    $scope.articles = sharedVars.articles;
 
         // empty the array
-    while (sharedArticles.articles.length > 0) {
-        sharedArticles.articles.pop();
+    while (sharedVars.articles.length > 0) {
+        sharedVars.articles.pop();
     }
 
     $scope.projectArea = $routeParams.area; // picking value from the url in angular
@@ -215,6 +287,29 @@ rbAppControllers.controller('articleListController', ['$scope', '$http', '$locat
 
         return found;
 
+    };
+
+    $scope.searchTagCloud = function(currentArticle) {
+
+        var isApplicable = true;
+
+        if (currentArticle.tags) {
+
+            var selectedTagsLength = $scope.selectedTags.length;
+            if ($scope.selectedTags.length != 0) {
+
+                for (var j = 0; j < selectedTagsLength; j++) {
+                    var selectedTag = $scope.selectedTags[j];
+                    if (currentArticle.tags.indexOf(selectedTag) == -1) {
+                        isApplicable = false;
+                        break;
+                    }
+                }
+            }
+
+        }
+
+        return isApplicable;
     };
 
     $scope.searchSectionOrSubSectionTags = function(article) {
@@ -379,35 +474,29 @@ rbAppControllers.controller('articleListController', ['$scope', '$http', '$locat
 
 }]);
 
-rbAppControllers.controller('articleDetailsController', ['$scope', '$http', '$location', '$routeParams', 'sharedArticles', function($scope, $http, $location, $routeParams, sharedArticles) {
+rbAppControllers.controller('articleDetailsController', ['$scope', '$http', '$location', '$routeParams', 'sharedVars', function($scope, $http, $location, $routeParams, sharedVars) {
 
-    $scope.article = sharedArticles.articles[$routeParams.articleId];
+    $scope.article = sharedVars.articles[$routeParams.articleId];
 
 }]);
 
-rbAppControllers.controller('metaDataController', ['$scope', 'rbFiles', 'sharedArticles', function($scope, rbFiles, sharedArticles) {
+rbAppControllers.controller('metaDataController', ['$scope', 'rbFiles', 'sharedVars', function($scope, rbFiles, sharedVars) {
 
     $scope.keys = function(obj) {
         return obj ? Object.keys(obj) : [];
     };
 
     $scope.tags = {};
-    $scope.selectedTags = [];
     $scope.regularTags = [];
     $scope.sectionAndSubSectionTags = [];
     $scope.atTags = [];
-
-    $scope.isLast = function(check) {
-        var cssClass = check ? 'active' : null;
-        return cssClass;
-    };
 
     var addToAtTags = function(inText) {
         var regExp = /@tags\(([^)]+)\)/g; // to extract @tags
         var myArray;
         while ((myArray = regExp.exec(inText)) !== null) {
             $scope.atTags.push(myArray[1]);
-            processArrayOfTags(myArray[1], $scope.tags);
+            sharedVars.processArrayOfTags(myArray[1], $scope.tags);
         }
     };
 
@@ -417,7 +506,7 @@ rbAppControllers.controller('metaDataController', ['$scope', 'rbFiles', 'sharedA
 
             if (value.tags) {
                 $scope.sectionAndSubSectionTags.push(value.tags);
-                processArrayOfTags(value.tags, $scope.tags);
+                sharedVars.processArrayOfTags(value.tags, $scope.tags);
             }
 
             if (value.sub_section) jQuery.each(value.sub_section, function(index, value) {
@@ -425,52 +514,22 @@ rbAppControllers.controller('metaDataController', ['$scope', 'rbFiles', 'sharedA
 
                 if (value.tags) {
                     $scope.sectionAndSubSectionTags.push(value.tags);
-                    processArrayOfTags(value.tags, $scope.tags);
+                    sharedVars.processArrayOfTags(value.tags, $scope.tags);
                 }
 
             });
         });
     };
 
-    $scope.addToSelectedTags = function (selectedTag) {
-
-        if (jQuery.inArray(selectedTag, $scope.selectedTags) == -1) {
-            $scope.selectedTags.push(selectedTag);
-            filterArticleTags();
-        }
-    };
-
-    $scope.removeFromSelectedTags = function (selectedTag) {
-        $scope.selectedTags.splice($scope.selectedTags.indexOf(selectedTag), 1);
-        filterArticleTags();
-    };
-
-    var processArrayOfTags = function(value, tagCountArray) {
-
-        var tagArr = value.split(",");
-
-        for (var j = 0; j < tagArr.length; j++) {
-            var tag = tagArr[j].trim();
-            if (tagCountArray[tag]) {
-                tagCountArray[tag].value++;
-            } else {
-                tagCountArray[tag] = {};
-                tagCountArray[tag].value = 1;
-                tagCountArray[tag].name = tag;
-            }
-        }
-
-    };
-
-    var articlesLength = sharedArticles.articles.length;
+    var articlesLength = sharedVars.articles.length;
     for (var i = 0; i < articlesLength; i++) {
 
-        var currentArticle = sharedArticles.articles[i];
+        var currentArticle = sharedVars.articles[i];
 
         if (currentArticle.tags) {
 
             $scope.regularTags.push(currentArticle.tags);
-            processArrayOfTags(currentArticle.tags, $scope.tags);
+            sharedVars.processArrayOfTags(currentArticle.tags, $scope.tags);
 
         }
 
@@ -483,42 +542,5 @@ rbAppControllers.controller('metaDataController', ['$scope', 'rbFiles', 'sharedA
         findTagsInSectionAndSubSections(articleAnnotation.section);
 
     };
-
-    $scope.filteredTags = {};
-    var filterArticleTags = function () {
-
-        // reinitialize
-        $scope.filteredTags = {};
-
-        var articlesLength = sharedArticles.articles.length;
-        for (var i = 0; i < articlesLength; i++) {
-
-            var currentArticle = sharedArticles.articles[i];
-            var isApplicable = true;
-
-            if (currentArticle.tags) {
-
-                var selectedTagsLength = $scope.selectedTags.length;
-                if ($scope.selectedTags.length != 0) {
-
-                    for (var j = 0; j < selectedTagsLength; j++) {
-                        var selectedTag = $scope.selectedTags[j];
-                        if (currentArticle.tags.indexOf(selectedTag) == -1) {
-                            isApplicable = false;
-                            break;
-                        }
-                    }
-                }
-
-                if (isApplicable) {
-
-                    processArrayOfTags(currentArticle.tags, $scope.filteredTags);
-
-                }
-
-            }
-        }
-    };
-    filterArticleTags();
 
 }]);
