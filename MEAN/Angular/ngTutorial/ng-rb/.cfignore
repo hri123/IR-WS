@@ -1,5 +1,4 @@
-/node_modules/**
-/bower_components/**
-/passport-sample/**
-/RB-files/**
-/test/**
+test/
+RB-files/
+bower_components/
+node_modules/
