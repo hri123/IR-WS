@@ -95,6 +95,8 @@ Sample-Article-Structure
 Cloud-Hosting
 -------------
 
+cf is not able to ignore node_modules/ directory even if it is present in the .cfignore file causing issues while pushing to bluemix. Workaround is to temporarily move the node_modules to a different directory, issue the cf push and move it back after the successful push.
+
 - cf api https://api.ng.bluemix.net
 - cf login -u hrishikesh.kumar@in.ibm.com
 - cf target -o hrishikesh.kumar@in.ibm.com -s dev
