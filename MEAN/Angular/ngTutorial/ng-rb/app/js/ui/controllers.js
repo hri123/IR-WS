@@ -63,6 +63,115 @@ rbAppControllers.controller('mainAppController', ['$scope', 'sharedVars', functi
         val: ''
     };
 
+    // for the Search All
+    $scope.searchAll = {
+        val: ''
+    };
+
+    $scope.displayRefineBy = function() {
+
+        if ($scope.searchAll.val.trim() == "")  {
+            alert('Empty Search String');
+            return;
+        }
+
+        $scope.searchAllCheckboxGroup = [];
+        $scope.articleTags = {'name': 'Article Tags', 'model': false, 'count': 0};
+        $scope.articleSummary = {'name': 'Article Summary', 'model': false, 'count': 0};
+        $scope.articleContentMain = {'name': 'Article Content Main', 'model': false, 'count': 0};
+        $scope.articleContentSectionName = {'name': 'Art. Con. Sec. Name', 'model': false, 'count': 0};
+        $scope.articleContentSectionMain = {'name': 'Art. Con. Sec. Main', 'model': false, 'count': 0};
+        $scope.articleContentSubSectionName = {'name': 'Art. Con. SubSec. Name', 'model': false, 'count': 0};
+        $scope.articleContentSubSectionMain = {'name': 'Art. Con. SubSec. Main', 'model': false, 'count': 0};
+        $scope.articleAnnotationMain = {'name': 'Article Annotation Main', 'model': false, 'count': 0};
+        $scope.articleAnnotationSectionName = {'name': 'Art. Ann. Sec. Name', 'model': false, 'count': 0};
+        $scope.articleAnnotationSectionMain = {'name': 'Art. Ann. Sec. Main', 'model': false, 'count': 0};
+        $scope.articleAnnotationSubSectionName = {'name': 'Art. Ann. SubSec. Name', 'model': false, 'count': 0};
+        $scope.articleAnnotationSubSectionMain = {'name': 'Art. Ann. SubSec. Main', 'model': false, 'count': 0};
+
+        var articlesLength = sharedVars.articles.length;
+        
+        for (var i = 0; i < articlesLength; i++) {
+
+            var currentArticle = sharedVars.articles[i];
+
+            findInStringForSearchAll(currentArticle.tags, $scope.articleTags);
+            findInStringForSearchAll(currentArticle.summary, $scope.articleSummary);
+            findInStringForSearchAll(currentArticle.content.main, $scope.articleContentMain);
+            findInStringForSearchAll(currentArticle.annotation.main, $scope.articleAnnotationMain);
+
+            if (currentArticle.content.section) jQuery.each(currentArticle.content.section, function(index, section) {
+                findInStringForSearchAll(section.name, $scope.articleContentSectionName);
+                findInStringForSearchAll(section.main, $scope.articleContentSectionMain);
+                if (section.sub_section) jQuery.each(section.sub_section, function(index, sub_section) {
+                    findInStringForSearchAll(sub_section.name, $scope.articleContentSubSectionName);
+                    findInStringForSearchAll(sub_section.main, $scope.articleContentSubSectionMain);
+                    
+                });                
+            });
+
+            if (currentArticle.annotation.section) jQuery.each(currentArticle.annotation.section, function(index, section) {
+                findInStringForSearchAll(section.name, $scope.articleAnnotationSectionName);
+                findInStringForSearchAll(section.main, $scope.articleAnnotationSectionMain);
+                if (section.sub_section) jQuery.each(section.sub_section, function(index, sub_section) {
+                    findInStringForSearchAll(sub_section.name, $scope.articleAnnotationSubSectionName);
+                    findInStringForSearchAll(sub_section.main, $scope.articleAnnotationSubSectionMain);
+                    
+                });                
+            });
+
+        }
+        
+        $scope.searchAllCheckboxGroup.push($scope.articleTags);
+        $scope.searchAllCheckboxGroup.push($scope.articleSummary);
+        $scope.searchAllCheckboxGroup.push($scope.articleContentMain);
+        $scope.searchAllCheckboxGroup.push($scope.articleContentSectionName);
+        $scope.searchAllCheckboxGroup.push($scope.articleContentSectionMain);
+        $scope.searchAllCheckboxGroup.push($scope.articleContentSubSectionName);
+        $scope.searchAllCheckboxGroup.push($scope.articleContentSubSectionMain);
+        $scope.searchAllCheckboxGroup.push($scope.articleAnnotationMain);
+        $scope.searchAllCheckboxGroup.push($scope.articleAnnotationSectionName);
+        $scope.searchAllCheckboxGroup.push($scope.articleAnnotationSectionMain);
+        $scope.searchAllCheckboxGroup.push($scope.articleAnnotationSubSectionName);
+        $scope.searchAllCheckboxGroup.push($scope.articleAnnotationSubSectionMain);
+    };
+
+    var findInStringForSearchAll = function(inputString, tracker) {
+        if (inputString && inputString.toLowerCase().indexOf($scope.searchAll.val.trim()) != -1) {
+
+            tracker.count++;
+
+        }
+    };
+
+    var setSearchValAfterRefinedBy = function(tracker) {
+        var returnVal = '';
+        if (tracker.count > 0 && tracker.model == true) {
+            returnVal = $scope.searchAll.val;
+        }
+        return returnVal;
+    };
+
+    $scope.changeRefineBy = function() {
+
+        $scope.search1.tags = setSearchValAfterRefinedBy($scope.articleTags);
+        $scope.search4.summary = setSearchValAfterRefinedBy($scope.articleSummary);
+        $scope.search5.content.main = setSearchValAfterRefinedBy($scope.articleContentMain);
+        $scope.search6.annotation.main = setSearchValAfterRefinedBy($scope.articleAnnotationMain);
+
+        $scope.search7.val = '';
+        if ((x = setSearchValAfterRefinedBy($scope.articleContentSectionName)) != '') $scope.search7.val = x;
+        if ((x = setSearchValAfterRefinedBy($scope.articleContentSectionMain)) != '') $scope.search7.val = x;
+        if ((x = setSearchValAfterRefinedBy($scope.articleContentSubSectionName)) != '') $scope.search7.val = x;
+        if ((x = setSearchValAfterRefinedBy($scope.articleContentSubSectionMain)) != '') $scope.search7.val = x;
+        if ((x = setSearchValAfterRefinedBy($scope.articleAnnotationSectionName)) != '') $scope.search7.val = x;
+        if ((x = setSearchValAfterRefinedBy($scope.articleAnnotationSectionMain)) != '') $scope.search7.val = x;
+        if ((x = setSearchValAfterRefinedBy($scope.articleAnnotationSubSectionName)) != '') $scope.search7.val = x;
+        if ((x = setSearchValAfterRefinedBy($scope.articleAnnotationSubSectionMain)) != '') $scope.search7.val = x;
+
+
+    };
+
     $scope.clearInputTags = function(inputVar) {
         inputVar.tags = '';
     };
