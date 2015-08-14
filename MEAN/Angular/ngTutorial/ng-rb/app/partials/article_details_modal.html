@@ -63,7 +63,7 @@
 
               <div data-ng-repeat="section in currentArticle.content.section track by $index">
                 <div id="section_c_{{$index}}">
-                  <h2><span>SECTION - <a href="#" editable-text="section.name">{{ section.name || 'empty section name' }}</a></span></h2>
+                  <h2><span>CONTENT-SECTION - <a href="#" editable-text="section.name">{{ section.name || 'empty section name' }}</a></span></h2>
                   <span>TAGS - <a href="#" editable-text="section.tags">{{ section.tags || 'empty section tags' }}</a></span>
                   <br/>
                   <a href="#" editable-textarea="section.main">
@@ -80,7 +80,7 @@
                   <div>
 
                     <div data-ng-repeat="sub_section in section.sub_section">
-                      <h3><span>SUB-SECTION - <a href="#" editable-text="sub_section.name">{{ sub_section.name || 'empty sub_section name' }}</a></span></h3>
+                      <h3><span>CONTENT-SUB-SECTION - <a href="#" editable-text="sub_section.name">{{ sub_section.name || 'empty sub_section name' }}</a></span></h3>
                       <span>TAGS - <a href="#" editable-text="sub_section.tags">{{ sub_section.tags || 'empty sub_section tags' }}</a></span>
                       <br/>
                       <a href="#" editable-textarea="sub_section.main">
@@ -114,7 +114,7 @@
 
               <div data-ng-repeat="section in currentArticle.annotation.section track by $index">
                 <div id="section_a_{{$index}}">
-                  <h2><span>SECTION - <a href="#" editable-text="section.name">{{ section.name || 'empty section name' }}</a></span></h2>
+                  <h2><span>ANNOTATION-SECTION - <a href="#" editable-text="section.name">{{ section.name || 'empty section name' }}</a></span></h2>
                   <span>TAGS - <a href="#" editable-text="section.tags">{{ section.tags || 'empty section tags' }}</a></span>
                   <br/>
                   <!-- TODO: BAD responsive design - hardcoding rows and columns -->
@@ -132,7 +132,7 @@
                   <div>
 
                     <div data-ng-repeat="sub_section in section.sub_section">
-                      <h3><span>SUB-SECTION - <a href="#" editable-text="sub_section.name">{{ sub_section.name || 'empty sub_section name' }}</a></span></h3>
+                      <h3><span>ANNOTATION-SUB-SECTION - <a href="#" editable-text="sub_section.name">{{ sub_section.name || 'empty sub_section name' }}</a></span></h3>
                       <span>TAGS - <a href="#" editable-text="sub_section.tags">{{ sub_section.tags || 'empty sub_section tags' }}</a></span>
                       <br/>
                       <a href="#" editable-textarea="sub_section.main">

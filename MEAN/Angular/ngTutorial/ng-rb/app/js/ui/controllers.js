@@ -79,13 +79,17 @@ rbAppControllers.controller('mainAppController', ['$scope', 'sharedVars', functi
         $scope.articleTags = {'name': 'Article Tags', 'model': false, 'count': 0};
         $scope.articleSummary = {'name': 'Article Summary', 'model': false, 'count': 0};
         $scope.articleContentMain = {'name': 'Article Content Main', 'model': false, 'count': 0};
+        $scope.articleContentSectionTags = {'name': 'Art. Con. Sec. Tags', 'model': false, 'count': 0};
         $scope.articleContentSectionName = {'name': 'Art. Con. Sec. Name', 'model': false, 'count': 0};
         $scope.articleContentSectionMain = {'name': 'Art. Con. Sec. Main', 'model': false, 'count': 0};
+        $scope.articleContentSubSectionTags = {'name': 'Art. Con. SubSec. Tags', 'model': false, 'count': 0};
         $scope.articleContentSubSectionName = {'name': 'Art. Con. SubSec. Name', 'model': false, 'count': 0};
         $scope.articleContentSubSectionMain = {'name': 'Art. Con. SubSec. Main', 'model': false, 'count': 0};
         $scope.articleAnnotationMain = {'name': 'Article Annotation Main', 'model': false, 'count': 0};
+        $scope.articleAnnotationSectionTags = {'name': 'Art. Ann. Sec. Tags', 'model': false, 'count': 0};
         $scope.articleAnnotationSectionName = {'name': 'Art. Ann. Sec. Name', 'model': false, 'count': 0};
         $scope.articleAnnotationSectionMain = {'name': 'Art. Ann. Sec. Main', 'model': false, 'count': 0};
+        $scope.articleAnnotationSubSectionTags = {'name': 'Art. Ann. SubSec. Tags', 'model': false, 'count': 0};
         $scope.articleAnnotationSubSectionName = {'name': 'Art. Ann. SubSec. Name', 'model': false, 'count': 0};
         $scope.articleAnnotationSubSectionMain = {'name': 'Art. Ann. SubSec. Main', 'model': false, 'count': 0};
 
@@ -101,9 +105,11 @@ rbAppControllers.controller('mainAppController', ['$scope', 'sharedVars', functi
             findInStringForSearchAll(currentArticle.annotation.main, $scope.articleAnnotationMain);
 
             if (currentArticle.content.section) jQuery.each(currentArticle.content.section, function(index, section) {
+                findInStringForSearchAll(section.tags, $scope.articleContentSectionTags);
                 findInStringForSearchAll(section.name, $scope.articleContentSectionName);
                 findInStringForSearchAll(section.main, $scope.articleContentSectionMain);
                 if (section.sub_section) jQuery.each(section.sub_section, function(index, sub_section) {
+                    findInStringForSearchAll(sub_section.tags, $scope.articleContentSubSectionTags);
                     findInStringForSearchAll(sub_section.name, $scope.articleContentSubSectionName);
                     findInStringForSearchAll(sub_section.main, $scope.articleContentSubSectionMain);
                     
@@ -111,9 +117,11 @@ rbAppControllers.controller('mainAppController', ['$scope', 'sharedVars', functi
             });
 
             if (currentArticle.annotation.section) jQuery.each(currentArticle.annotation.section, function(index, section) {
+                findInStringForSearchAll(section.tags, $scope.articleAnnotationSectionTags);
                 findInStringForSearchAll(section.name, $scope.articleAnnotationSectionName);
                 findInStringForSearchAll(section.main, $scope.articleAnnotationSectionMain);
                 if (section.sub_section) jQuery.each(section.sub_section, function(index, sub_section) {
+                    findInStringForSearchAll(sub_section.tags, $scope.articleAnnotationSubSectionTags);
                     findInStringForSearchAll(sub_section.name, $scope.articleAnnotationSubSectionName);
                     findInStringForSearchAll(sub_section.main, $scope.articleAnnotationSubSectionMain);
                     
@@ -125,13 +133,17 @@ rbAppControllers.controller('mainAppController', ['$scope', 'sharedVars', functi
         $scope.searchAllCheckboxGroup.push($scope.articleTags);
         $scope.searchAllCheckboxGroup.push($scope.articleSummary);
         $scope.searchAllCheckboxGroup.push($scope.articleContentMain);
+        $scope.searchAllCheckboxGroup.push($scope.articleContentSectionTags);
         $scope.searchAllCheckboxGroup.push($scope.articleContentSectionName);
         $scope.searchAllCheckboxGroup.push($scope.articleContentSectionMain);
+        $scope.searchAllCheckboxGroup.push($scope.articleContentSubSectionTags);
         $scope.searchAllCheckboxGroup.push($scope.articleContentSubSectionName);
         $scope.searchAllCheckboxGroup.push($scope.articleContentSubSectionMain);
         $scope.searchAllCheckboxGroup.push($scope.articleAnnotationMain);
+        $scope.searchAllCheckboxGroup.push($scope.articleAnnotationSectionTags);
         $scope.searchAllCheckboxGroup.push($scope.articleAnnotationSectionName);
         $scope.searchAllCheckboxGroup.push($scope.articleAnnotationSectionMain);
+        $scope.searchAllCheckboxGroup.push($scope.articleAnnotationSubSectionTags);
         $scope.searchAllCheckboxGroup.push($scope.articleAnnotationSubSectionName);
         $scope.searchAllCheckboxGroup.push($scope.articleAnnotationSubSectionMain);
     };
@@ -169,7 +181,11 @@ rbAppControllers.controller('mainAppController', ['$scope', 'sharedVars', functi
         if ((x = setSearchValAfterRefinedBy($scope.articleAnnotationSubSectionName)) != '') $scope.search7.val = x;
         if ((x = setSearchValAfterRefinedBy($scope.articleAnnotationSubSectionMain)) != '') $scope.search7.val = x;
 
-
+        $scope.search9.val = '';
+        if ((x = setSearchValAfterRefinedBy($scope.articleContentSectionTags)) != '') $scope.search9.val = x;
+        if ((x = setSearchValAfterRefinedBy($scope.articleContentSubSectionTags)) != '') $scope.search9.val = x;
+        if ((x = setSearchValAfterRefinedBy($scope.articleAnnotationSectionTags)) != '') $scope.search9.val = x;
+        if ((x = setSearchValAfterRefinedBy($scope.articleAnnotationSubSectionTags)) != '') $scope.search9.val = x;
     };
 
     $scope.clearInputTags = function(inputVar) {

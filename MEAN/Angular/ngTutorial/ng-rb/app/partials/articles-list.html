@@ -14,11 +14,15 @@
         <p style="white-space: pre-line;">CONTENT - </p>
         <ol>
           <li data-ng-repeat="section in article.content.section">
-            <span>SECTION - {{section.name}}</span>
+            <span>CONTENT-SECTION - {{section.name}}</span>
+            <br/>
+            <span>CONTENT-SECTION-TAGS - {{section.tags}}</span>
             <br/>
             <ol>
               <li data-ng-repeat="sub_section in section.sub_section">
-                <span>SUB-SECTION - {{sub_section.name}}</span>
+                <span>CONTENT-SUB-SECTION - {{sub_section.name}}</span>
+                <br/>
+                <span>CONTENT-SUB-SECTION-TAGS - {{sub_section.tags}}</span>
                 <br/>
               </li>
             </ol>
@@ -27,11 +31,15 @@
         <p style="white-space: pre-line;">ANNOTATION - </p>
         <ol>
           <li data-ng-repeat="section in article.annotation.section">
-            <span>SECTION - {{section.name}}</span>
+            <span>ANNOTATION-SECTION - {{section.name}}</span>
+            <br/>
+            <span>ANNOTATION-SECTION-TAGS - {{section.tags}}</span>
             <br/>
             <ol>
               <li data-ng-repeat="sub_section in section.sub_section">
-                <span>SUB-SECTION - {{sub_section.name}}</span>
+                <span>ANNOTATION-SUB-SECTION - {{sub_section.name}}</span>
+                <br/>
+                <span>ANNOTATION-SUB-SECTION-TAGS - {{sub_section.tags}}</span>
                 <br/>
               </li>
             </ol>
