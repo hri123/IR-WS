@@ -16,6 +16,8 @@ var DropboxStrategy = require('passport-dropbox-oauth2').Strategy;
 
 var shortId = require('shortid');
 
+var path = require('path');
+
 // for the app - rBookApp (Register your application with all of the OAuth providers you want to use, except Google - as Google uses OpenID)
 
 // Put the keys and secrets in a file called oauth.js
@@ -29,10 +31,10 @@ var shortId = require('shortid');
 // }
 // module.exports = ids
 
-var config = require('./app/js/server/oauth.js');
-var myDropboxUtils = require('./app/js/server/dropbox.js');
+var config = require('./oauth.js');
+var myDropboxUtils = require('./dropbox.js');
 
-var storageFactory = require('./app/js/server/storageFactory.js');
+var storageFactory = require('./storageFactory.js');
 
 var skipDropboxAuth = false;
 if (process.argv[2] == 'local') {
@@ -98,21 +100,21 @@ app.configure(function() {
     app.use(passport.session());
     app.use(app.router);
 
-    app.use(express.static(__dirname + '/app'));
+    app.use(express.static(path.resolve('../../')));
     // app.use('/', express.static(__dirname + '/bower_components/mobile-angular-ui')); // http://localhost:3000/demo/#/ will take you to the mobile angular ui demo on local
-    app.use('/bower_components', express.static(__dirname + '/bower_components'));
+    app.use('/bower_components', express.static(path.resolve('../../../bower_components')));
 });
 
 app.get('/', ensureAuthenticated, function(req, res) {
-    res.sendfile(__dirname + '/app' + '/' + 'index.html');
+    res.sendfile(path.resolve('../../index.html')); // http://stackoverflow.com/a/14594282
 });
 
 app.get('/select', ensureAuthenticated, function(req, res) {
-    res.sendfile(__dirname + '/app' + '/' + 'select.html');
+    res.sendfile(path.resolve('../../select.html'));
 });
 
 app.get('/login', function(req, res) {
-    res.sendfile(__dirname + '/app' + '/' + 'login.html');
+    res.sendfile(path.resolve('../../login.html'));
 });
 
 app.get('/auth/dropbox',

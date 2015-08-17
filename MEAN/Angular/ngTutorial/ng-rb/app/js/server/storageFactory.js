@@ -45,7 +45,7 @@
 
         function LocalFileSystemClient() {
 
-            this.baseDirectory = './RB-files/';
+            this.baseDirectory = '../../../RB-files/';
 
 
         }

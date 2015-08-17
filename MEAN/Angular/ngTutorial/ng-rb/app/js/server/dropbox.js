@@ -10,7 +10,7 @@ var dropbox_apis = {
             }
 
             for (i = 0; i < projectAreas.length; i++) {
-                if (entries.indexOf(projectAreas[i]) < 0) { // directory not found for project area
+                if (entries && entries.indexOf(projectAreas[i]) < 0) { // directory not found for project area
                     client.mkdir((client.baseDirectory || "/") + projectAreas[i],
                         function(error) {
                         	if (error != null) {
