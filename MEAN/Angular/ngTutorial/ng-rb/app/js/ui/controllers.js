@@ -26,6 +26,20 @@ var printNesting = function(data) {
 
 var rbAppControllers = angular.module('rbAppControllers', []);
 
+// https://docs.angularjs.org/guide/providers
+// Extracted it outside so that it can be injected into the controller, helpful during testing (mocking)
+rbAppControllers.factory('socketIO', ['$location', function socketIOFactory($location) {
+
+    function Connection() {
+        this.connect = function() {
+            this.socket = io.connect($location.$$protocol + "://" + $location.$$host + ":" + $location.$$port, {'force new connection': true});
+        }
+    }
+
+    return new Connection();
+
+}]);
+
 // sharing variables between sidebar and the main body
 rbAppControllers.controller('mainAppController', ['$scope', 'sharedVars', function($scope, sharedVars) {
 
@@ -283,7 +297,7 @@ rbAppControllers.controller('mainAppController', ['$scope', 'sharedVars', functi
 
 }]);
 
-rbAppControllers.controller('articleListController', ['$scope', '$http', '$location', '$routeParams', 'sharedVars', 'rbFiles', function($scope, $http, $location, $routeParams, sharedVars, rbFiles) {
+rbAppControllers.controller('articleListController', ['$scope', '$http', '$location', '$routeParams', 'sharedVars', 'rbFiles', 'socketIO', function($scope, $http, $location, $routeParams, sharedVars, rbFiles, socketIO) {
 
     // this method was called twice - http://stackoverflow.com/a/24519817/512126 - in index.html
     // <div ng-include="'partials/sidebar.html'" 
@@ -346,8 +360,8 @@ rbAppControllers.controller('articleListController', ['$scope', '$http', '$locat
     // invokeReadFile({area: $scope.projectArea, project: $scope.projectName});
 
     // http://stackoverflow.com/a/7504015
-    var socket = io.connect($location.$$protocol + "://" + $location.$$host + ":" + $location.$$port, {'force new connection': true});
-    socket.on('connect_success', function(data) {
+    socketIO.connect();
+    socketIO.socket.on('connect_success', function(data) {
 
         var data = rbFiles.query({
             area: $scope.projectArea,
@@ -357,7 +371,7 @@ rbAppControllers.controller('articleListController', ['$scope', '$http', '$locat
             // nothing here, the server sends data using sockets
         });
     });
-    socket.on('receive_article', function(data) {
+    socketIO.socket.on('receive_article', function(data) {
 
         // $scope.apply is required to trigger the 2 way data binding of angular between model and view
         // if this is not done, the view is not getting updated
@@ -599,7 +613,7 @@ rbAppControllers.controller('articleListController', ['$scope', '$http', '$locat
 
 }]);
 
-rbAppControllers.controller('articleDetailsController', ['$scope', '$http', '$location', '$routeParams', 'sharedVars', function($scope, $http, $location, $routeParams, sharedVars) {
+rbAppControllers.controller('articleDetailsController', ['$scope', '$http', '$routeParams', 'sharedVars', function($scope, $http, $routeParams, sharedVars) {
 
     $scope.article = sharedVars.articles[$routeParams.articleId];
 
