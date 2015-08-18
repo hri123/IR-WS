@@ -29,7 +29,7 @@ var rbAppControllers = angular.module('rbAppControllers', []);
 // sharing variables between sidebar and the main body
 rbAppControllers.controller('mainAppController', ['$scope', 'sharedVars', function($scope, sharedVars) {
 
-    $scope.articles = sharedVars.articles = [];
+    $scope.articles = sharedVars.articles;
 
     $scope.search1 = {
         tags: '',

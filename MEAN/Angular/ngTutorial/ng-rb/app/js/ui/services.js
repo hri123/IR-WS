@@ -1,7 +1,9 @@
 var rbAppServices = angular.module('rbAppServices', ['ngResource']);
 
 rbAppServices.service('sharedVars', function() {
-    return {};
+    return {
+      articles: []
+    };
 });
 
 // https://docs.angularjs.org/api/ngResource/service/$resource
