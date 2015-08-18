@@ -202,6 +202,12 @@ rbAppControllers.controller('mainAppController', ['$scope', 'sharedVars', functi
         if ((x = setSearchValAfterRefinedBy($scope.articleAnnotationSubSectionTags)) != '') $scope.search9.val = x;
     };
 
+    // http://www.tutorialrepublic.com/twitter-bootstrap-tutorial/bootstrap-accordion.php
+    // expanding / collapsing via data attributes caused the controller to be called again, so using the javascript call directly
+    $scope.accordianCollapse = function(panelID) {
+        jQuery(panelID).collapse('toggle');
+    };
+
     $scope.clearInputTags = function(inputVar) {
         inputVar.tags = '';
     };
