@@ -1,3 +1,6 @@
+// Usage
+// npm test
+
 module.exports = function(config){
   config.set({
 

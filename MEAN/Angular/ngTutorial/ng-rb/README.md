@@ -44,6 +44,7 @@ References
 TODO
 ----
 
+- delete article-details.html
 - Article list page should look like this - http://www.flipkart.com/all-categories/pr?sid=search.flipkart.com&filterNone=true
 - instant search should be the core value add with this application (like Verse mail client from IBM)
 - protractor testing pending
