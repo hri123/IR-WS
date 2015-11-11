@@ -1,12 +1,13 @@
-// http://stackoverflow.com/questions/1911015/how-to-debug-node-js-applications
-// node-debug main.js
-
 // Usage
 // npm install
 // add the path where git.exe (installed by GitHub) to environment path var
-// ./app/js/server/oauth.js
-// node main.js local
-// node main.js 
+// create & update ./app/js/server/oauth.js
+// node ./app/js/server/main.js local
+// node ./app/js/server/main.js - for dropbox
+// or can also use - npm start
+
+// http://stackoverflow.com/questions/1911015/how-to-debug-node-js-applications
+// node-debug main.js
 
 var express = require('express');
 var app = express();
@@ -31,7 +32,8 @@ var path = require('path');
 // }
 // module.exports = ids
 
-var config = require('./oauth.js');
+var config = require('./config.js');
+var config_oauth = require('./oauth.js');
 var myDropboxUtils = require('./dropbox.js');
 
 var storageFactory = require('./storageFactory.js');
@@ -44,6 +46,7 @@ if (process.argv[2] == 'local') {
 var storageClient;
 if (skipDropboxAuth) { // read from command line args
     storageClient = storageFactory.getStorageClient('LocalFileSystem');
+    storageClient.prototype.baseDirectory = config.paths.storageClient_local_baseDirectory;
 } else {
     storageClient = storageFactory.getStorageClient();
 }
@@ -59,14 +62,14 @@ passport.deserializeUser(function(obj, done) {
 var accessTokenGlobal = {};
 var socketsGlobal = {};
 
-var tempCallbackURL = config.dropbox.callbackURLLocal;
+var tempCallbackURL = config_oauth.dropbox.callbackURLLocal;
 if (process.env.VCAP_APP_PORT) // if on bluemix
-    tempCallbackURL = config.dropbox.callbackURLBluemix;
+    tempCallbackURL = config_oauth.dropbox.callbackURLBluemix;
 
-// config
+// config_oauth
 passport.use(new DropboxStrategy({
-        clientID: config.dropbox.clientID, // "--insert-dropbox-app-key-here--"
-        clientSecret: config.dropbox.clientSecret, //"--insert-dropbox-app-secret-here--";
+        clientID: config_oauth.dropbox.clientID, // "--insert-dropbox-app-key-here--"
+        clientSecret: config_oauth.dropbox.clientSecret, //"--insert-dropbox-app-secret-here--";
         callbackURL: tempCallbackURL
     },
     function(accessToken, refreshToken, profile, done) {
@@ -100,21 +103,21 @@ app.configure(function() {
     app.use(passport.session());
     app.use(app.router);
 
-    app.use(express.static(path.resolve('../../')));
+    app.use(express.static(path.resolve(config.paths.appDir)));
     // app.use('/', express.static(__dirname + '/bower_components/mobile-angular-ui')); // http://localhost:3000/demo/#/ will take you to the mobile angular ui demo on local
-    app.use('/bower_components', express.static(path.resolve('../../../bower_components')));
+    app.use('/bower_components', express.static(path.resolve(config.paths.appDir + '../bower_components')));
 });
 
 app.get('/', ensureAuthenticated, function(req, res) {
-    res.sendfile(path.resolve('../../index.html')); // http://stackoverflow.com/a/14594282
+    res.sendfile(path.resolve(config.paths.appDir + 'index.html')); // http://stackoverflow.com/a/14594282
 });
 
 app.get('/select', ensureAuthenticated, function(req, res) {
-    res.sendfile(path.resolve('../../select.html'));
+    res.sendfile(path.resolve(config.paths.appDir + 'select.html'));
 });
 
 app.get('/login', function(req, res) {
-    res.sendfile(path.resolve('../../login.html'));
+    res.sendfile(path.resolve(config.paths.appDir + 'login.html'));
 });
 
 app.get('/auth/dropbox',
@@ -148,8 +151,8 @@ function ensureAuthenticated(req, res, next) {
 var articleSaveAndUpdate = function(req, res, isNew) {
 
     var client = new storageClient({
-        key: config.dropbox.clientID,
-        secret: config.dropbox.clientSecret,
+        key: config_oauth.dropbox.clientID,
+        secret: config_oauth.dropbox.clientSecret,
         token: getAccessTokenFromGlobal(req),
         sandbox: false
     });
@@ -229,8 +232,8 @@ var getAccessTokenFromGlobal = function(req) {
 app.get('/api/articles', ensureAuthenticated, function(req, res) {
 
     var client = new storageClient({
-        key: config.dropbox.clientID,
-        secret: config.dropbox.clientSecret,
+        key: config_oauth.dropbox.clientID,
+        secret: config_oauth.dropbox.clientSecret,
         token: getAccessTokenFromGlobal(req),
         sandbox: false
     });

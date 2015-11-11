@@ -45,9 +45,6 @@
 
         function LocalFileSystemClient() {
 
-            this.baseDirectory = '../../../RB-files/';
-
-
         }
 
         LocalFileSystemClient.prototype.readdir = function(path, callback) {
