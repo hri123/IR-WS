@@ -55,6 +55,11 @@ TODO
 - restructure app - launch page - login, once login, landing page - choose Project Areas (like in 'things for ios' app - Artistic, Attitude, Career, Education, Family, Financial, Physical, Pleasure, Public-Service), once category, create projects - RB, Tech, etc, under suitable category, open the Single page app with navigation on left and search that slides down from top, add a bread crumb for the chosen search criteria like in myntra; 3 * 3 matrix for the selection of project area (like in the http://www.ellucian.com/ home page, followed by some nice interface to select the projects.
 - PouchDB like stuff for offline storage
 
+DEFECTS
+-------
+
+- The article is saved in a json file inside a directory - if tags are present, the directory name is the first tag name, if tags are not present, the directory name is 'unknown'. In case this article's tags are updated, a new article is created and saved in the new folder, but the previous article does not get deleted. Workaround - delete it from the dropbox console or explorer for now.
+
 Journal
 -------
 
