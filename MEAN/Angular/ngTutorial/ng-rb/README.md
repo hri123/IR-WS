@@ -109,4 +109,4 @@ cf is not able to ignore node_modules/ directory even if it is present in the .c
 - cf api https://api.ng.bluemix.net
 - cf login -u hrishikesh.kumar@in.ibm.com
 - cf target -o hrishikesh.kumar@in.ibm.com -s dev
-- cf push ng-rb
+- cf push ng-rb (C:\H\C\GitHub\IR-WS\MEAN\Angular\ngTutorial>cf push ng-rb)
