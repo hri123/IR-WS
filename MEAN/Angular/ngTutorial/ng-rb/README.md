@@ -64,6 +64,7 @@ Journal
 -------
 
 - Verified manually all the RB files using the /exportForVerification call which internally calls the getStructure method and made sure everything is exported fine
+- 160202 - using migrate.js and reverse-migrate.js and spending one whole day doing a manual comparison between the original xml and the xml generated back from the reverse-migrate, made sure every article, section, sub-section, tags are exported correctly. Today, I certify that the migrate tool can be used with complete confidence.
 
 Sample-Article-Structure
 ------------------------
