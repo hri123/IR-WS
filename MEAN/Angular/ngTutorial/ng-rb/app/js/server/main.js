@@ -262,6 +262,11 @@ app.get('/api/articles', ensureAuthenticated, function(req, res) {
 
                 for (var i = 0; i < entries.length; i++) {
                     // TODO: if entries[i] is not a folder, continue
+                    if (entries[i] == '.DS_Store') {
+                        continue;
+                    }
+
+
                     var dirName = (client.baseDirectory || "/") + selectedArea + "/" + selectedProject + "/" + entries[i];
                     // scope is required because the dirName would have got updated before all the files in the folder dirName are read
                     // error during readFile:Dropbox API error 404 from GET https://api-content.dropbox.com/1/files/auto/attitude/rb/sacrifice-

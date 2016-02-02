@@ -1,7 +1,12 @@
+// Usage
+// update the line with source folder location in the code below
+// var p = '/Users/hrishikesh/H/HP/Dropbox/Kaizen/Hhh100204';
+// node ./app/js/server/migrate.js 
+
 utils = require('../common/utils.js');
 var mkdirp = require('mkdirp');
 
-var massageArticleForExport = function(inArticle) {
+var massageArticleForExport = function(inArticle, subProjectName, num) {
 
     var outArticle = {};
 
@@ -12,6 +17,9 @@ var massageArticleForExport = function(inArticle) {
 
     outArticle.content = utils.getStructure(inArticle.content[0]);
     outArticle.annotation = utils.getStructure(inArticle.annotation[0]);
+
+    articleFileName = subProjectName + "_" + ("0" + num).slice(-2) + ".json";
+    outArticle.fileName = articleFileName;
 
     return outArticle;
 
@@ -24,7 +32,7 @@ var fs = require('fs'),
     path = require("path"),
     shortId = require('shortid');
 
-var p = 'C:/H/H/H/HP/Dropbox/Kaizen/Hhh100204/';
+var p = '/Users/hrishikesh/H/HP/Dropbox/Kaizen/Hhh100204';
 fs.readdir(p, function(err, files) {
     if (err) {
         throw err;
@@ -53,19 +61,15 @@ fs.readdir(p, function(err, files) {
             var articlesLength = articles.length;
             for (var i = 0; i < articlesLength; i++) {
 
-                var articleToSave = massageArticleForExport(articles[i]);
-
-                articleFileName = shortId.generate() + ".json";
-
-                articleToSave.fileName = articleFileName;
-
                 var subProjectName = "unknown";
-                var endIndexOfFirstTag = articleToSave.tags.indexOf(",");
+                var endIndexOfFirstTag = articles[i].tags[0].indexOf(",");
                 if (endIndexOfFirstTag > 0) { // has tags
-                    subProjectName = articleToSave.tags.substr(0, endIndexOfFirstTag);
-                } else if (articleToSave.tags.length > 0) { // has only one tag, no ","
-                    subProjectName = articleToSave.tags;
+                    subProjectName = articles[i].tags[0].substr(0, endIndexOfFirstTag);
+                } else if (articles[i].tags[0].length > 0) { // has only one tag, no ","
+                    subProjectName = articles[i].tags[0];
                 }
+
+                var articleToSave = massageArticleForExport(articles[i], subProjectName, i);
 
                 var outdir = './RB-files/attitude/rb/' + subProjectName;
     
@@ -77,7 +81,7 @@ fs.readdir(p, function(err, files) {
                 //     fs.mkdirSync(outdir);
                 // }
 
-                fs.writeFile(outdir + '/' + articleFileName, JSON.stringify(articleToSave, null, 2), function(err) {
+                fs.writeFile(outdir + '/' + articleToSave.fileName, JSON.stringify(articleToSave, null, 2), function(err) {
                     if (err) throw err;
                 });
 
