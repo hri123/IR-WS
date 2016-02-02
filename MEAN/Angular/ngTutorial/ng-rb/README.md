@@ -14,7 +14,7 @@ Table of Contents
 Start-Here
 ----------
 
-- **Usage: See the section Usage in main.js**
+- **Usage: See the section Usage in main.js
 
 - http://localhost:3000/#/index/-1
 - http://localhost:3000/#/article/2
