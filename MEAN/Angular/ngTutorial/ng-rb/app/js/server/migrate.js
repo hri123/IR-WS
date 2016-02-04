@@ -77,11 +77,14 @@ fs.readdir(p, function(err, files) {
                     if (err) console.error(err);
                 });
 
+                var strArticleToSave = JSON.stringify(articleToSave, null, 2);
+                strArticleToSave = strArticleToSave.split("\\r").join('');
+
                 // if (!fs.existsSync(outdir)) {
                 //     fs.mkdirSync(outdir);
                 // }
 
-                fs.writeFile(outdir + '/' + articleToSave.fileName, JSON.stringify(articleToSave, null, 2), function(err) {
+                fs.writeFile(outdir + '/' + articleToSave.fileName, strArticleToSave, function(err) {
                     if (err) throw err;
                 });
 
