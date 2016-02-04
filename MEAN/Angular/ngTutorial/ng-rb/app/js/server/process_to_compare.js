@@ -1,10 +1,10 @@
 // Usage
-// node ./app/js/server/reverse_migrate.js 
+// node ./app/js/server/process_to_compare.js 
 
 // var source_dir="/Users/hrishikesh/H/HP/Dropbox/Kaizen/ng-rb/RB-files/attitude/rb";
 // var output_dir="/Users/hrishikesh/H/HP/Dropbox/Kaizen/ng-rb/RB-files/attitude/rb_for_compare"
-var source_dir="/Users/hrishikesh/H/HP/Dropbox/Kaizen/ng-rb/Snapshot_160203/RB-files/attitude/rb";
-var output_dir="/Users/hrishikesh/H/HP/Dropbox/Kaizen/ng-rb/Snapshot_160203/RB-files/attitude/rb_for_compare"
+var source_dir="/Users/hrishikesh/H/HP/Dropbox/Kaizen/ng-rb/Snapshot_160204/RB-files/attitude/rb";
+var output_dir="/Users/hrishikesh/H/HP/Dropbox/Kaizen/ng-rb/Snapshot_160204/RB-files/attitude/rb_for_compare"
 
 utils = require('../common/utils.js');
 var mkdirp = require('mkdirp');
