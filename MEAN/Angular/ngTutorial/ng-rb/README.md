@@ -55,6 +55,7 @@ TODO
 - restructure app - launch page - login, once login, landing page - choose Project Areas (like in 'things for ios' app - Artistic, Attitude, Career, Education, Family, Financial, Physical, Pleasure, Public-Service), once category, create projects - RB, Tech, etc, under suitable category, open the Single page app with navigation on left and search that slides down from top, add a bread crumb for the chosen search criteria like in myntra; 3 * 3 matrix for the selection of project area (like in the http://www.ellucian.com/ home page, followed by some nice interface to select the projects.
 - PouchDB / Cloudant storageClient - like stuff for offline storage
 - Use http://quilljs.com/ for text editing of sections
+- Check the video in (https://www.ibm.com/developerworks/community/blogs/36db6433-2f12-4533-9c68-489067780bfd?lang=en -> ftp://public.dhe.ibm.com/software/ecm/content-analytics/tac/V005-WEX_CA_AlchemyConceptDiscoveryDemo.mp4) if the text analytics can be applied to articles of rb
 
 DEFECTS
 -------
