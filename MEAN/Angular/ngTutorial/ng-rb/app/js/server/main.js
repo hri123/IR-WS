@@ -282,6 +282,11 @@ app.get('/api/articles', ensureAuthenticated, function(req, res) {
                             } else {
                                 totalNumOfFiles += sub_entries.length;
                                 for (var j = 0; j < sub_entries.length; j++) {
+
+                                    if (sub_entries[j] == '.DS_Store') {
+                                        continue;
+                                    }
+
                                     client.readFile(dirName + '/' + sub_entries[j], function(error, data, stat) { // data has the file's contents
                                         if (error) {
                                             console.log("error during readFile:" + error); // Something went wrong.
