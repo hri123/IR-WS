@@ -19,6 +19,8 @@ var shortId = require('shortid');
 
 var path = require('path');
 
+var Promise = require('bluebird');
+
 // for the app - rBookApp (Register your application with all of the OAuth providers you want to use, except Google - as Google uses OpenID)
 
 // Put the keys and secrets in a file called oauth.js
@@ -228,6 +230,61 @@ var getAccessTokenFromGlobal = function(req) {
     }
 }
 
+var read_json_files = function (grandParent, client, dirName, fileName, socket) {
+    client.readFile(dirName + '/' + fileName, function(error, data, stat) { // data has the file's contents
+        if (error) {
+            console.log("error during readFile:" + error); // Something went wrong.
+            res.send(500);
+        } else {
+            var article = JSON.parse(data);
+
+            if (!article.fileName) {
+               article.fileName = stat.name; // this works for dropbox client, stat not available for local file system client 
+            }
+
+            // the articles were sent once everything was loaded from dropbox, which used to give a slow response feeling to the user
+            // so, using websockets to return the articles as soon as it is read from dropbox
+            // if the datastore was a nosql database, may be this could have been used
+            // articles.push(article);
+            socket.emit('receive_article', article);
+
+            grandParent.totalNumOfFiles -= 1;
+            // below actions should be after loading all the files
+            if (grandParent.totalNumOfFiles == 0) {
+                // res.send(articles);
+                
+                // close / disconnect the connection
+                delete socketsGlobal[socket_id];
+                socket.disconnect();
+            }
+        }
+    });    
+}
+
+var read_subdirectories = function(parent, client, dirName, socket) {
+
+    // client.readdir without using Promise
+    client.readdir(dirName, function(error, sub_entries) {
+        if (error) {
+            console.log("error during readdir: " + error); // Something went wrong.
+            res.send(500);
+        } else if (!sub_entries) {
+            console.log("no sub-entries: " + error); // Something went wrong.
+            res.send(500);
+        } else {
+            parent.totalNumOfFiles += sub_entries.length;
+            for (var j = 0; j < sub_entries.length; j++) {
+
+                if (sub_entries[j] == '.DS_Store') {
+                    continue;
+                }
+
+                read_json_files(parent, client, dirName, sub_entries[j], socket);
+            }
+        }
+    });
+}
+
 // REST: Query - get all
 app.get('/api/articles', ensureAuthenticated, function(req, res) {
 
@@ -249,15 +306,14 @@ app.get('/api/articles', ensureAuthenticated, function(req, res) {
         var socket_id = req.query.socket_id;
         var socket = socketsGlobal[socket_id];
 
-        client.readdir((client.baseDirectory || "/") + selectedArea + "/" + selectedProject, function(error, entries, stat) {
-            if (error) {
-                var errorResponse = "error during readdir: " + error + "\nLooks like there are no folder: " + selectedProject + " inside the area: " + selectedArea + ". Create a folder with the project name in dropbox or create an article here to automatically create the folder."; // Something went wrong.
-                console.log(errorResponse);
-                res.status(500).send(errorResponse);
-            } else {
+        // client.readdir using Promise
+        var readdirAsync = Promise.promisify(client.readdir);
+
+        readdirAsync((client.baseDirectory || "/") + selectedArea + "/" + selectedProject)
+            .then(function(entries, stat) {
                 // console.log("Your Dropbox contains " + entries);
 
-                var totalNumOfFiles = 0;
+                this.totalNumOfFiles = 0;
                 var articles = [];
 
                 for (var i = 0; i < entries.length; i++) {
@@ -271,58 +327,14 @@ app.get('/api/articles', ensureAuthenticated, function(req, res) {
                     // scope is required because the dirName would have got updated before all the files in the folder dirName are read
                     // error during readFile:Dropbox API error 404 from GET https://api-content.dropbox.com/1/files/auto/attitude/rb/sacrifice-
                     // from-others%20-%20Copy%20%289%29/Q1elgkjw.json :: {"error": "File not found"}
-                    (function(dirName) {
-                        client.readdir(dirName, function(error, sub_entries) {
-                            if (error) {
-                                console.log("error during readdir: " + error); // Something went wrong.
-                                res.send(500);
-                            } else if (!sub_entries) {
-                                console.log("no sub-entries: " + error); // Something went wrong.
-                                res.send(500);
-                            } else {
-                                totalNumOfFiles += sub_entries.length;
-                                for (var j = 0; j < sub_entries.length; j++) {
-
-                                    if (sub_entries[j] == '.DS_Store') {
-                                        continue;
-                                    }
-
-                                    client.readFile(dirName + '/' + sub_entries[j], function(error, data, stat) { // data has the file's contents
-                                        if (error) {
-                                            console.log("error during readFile:" + error); // Something went wrong.
-                                            res.send(500);
-                                        } else {
-                                            var article = JSON.parse(data);
-
-                                            if (!article.fileName) {
-                                               article.fileName = stat.name; // this works for dropbox client, stat not available for local file system client 
-                                            }
-
-                                            // the articles were sent once everything was loaded from dropbox, which used to give a slow response feeling to the user
-                                            // so, using websockets to return the articles as soon as it is read from dropbox
-                                            // if the datastore was a nosql database, may be this could have been used
-                                            // articles.push(article);
-                                            socket.emit('receive_article', article);
-
-                                            totalNumOfFiles -= 1;
-                                            // below actions should be after loading all the files
-                                            if (totalNumOfFiles == 0) {
-                                                // res.send(articles);
-                                                
-                                                // close / disconnect the connection
-                                                delete socketsGlobal[socket_id];
-                                                socket.disconnect();
-                                            }
-                                        }
-                                    });
-                                }
-                            }
-                        });
-                    })(dirName);
+                    read_subdirectories(this, client, dirName, socket);
                 }
                 res.send([]); // empty reponse is sent for the get all, which return immediately and then the web sockets take over and return the articles one by one, as and when they get loaded
-            }
-        });
+            }).catch(function(error) {
+                var errorResponse = "error during readdir: " + error + "\nLooks like there are no folder: " + selectedProject + " inside the area: " + selectedArea + ". Create a folder with the project name in dropbox or create an article here to automatically create the folder."; // Something went wrong.
+                console.log(errorResponse);
+                res.status(500).send(errorResponse);
+            });
 
     } else {
         console.log('dropbox client is not authenticated'); // Something went wrong.
