@@ -26,19 +26,6 @@ var printNesting = function(data) {
 
 var rbAppControllers = angular.module('rbAppControllers', []);
 
-// https://docs.angularjs.org/guide/providers
-// Extracted it outside so that it can be injected into the controller, helpful during testing (mocking)
-rbAppControllers.factory('socketIO', ['$location', function socketIOFactory($location) {
-
-    function Connection() {
-        this.connect = function() {
-            this.socket = io.connect($location.$$protocol + "://" + $location.$$host + ":" + $location.$$port, {'force new connection': true});
-        }
-    }
-
-    return new Connection();
-
-}]);
 
 // sharing variables between sidebar and the main body
 rbAppControllers.controller('mainAppController', ['$scope', 'sharedVars', function($scope, sharedVars) {

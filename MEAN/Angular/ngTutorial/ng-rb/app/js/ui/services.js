@@ -1,3 +1,5 @@
+(function() {
+
 var rbAppServices = angular.module('rbAppServices', ['ngResource']);
 
 rbAppServices.service('sharedVars', function() {
@@ -32,3 +34,21 @@ rbAppServices.factory('rbFiles', ['$resource', function($resource) {
         stripTrailingSlashes: false
     });
 }]);
+
+
+// https://docs.angularjs.org/guide/providers
+// Extracted it outside so that it can be injected into the controller, helpful during testing (mocking)
+rbAppServices.factory('socketIO', ['$location', function socketIOFactory($location) {
+
+    function Connection() {
+        this.connect = function() {
+            this.socket = io.connect($location.$$protocol + "://" + $location.$$host + ":" + $location.$$port, {'force new connection': true});
+        }
+    }
+
+    return new Connection();
+
+}]);
+
+
+})();
