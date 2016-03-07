@@ -43,6 +43,30 @@ rbAppServices.factory('socketIO', ['$location', function socketIOFactory($locati
     function Connection() {
         this.connect = function() {
             this.socket = io.connect($location.$$protocol + "://" + $location.$$host + ":" + $location.$$port, {'force new connection': true});
+        },
+        this.loadArticles = function(rbFiles, $scope) {
+
+            // http://stackoverflow.com/a/7504015
+            this.connect();
+            this.socket.on('connect_success', function(data) {
+
+                var data = rbFiles.query({
+                    area: $scope.projectArea,
+                    project: $scope.projectName,
+                    socket_id: data.socket_id
+                }, function(data) {
+                    // nothing here, the server sends data using sockets
+                });
+            });
+            this.socket.on('receive_article', function(data) {
+
+                // $scope.apply is required to trigger the 2 way data binding of angular between model and view
+                // if this is not done, the view is not getting updated
+                // http://stackoverflow.com/questions/21658490/angular-websocket-and-rootscope-apply
+                $scope.$apply(function() {
+                    $scope.articles.push(data);
+                });
+            });            
         }
     }
 
