@@ -22,6 +22,14 @@ Folder Structure
 └── www            // application - JS code and libs, CSS, images, etc.
 
 
+Run
+=====================
+
+ionic build ios
+
+ionic emulate ios
+
+
 .gitignore
 =====================
 
