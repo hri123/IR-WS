@@ -1,26 +1,38 @@
 Folder Structure
 =====================
 
+└── bower.json     // bower dependencies
 
-├── bower.json     // bower dependencies
-├── config.xml     // cordova configuration
-├── gulpfile.js    // gulp tasks
-├── hooks          // custom cordova hooks to execute on specific commands
-├── ionic.project  // ionic configuration
-├── package.json   // node dependencies
-├── platforms      // iOS/Android specific builds will reside here
-├── plugins        // where your cordova/ionic plugins will be installed
-├── scss           // scss code, which will output to www/css/
+└── config.xml     // cordova configuration
+
+└── gulpfile.js    // gulp tasks
+
+└── hooks          // custom cordova hooks to execute on specific commands
+
+└── ionic.project  // ionic configuration
+
+└── package.json   // node dependencies
+
+└── platforms      // iOS/Android specific builds will reside here
+
+└── plugins        // where your cordova/ionic plugins will be installed
+
+└── scss           // scss code, which will output to www/css/
+
 └── www            // application - JS code and libs, CSS, images, etc.
 
 
 .gitignore
+=====================
 
 npm install -> adds node_modules/ folder
+
 ionic platform add ios -> adds platforms/ folder
+
 ionic state reset -> adds plugins/ folder
 
 .bowerrc contains -> ”directory": "www/lib"
+
 bower install -> adds www/lib folder
 
 (to update ionic -> ionic lib update -v 1.2.4 -> adds www/lib/ionic/ folder)
