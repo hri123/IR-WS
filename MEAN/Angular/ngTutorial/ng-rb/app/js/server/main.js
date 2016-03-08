@@ -9,8 +9,12 @@
 // http://stackoverflow.com/questions/1911015/how-to-debug-node-js-applications
 // node-debug main.js
 
+// http://stackoverflow.com/a/21622564
+var cors = require('cors');
+
 var express = require('express');
 var app = express();
+app.use(cors());
 
 var passport = require('passport');
 var DropboxStrategy = require('passport-dropbox-oauth2').Strategy;
@@ -20,6 +24,7 @@ var shortId = require('shortid');
 var path = require('path');
 
 var Promise = require('bluebird');
+
 
 // for the app - rBookApp (Register your application with all of the OAuth providers you want to use, except Google - as Google uses OpenID)
 

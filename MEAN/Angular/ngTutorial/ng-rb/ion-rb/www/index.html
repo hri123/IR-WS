@@ -18,10 +18,21 @@
     <!-- cordova script (this will be a 404 during development) -->
     <script src="cordova.js"></script>
 
+    <!-- TODO: why should I explicitly include this when we do not explicitly include angular.js -->
+    <script src="lib/angular-resource/angular-resource.js"></script>
+
+
+    <script src="lib/socket.io-client/socket.io.js"></script>
+    
+    <!-- reuse services from the ng-rb app -->
+    <!-- use bower install to copy this file from ng-rb to ion-rb -->
+    <script src="lib/ng-rb-services/index.js"></script>
+
     <!-- your app's js -->
     <script src="js/app.js"></script>
     <script src="js/controllers.js"></script>
     <script src="js/services.js"></script>
+
   </head>
   <body ng-app="starter">
 

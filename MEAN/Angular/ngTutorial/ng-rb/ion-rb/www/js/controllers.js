@@ -68,7 +68,7 @@ angular.module('starter.controllers', [])
   };
 })
 
-.controller('PlaylistsCtrl', function($scope) {
+.controller('PlaylistsCtrl', ['$scope', '$location', 'socketIO', 'rbFiles', 'sharedVars', function($scope, $location, socketIO, rbFiles, sharedVars) {
   $scope.playlists = [
     { title: 'Reggae', id: 1 },
     { title: 'Chill', id: 2 },
@@ -77,7 +77,15 @@ angular.module('starter.controllers', [])
     { title: 'Rap', id: 5 },
     { title: 'Cowbell', id: 6 }
   ];
-})
+
+  $scope.articles = sharedVars.articles;
+
+  $scope.projectArea = 'attitude';
+  $scope.projectName = 'rb';
+  var articlesLoadUrl = $location.$$protocol + "://" + $location.$$host + ":" + 3000;
+  socketIO.loadArticles(articlesLoadUrl, rbFiles, $scope);
+
+}])
 
 .controller('PlaylistCtrl', function($scope, $stateParams) {
 });

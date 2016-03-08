@@ -48,3 +48,37 @@ angular.module('starter.services', [])
     }
   };
 });
+
+// http://thecodebarbarian.com/2015/01/24/angularjs-interceptors
+// https://strongloop.com/strongblog/part-3-ionic-loopback-frameworks-building-the-ionic-app -> section - 'Tying It All Together'
+
+// Also the nodejs server servicing at :3000 need to add support for cross domain as
+// http://stackoverflow.com/a/21622564
+/*var cors = require('cors');
+
+var express = require('express');
+var app = express();
+app.use(cors());*/
+
+(function() {
+  var modify_interceptor = angular.module('modify_interceptor', ['ng']);
+
+  modify_interceptor.config(function($httpProvider) {
+    $httpProvider.interceptors.push(function() {
+      return {
+        request: function(req) {
+          // Transform **all** $http calls so that requests that go to `/`
+          // instead go to a different origin, in this case localhost:3000
+          if (req.url.charAt(0) === '/') {
+            req.url = 'http://localhost:3000' + req.url;
+            // and make sure to send cookies too
+            req.withCredentials = false;
+          }
+
+          return req;
+        }
+      };
+    });
+  });
+
+})();

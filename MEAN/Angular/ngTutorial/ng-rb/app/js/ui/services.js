@@ -41,13 +41,13 @@
     rbAppServices.factory('socketIO', ['$location', function socketIOFactory($location) {
 
         function Connection() {
-            this.connect = function() {
-                this.socket = io.connect($location.$$protocol + "://" + $location.$$host + ":" + $location.$$port, {'force new connection': true});
+            this.connect = function(url) {
+                this.socket = io.connect(url, {'force new connection': true});
             },
-            this.loadArticles = function(rbFiles, $scope) {
+            this.loadArticles = function(url, rbFiles, $scope) {
 
                 // http://stackoverflow.com/a/7504015
-                this.connect();
+                this.connect(url);
                 this.socket.on('connect_success', function(data) {
 
                     var data = rbFiles.query({

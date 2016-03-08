@@ -352,7 +352,8 @@ rbAppControllers.controller('articleListController', ['$scope', '$http', '$locat
 
     // invokeReadFile({area: $scope.projectArea, project: $scope.projectName});
 
-    socketIO.loadArticles(rbFiles, $scope);
+    var articlesLoadUrl = $location.$$protocol + "://" + $location.$$host + ":" + $location.$$port;
+    socketIO.loadArticles(articlesLoadUrl, rbFiles, $scope);
 
     $scope.setCurrentArticle = function(currentArticle) {
         $scope.currentArticle = currentArticle;
