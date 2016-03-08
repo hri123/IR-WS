@@ -1,3 +1,8 @@
+Run
+---
+
+ionic serve --lab
+
 Folder Structure
 =====================
 
@@ -22,7 +27,7 @@ Folder Structure
 └── www            // application - JS code and libs, CSS, images, etc.
 
 
-Run
+Run on device
 =====================
 
 ionic build ios

@@ -1,3 +1,29 @@
+Run
+---
+
+gulp
+or
+node ./app/js/server/main.js local
+or
+node ./app/js/server/main.js - for dropbox
+or
+npm start
+
+
+Install Dependencies
+--------------------
+
+npm install
+add the path where git.exe (installed by GitHub) to environment path var
+create & update ./app/js/server/oauth.js
+
+Debug
+-----
+
+http://stackoverflow.com/questions/1911015/how-to-debug-node-js-applications
+node-debug main.js
+
+
 Table of Contents
 -----------------
 

@@ -1,13 +1,3 @@
-// Usage
-// npm install
-// add the path where git.exe (installed by GitHub) to environment path var
-// create & update ./app/js/server/oauth.js
-// node ./app/js/server/main.js local
-// node ./app/js/server/main.js - for dropbox
-// or can also use - npm start
-
-// http://stackoverflow.com/questions/1911015/how-to-debug-node-js-applications
-// node-debug main.js
 
 // http://stackoverflow.com/a/21622564
 var cors = require('cors');
