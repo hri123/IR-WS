@@ -1,0 +1,153 @@
+<section id="dashboard-view" class="mainbar">
+    <section class="matter">
+        <div class="container">
+            <!-- <div class="row">
+              <div class="col-md-12">
+                  <ul class="today-datas">
+                      <li class="blightblue">
+                          <div class="pull-left"><i class="fa fa-plane"></i></div>
+                          <div class="datas-text pull-right">
+                              <span class="bold">May 18 - 19, 2015</span> Castle Resort, Neverland
+                          </div>
+                          <div class="clearfix"></div>
+                      </li>
+
+                      <li class="borange">
+                          <div class="pull-left"><i class="fa fa-envelope"></i></div>
+                          <div class="datas-text pull-right">
+                              <span class="bold">{{vm.messageCount}}</span> Messages
+                          </div>
+                          <div class="clearfix"></div>
+                      </li>
+
+                  </ul>
+              </div>
+          </div>           -->
+            <!-- <div class="row">
+                <div class="col-md-6">
+                    <div class="widget wviolet">
+                        <div ht-widget-header title="Customers"
+                             allow-collapse="true"></div>
+                        <div class="widget-content text-center text-info">
+                            <table class="table table-condensed table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>First Name</th>
+                                        <th>Last Name</th>
+                                        <th>Company</th>
+                                        <th>Email Address</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="p in vm.customers">
+                                        <td>{{p.firstname}}</td>
+                                        <td>{{p.lastname}}</td>
+                                        <td>{{p.company}}</td>
+                                        <td>{{p.email}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="widget-foot">
+                            <div class="clearfix"></div>
+                        </div>
+                    </div>
+                </div>
+            </div> -->
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="widget wblue">
+                        <div ht-widget-header title="Customers" allow-collapse="true"></div>
+                        <!-- http://jsfiddle.net/spacebeers/WYrwf/ -->
+                        <div class="widget-content text-center text-info" style="position: relative;">
+                            <div style="position:absolute; top:-42px; right: 0px; z-index: 5;">
+                                <a href="#" ng-click="toggleModal()">
+                                    <span class="fa-stack fa-lg" style="color:#dd4b39;">
+                                      <i class="fa fa-square fa-stack-2x"></i>
+                                      <i class="fa fa-plus fa-stack-1x" style="color:white;"></i>
+                                    </span>
+                                </a>
+                                <a href="#" ng-click="deleteCustomersConfirm()">
+                                    <span class="fa-stack fa-lg" style="color:#dd4b39;">
+                                      <i class="fa fa-square fa-stack-2x"></i>
+                                      <i class="fa fa-minus fa-stack-1x" style="color:white;"></i>
+                                    </span>
+                                </a>
+                            </div>
+                            <!-- http://ui-grid.info/ -->
+                            <div ui-grid="gridOptions" ui-grid-selection class="grid"></div>
+                        </div>
+                        <div class="widget-foot">
+                            <div class="clearfix"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="widget wblue">
+                        <div ht-widget-header title="Subject" allow-collapse="true"></div>
+                        <div class="widget-content text-center text-info">
+                            <div class="form-group" style="margin-bottom: 0px;">
+                                <input type="text" class="form-control" style="width: 100%; max-width: 100%;" id="usr" data-ng-model="sendMailObject.subject" placeholder="subject...">
+                            </div>
+                        </div>
+                        <div class="widget-foot">
+                            <div class="clearfix"></div>
+                        </div>
+                    </div>
+                    <div class="widget wblue">
+                        <div ht-widget-header title="Body" allow-collapse="true"></div>
+                        <div class="widget-content text-center text-info">
+                            <div class="form-group" style="margin-bottom: 0px;">
+                                <textarea class="form-control" rows="10" id="comment" style="width: 100%; max-width: 100%;" data-ng-model="sendMailObject.body" placeholder="content..."></textarea>
+                            </div>
+                        </div>
+                        <div class="widget-foot">
+                            <div class="clearfix"></div>
+                        </div>
+                    </div>
+                    <div class="widget wblue">
+                        <div class="text-center text-info">
+                            <button type="button" class="btn btn-success btn-block" ng-click="sendMail()">Send Mail</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <modal title="Customer Details" visible="showModal">
+                <form role="form" ng-submit="submit()">
+                    <div class="form-group">
+                        <label for="firstname">First Name</label>
+                        <input type="text" class="form-control" id="firstname" ng-model="newCustomer.firstname" placeholder="Enter first name" />
+                    </div>
+                    <div class="form-group">
+                        <label for="lastname">Last Name</label>
+                        <input type="text" class="form-control" id="lastname" ng-model="newCustomer.lastname" placeholder="Enter last name" />
+                    </div>
+                    <div class="form-group">
+                        <label for="company">Company</label>
+                        <input type="text" class="form-control" id="company" ng-model="newCustomer.company" placeholder="Enter Company" />
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email address</label>
+                        <input type="email" class="form-control" id="email" ng-model="newCustomer.email" placeholder="Enter email" />
+                    </div>
+                    <!-- <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" class="form-control" id="password" placeholder="Password" />
+                    </div> -->
+                    <button type="submit" class="btn btn-default">Submit</button>
+                </form>
+            </modal>
+
+            <modal title="Delete Customer" visible="showDeleteConfirmationModal">
+                <div class="modal-body">
+                    Are you sure you want to delete the selected Customers ?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" data-dismiss="modal" class="btn btn-primary" id="delete" ng-click="deleteCustomer()">Delete</button>
+                    <button type="button" data-dismiss="modal" class="btn">Cancel</button>
+                </div>
+              </modal>
+        </div>
+    </section>
+</section>
