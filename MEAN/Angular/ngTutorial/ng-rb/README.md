@@ -1,3 +1,12 @@
+What does this application cover
+--------------------------------
+
+- Angular ngTutorial as base of the application for front end
+- mobile angular ui & bootstrap for css and style
+- node express backend
+- dropbox (and local file system) for storing the json files
+- Ionic for mobile app
+
 Run
 ---
 

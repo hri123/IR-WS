@@ -1,3 +1,9 @@
+What does this application cover
+--------------------------------
+
+- Hot towel as base
+- Cloudant (bluemix shared free) service for storing documents
+
 Deploying on Bluemix:
 ----------------------
 
