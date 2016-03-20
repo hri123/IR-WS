@@ -1,0 +1,10 @@
+{
+  "name": "HelloIonic",
+  "private": "false",
+  "dependencies": {
+    "angular-resource": "1.4.3",
+    "moment": "2.10.6",
+    "directives": "../client/dist/all.js",
+    "templates": "../client/dist/templates.js"
+  }
+}

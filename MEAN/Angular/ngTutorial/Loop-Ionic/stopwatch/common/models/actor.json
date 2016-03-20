@@ -1,0 +1,24 @@
+{
+  "name": "Actor",
+  "properties": {
+    "name": {
+      "type": "string",
+      "required": true
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": {
+    "greet": {
+      "isStatic": false,
+      "returns": {
+        "arg": "message",
+        "type": "string"
+      },
+      "http": {
+        "verb": "get"
+      }
+    }
+  }
+}

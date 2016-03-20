@@ -1,0 +1,16 @@
+{
+  "facebook-login": {
+    "provider": "facebook",
+    "module": "passport-facebook",
+    "_clientID": "919651901409502",
+    "_clientSecret": "5ca481b467aa7f80c24702f093e64417",
+    "_app_url": "https://developers.facebook.com/apps/1715348412012312/",
+    "clientID": "1715348412012312",
+    "clientSecret": "c979deea977cb4b1112f0c11cb5dce0b",
+    "callbackURL": "http://localhost:3000/auth/facebook/callback",
+    "authPath": "/auth/facebook",
+    "callbackPath": "/auth/facebook/callback",
+    "successRedirect": "/index.html",
+    "scope": ["public_profile"]
+  }
+}
