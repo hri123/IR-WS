@@ -16,7 +16,14 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 app.use(logger('dev'));
 
-app.use('/api', require('./routes'));
+//
+app.use('/api', require('./routes/userAuth')); // this MUST be first
+
+app.use('/api', require('./routes/people'));
+app.use('/api', require('./routes/customer'));
+
+app.use('/api', require('./routes/lastRouter')); // this MUST be last
+
 
 console.log('About to crank up node');
 console.log('PORT=' + port);
