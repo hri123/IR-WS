@@ -8,7 +8,8 @@
         'app.layout',
         // 'app.admin',
         // 'app.trial-watson',
-        'app.customer'
+        'app.customer',
+        'app.userAuth'
     ]);
 
 })();

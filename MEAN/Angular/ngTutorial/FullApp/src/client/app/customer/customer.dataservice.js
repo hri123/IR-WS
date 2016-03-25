@@ -5,9 +5,9 @@
         .module('app.customer')
         .factory('customer.dataservice', dataservice);
 
-    dataservice.$inject = ['$http', '$q', 'exception', 'logger'];
+    dataservice.$inject = ['$http', '$q', 'exception', 'logger', '$rootScope'];
     /* @ngInject */
-    function dataservice($http, $q, exception, logger) {
+    function dataservice($http, $q, exception, logger, $rootScope) {
         var service = {
             getCustomers: getCustomers,
             createCustomer: createCustomer,
@@ -18,7 +18,12 @@
         return service;
 
         function getCustomers() {
-            return $http.get('/api/customers')
+
+          var data = {
+              token: $rootScope.globals.currentUser.token
+          };
+
+            return $http.get('/api/customers', {params: data})
                 .then(success)
                 .catch(fail);
 
@@ -78,7 +83,9 @@
             var data = {
                 subject: _subject,
                 body: _body,
-                recipients: _customers
+                recipients: _customers,
+                token: $rootScope.globals.currentUser.token
+
             };
 
             return $http.post('/api/sendmail', data)

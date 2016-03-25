@@ -20,7 +20,7 @@ module.exports = router;
 
 // since we have multiple routers
 function goToNextRouter(req, res, next) {
-  next();
+    next();
 }
 
 
@@ -28,7 +28,11 @@ function userAuthentication(username, password) {
 
     // TODO: Authenticate based on proper values stored in cloudant
     if (username && username != '') {
-        return true;
+        if (username == "db2onc" && password == "db2onc") {
+            return true;
+        } else {
+            return false;
+        }
     } else {
         return false;
     }
@@ -50,7 +54,7 @@ function login(req, res) {
         // if user is found and password is right
         // create a token
         var token = jwt.sign(username, superSecret, {
-            expiresInMinutes: 1440 // expires in 24 hours
+            expiresIn: "1h" // expires in 24 hours
         });
 
         // return the information including token as JSON
@@ -60,7 +64,7 @@ function login(req, res) {
             token: token
         });
     } else {
-        res.status(400).json({
+        res.status(200).json({
             success: false,
             message: 'Authentication failed. Invalid Username or Password.'
         });
@@ -69,35 +73,38 @@ function login(req, res) {
 }
 
 function authenticateRequest(req, res, next) {
-  // check header or url parameters or post parameters for token
-  var token = req.body.token || req.query.token || req.headers['x-access-token'];
+    // check header or url parameters or post parameters for token
+    var token = req.body.token || req.query.token || req.headers['x-access-token'];
 
-  // decode token
-  if (token) {
+    // decode token
+    if (token) {
 
-    // verifies secret and checks exp
-    jwt.verify(token, superSecret, function(err, decoded) {
-      if (err) {
-        return res.json({ success: false, message: 'Failed to authenticate token.' });
-      } else {
-        // if everything is good, save to request for use in other routes
-        req.decoded = decoded;
-        next();
-      }
-    });
+        // verifies secret and checks exp
+        jwt.verify(token, superSecret, function(err, decoded) {
+            if (err) {
+                return res.json({
+                    success: false,
+                    message: 'Failed to authenticate token.'
+                });
+            } else {
+                // if everything is good, save to request for use in other routes
+                req.decoded = decoded;
+                next();
+            }
+        });
 
-  } else {
+    } else {
 
-    // if there is no token
-    // return an error
+        // if there is no token
+        // return an error
 
-    // TODO: temporarily
-    // return res.status(403).send({
-    //     success: false,
-    //     message: 'No token provided.'
-    // });
+        return res.status(403).send({
+            success: false,
+            message: 'No token provided.'
+        });
 
-    next();
+        // Uncomment this to bypass authentication
+        // next();
 
-  }
+    }
 }
