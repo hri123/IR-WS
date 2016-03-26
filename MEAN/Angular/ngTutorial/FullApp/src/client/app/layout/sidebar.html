@@ -7,7 +7,8 @@
             <ul class="navi">
                 <li class="nlightblue fade-selection-animation" ng-class="vm.isCurrent(r)"
                     ng-repeat="r in vm.navRoutes">
-                    <a ui-sref="{{r.name}}"
+                    <!-- using href instead of ui-sref to prevent issues as mentioned in http://mattmetlis.blogspot.in/2013/12/angularui-router-state-and-location.html -->
+                    <a href="{{r.url}}"
                        ng-bind-html="r.settings.content"></a>
                 </li>
             </ul>

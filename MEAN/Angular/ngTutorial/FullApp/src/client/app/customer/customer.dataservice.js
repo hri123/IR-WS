@@ -17,10 +17,21 @@
 
         return service;
 
+        function getToken() {
+
+          if ($rootScope.globals && $rootScope.globals.currentUser && $rootScope.globals.currentUser.token) {
+              return $rootScope.globals.currentUser.token;
+          } else {
+            return '';
+          }
+
+        }
+
         function getCustomers() {
 
+
           var data = {
-              token: $rootScope.globals.currentUser.token
+              token: getToken()
           };
 
             return $http.get('/api/customers', {params: data})
@@ -84,7 +95,7 @@
                 subject: _subject,
                 body: _body,
                 recipients: _customers,
-                token: $rootScope.globals.currentUser.token
+                token: getToken()
 
             };
 
