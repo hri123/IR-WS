@@ -303,7 +303,9 @@ app.get('/api/articles', ensureAuthenticated, function(req, res) {
         var socket = socketsGlobal[socket_id];
 
         // client.readdir using Promise
-        var readdirAsync = Promise.promisify(client.readdir);
+        // http://bluebirdjs.com/docs/api/promise.promisify.html
+        // Dropbox client requires the client object available as context in the readdir method
+        var readdirAsync = Promise.promisify(client.readdir, {context: client});
 
         readdirAsync((client.baseDirectory || "/") + selectedArea + "/" + selectedProject)
             .then(function(entries, stat) {
