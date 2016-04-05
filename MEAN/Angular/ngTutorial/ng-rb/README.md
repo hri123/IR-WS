@@ -136,7 +136,7 @@ Sample-Article-Structure
       </sub-section>
     </section>
   </annotation>
-</article> 
+</article>
 ```
 
 Cloud-Hosting

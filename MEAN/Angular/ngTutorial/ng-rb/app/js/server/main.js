@@ -190,7 +190,7 @@ var articleSaveAndUpdate = function(req, res, isNew) {
             function(error) {
                 if (error) {
                     console.log("error during write file: " + error); // Something went wrong.
-                    res.send(500);                            
+                    res.send(500);
                 }
             });
 
@@ -225,7 +225,7 @@ var getAccessTokenFromGlobal = function(req) {
     }
 }
 
-var read_json_files = function (grandParent, client, dirName, fileName, socket) {
+var read_json_files = function (grandParent, client, dirName, fileName, socket_id) {
     client.readFile(dirName + '/' + fileName, function(error, data, stat) { // data has the file's contents
         if (error) {
             console.log("error during readFile:" + error); // Something went wrong.
@@ -234,29 +234,30 @@ var read_json_files = function (grandParent, client, dirName, fileName, socket) 
             var article = JSON.parse(data);
 
             if (!article.fileName) {
-               article.fileName = stat.name; // this works for dropbox client, stat not available for local file system client 
+               article.fileName = stat.name; // this works for dropbox client, stat not available for local file system client
             }
 
             // the articles were sent once everything was loaded from dropbox, which used to give a slow response feeling to the user
             // so, using websockets to return the articles as soon as it is read from dropbox
             // if the datastore was a nosql database, may be this could have been used
             // articles.push(article);
+            var socket = socketsGlobal[socket_id];
             socket.emit('receive_article', article);
 
             grandParent.totalNumOfFiles -= 1;
             // below actions should be after loading all the files
             if (grandParent.totalNumOfFiles == 0) {
                 // res.send(articles);
-                
+
                 // close / disconnect the connection
                 delete socketsGlobal[socket_id];
                 socket.disconnect();
             }
         }
-    });    
+    });
 }
 
-var read_subdirectories = function(parent, client, dirName, socket) {
+var read_subdirectories = function(parent, client, dirName, socket_id) {
 
     // client.readdir without using Promise
     client.readdir(dirName, function(error, sub_entries) {
@@ -274,7 +275,7 @@ var read_subdirectories = function(parent, client, dirName, socket) {
                     continue;
                 }
 
-                read_json_files(parent, client, dirName, sub_entries[j], socket);
+                read_json_files(parent, client, dirName, sub_entries[j], socket_id);
             }
         }
     });
@@ -322,7 +323,7 @@ app.get('/api/articles', ensureAuthenticated, function(req, res) {
                     // scope is required because the dirName would have got updated before all the files in the folder dirName are read
                     // error during readFile:Dropbox API error 404 from GET https://api-content.dropbox.com/1/files/auto/attitude/rb/sacrifice-
                     // from-others%20-%20Copy%20%289%29/Q1elgkjw.json :: {"error": "File not found"}
-                    read_subdirectories(this, client, dirName, socket);
+                    read_subdirectories(this, client, dirName, socket_id);
                 }
                 res.send([]); // empty reponse is sent for the get all, which return immediately and then the web sockets take over and return the articles one by one, as and when they get loaded
             }).catch(function(error) {
@@ -342,7 +343,7 @@ var server = require('http').Server(app); // for socket.io, this is how it needs
 
 var io = require('socket.io')(server);
 // TODO: security testing - all possible tests / hacks to make sure one user's data cannot be accessed by another user
-// e.g.: 
+// e.g.:
 // make sure the socket.emit does not send the articles to a different user
 // make sure the user cannot pass a different user's userid in the request, i.e, the req.user.id must not be tampered with
 io.on('connection', function (socket) {
