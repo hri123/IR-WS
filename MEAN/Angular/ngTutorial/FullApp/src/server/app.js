@@ -1,8 +1,28 @@
 /*jshint node:true*/
 'use strict';
 
+
+// Cross Origin Support
+// http://stackoverflow.com/a/21622564
+var cors = require('cors');
+
 var express = require('express');
 var app = express();
+app.use(cors());
+
+// http://stackoverflow.com/a/7069902/512126
+var allowCrossDomain = function(req, res, next) {
+    res.header('Access-Control-Allow-Origin', 'http://localhost:8100'); // passing * instead of the absolute value may not work
+    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+    res.header('Access-Control-Allow-Headers', 'Content-Type');
+    res.header('Access-Control-Allow-Credentials', 'true');
+
+    next();
+}
+app.use(allowCrossDomain);
+
+
+
 var bodyParser = require('body-parser');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
@@ -16,11 +36,23 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 app.use(logger('dev'));
 
+
+var server = require('http').Server(app); // for socket.io, this is how it needs to be used
+// ALSO instead of usual 'app.listen(port,' 'server.listen(port,' needs to be used
+
+
+var io = require('socket.io')(server);
+app.io = io; // setting io to app so that it can be used inside 'route' files
+
+
 //
 app.use('/api', require('./routes/userAuth')); // this MUST be first
 
 app.use('/api', require('./routes/people'));
 app.use('/api', require('./routes/customer'));
+
+// requiring express in each file will return the same instance. http://nodejs.org/docs/latest/api/modules.html#modules_caching
+app.use('/api', require('./routes/rb/rb')(app)); // passing app so that it can be accessed inside 'route' files
 
 app.use('/api', require('./routes/lastRouter')); // this MUST be last
 
@@ -54,7 +86,13 @@ switch (environment){
         break;
 }
 
-app.listen(port, function() {
+
+// spin up server
+// app.listen(3000, '0.0.0.0')
+// app.listen(process.env.VCAP_APP_PORT || 3000); // VCAP for bluemix compatibility
+
+// app.listen(port, function() {
+server.listen(port, function() { // for socket.io, this is how it needs to be used
     console.log('Express server listening on port ' + port);
     console.log('env = ' + app.get('env') +
         '\n__dirname = ' + __dirname  +
