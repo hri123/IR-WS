@@ -82,6 +82,9 @@ angular.module('starter.controllers', [])
 
   $scope.projectArea = 'attitude';
   $scope.projectName = 'rb';
+
+  // Connection closed before receiving a handshake response - the port is duplicated by browserSync at 8100 and 3000 which causes this issue
+  // in case of servers started using the hottowel structure of gulpfile
   var articlesLoadUrl = $location.$$protocol + "://" + $location.$$host + ":" + 3000;
   socketIO.loadArticles(articlesLoadUrl, rbFiles, $scope);
 
