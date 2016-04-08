@@ -49,3 +49,8 @@ gulp.task('git-check', function(done) {
   }
   done();
 });
+
+gulp.task('wiredep', function() {
+    console.log('Wiring the bower dependencies into the html - dummy - check .bowerrc file - postinstall - in parent directory');
+
+});
