@@ -1,3 +1,5 @@
+// DO NOT UPDATE THIS FILE INSIDE THE ION-RB DIRECTORY, this is copied from ng-rb, see bower.json
+
 (function() {
 
     var rbAppServices = angular.module('rbAppServices', ['ngResource']);
@@ -66,7 +68,7 @@
                     $scope.$apply(function() {
                         $scope.articles.push(data);
                     });
-                });            
+                });
             }
         }
 
