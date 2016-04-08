@@ -184,7 +184,7 @@ module.exports = function(app) {
 
             readdirAsync((client.baseDirectory || "/") + selectedArea + "/" + selectedProject)
                 .then(function(entries, stat) {
-                    console.log("Your Dropbox contains " + entries);
+                    // console.log("Your Dropbox contains " + entries);
 
                     var totalNumOfFiles = {num: 0};
                     var articles = [];

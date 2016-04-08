@@ -2,12 +2,20 @@
 'use strict';
 
 
+var express = require('express');
+var app = express();
+app.io = require('socket.io')(); // setting io to app so that it can be used inside 'route' files
+var http = require('http');
+var server = http.createServer(app); // for socket.io, this is how it needs to be used
+// ALSO instead of usual 'app.listen(port,' 'server.listen(port,' needs to be used
+app.io.attach(server);
+
+
+
 // Cross Origin Support
 // http://stackoverflow.com/a/21622564
 var cors = require('cors');
 
-var express = require('express');
-var app = express();
 app.use(cors());
 
 // http://stackoverflow.com/a/7069902/512126
@@ -36,13 +44,6 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 app.use(logger('dev'));
 
-
-var server = require('http').Server(app); // for socket.io, this is how it needs to be used
-// ALSO instead of usual 'app.listen(port,' 'server.listen(port,' needs to be used
-
-
-var io = require('socket.io')(server);
-app.io = io; // setting io to app so that it can be used inside 'route' files
 
 
 //
