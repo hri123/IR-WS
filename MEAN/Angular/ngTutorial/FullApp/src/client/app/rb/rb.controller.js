@@ -442,7 +442,8 @@
         socketIO.loadArticles(articlesLoadUrl, rbFiles, $scope);
 
         $scope.setCurrentArticle = function(currentArticle) {
-            $scope.currentArticle = currentArticle;
+            sharedVars.currentArticle = currentArticle;
+            $location.path('/rb-details');
         };
 
         $scope.searchSectionOrSubSection = function(article) {
@@ -675,7 +676,8 @@
 
     angular.module('app.rb').controller('articleDetailsController', ['$scope', '$http', '$stateParams', 'sharedVars', function($scope, $http, $stateParams, sharedVars) {
 
-        $scope.article = sharedVars.articles[$stateParams.articleId];
+        // $scope.article = sharedVars.articles[$stateParams.articleId];
+        $scope.currentArticle = sharedVars.currentArticle;
 
     }]);
 

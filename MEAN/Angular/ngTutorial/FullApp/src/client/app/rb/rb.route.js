@@ -25,6 +25,15 @@
                     content: '<i class="fa fa-lock"></i> RB'
                 }
             }
+        }, {
+            state: 'rb-details',
+            config: {
+                url: '/rb-details',
+                templateUrl: 'app/rb/views/article-details.html',
+                controller: 'articleDetailsController',
+                controllerAs: 'vm',
+                title: 'RB-Details',
+            }
         }];
     }
 

@@ -1,0 +1,166 @@
+<!-- <div class="modal modal-overlay" ui-if='article_details_modal' ui-state='article_details_modal' style="background: rgba(255, 255, 255, 1.0)">
+  <div class="modal-dialog" style="margin: 0px;">
+    <div class="modal-content"> -->
+
+<!--       <div class="modal-header">
+        <button class="close" ui-turn-off="article_details_modal">&times;</button>
+      </div>
+ -->
+<!-- http://stackoverflow.com/questions/17470370/how-to-implement-a-scrollspy-in-angular-js-the-right-way -->
+<!-- <div class="modal-body"> -->
+<section id="dashboard-view" class="mainbar">
+    <section class="matter">
+        <div class="container">
+            <div class="row">
+
+                <div class="col-md-2">
+                    <div class="row">
+                        <div class="col-xs-4">
+                            <button ui-turn-off="article_details_modal" class="btn btn-default">Close</button>
+                        </div>
+                        <div class="col-xs-3">
+                            <button ui-turn-off="article_details_modal" class="btn btn-primary" ng-click="saveArticle()">Save changes</button>
+                        </div>
+                    </div>
+                    <ul id="navPills" class="nav nav-pills nav-stacked margin-top-10">
+                        <li class="">
+                            <a href="#section_mc" prevent-default="" scroll-to="section_mc">Main Content</a>
+                        </li>
+                        <li class="" data-ng-repeat="section in currentArticle.content.section track by $index">
+                            <a href="#section_c_{{$index}}" prevent-default="" scroll-to="section_c_{{$index}}">&nbsp;&nbsp;<i>{{(section.name || 'no name').substring(0, 20) + '...'}}</i></a>
+                        </li>
+                        <li class="">
+                            <a href="#section_ann" prevent-default="" scroll-to="section_ann">Annotation</a>
+                        </li>
+                        <li data-ng-repeat="section in currentArticle.annotation.section track by $index">
+                            <a href="#section_a_{{$index}}" prevent-default="" scroll-to="section_a_{{$index}}">&nbsp;&nbsp;<i>{{(section.name || 'no name').substring(0, 20) + '...'}}</i></a>
+                        </li>
+                    </ul>
+                </div>
+                <!-- max-height to be specified for scrollspy to work, if it is mentioned in px, it will be BAD responsive design, so using calc & vh -->
+                <div class="col-md-10 scroll-spy-article" scroll-spy="" data-target="#navPills" data-scroll-offset="10">
+                    <div id="section_mc">
+                        <h1 class="page-header"><a href="#" editable-text="currentArticle.summary">{{ currentArticle.summary || 'empty summary' }}</a>
+              </h1>
+                        <div href="#" editable-text="currentArticle.tags">{{ currentArticle.tags || 'empty tags' }}</a>
+                        </div>
+                        <div href="#" editable-text="currentArticle.rating">{{ currentArticle.rating || 'empty rating' }}</a>
+                        </div>
+                        <div href="#" editable-text="currentArticle.from">{{ currentArticle.from || 'empty from' }}</a>
+                        </div>
+                    </div>
+                    <div>
+                        <a href="#" editable-textarea="currentArticle.content.main" e-style="color:blue;font-weight:900;">
+                            <pre>{{ currentArticle.content.main || 'empty content main' }}</pre>
+                        </a>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <button class="btn btn-link btn-xs" ng-click="createNewSection('content')">
+                                <span class="glyphicon glyphicon-plus"></span>  New Content Section
+                            </button>
+                        </div>
+                    </div>
+
+                    <div>
+
+                        <div data-ng-repeat="section in currentArticle.content.section track by $index">
+                            <div id="section_c_{{$index}}">
+                                <h2><span>CONTENT-SECTION - <a href="#" editable-text="section.name">{{ section.name || 'empty section name' }}</a></span></h2>
+                                <span>TAGS - <a href="#" editable-text="section.tags">{{ section.tags || 'empty section tags' }}</a></span>
+                                <br/>
+                                <a href="#" editable-textarea="section.main">
+                                    <pre>{{ section.main || 'empty section main' }}</pre>
+                                </a>
+
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <button class="btn btn-link btn-xs" ng-click="createNewSubSection(section)">
+                                            <span class="glyphicon glyphicon-plus"></span>  New Sub Section
+                                        </button>
+                                    </div>
+                                </div>
+                                <div>
+
+                                    <div data-ng-repeat="sub_section in section.sub_section">
+                                        <h3><span>CONTENT-SUB-SECTION - <a href="#" editable-text="sub_section.name">{{ sub_section.name || 'empty sub_section name' }}</a></span></h3>
+                                        <span>TAGS - <a href="#" editable-text="sub_section.tags">{{ sub_section.tags || 'empty sub_section tags' }}</a></span>
+                                        <br/>
+                                        <a href="#" editable-textarea="sub_section.main">
+                                            <pre>{{ sub_section.main || 'empty sub_section main' }}</pre>
+                                        </a>
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div id="section_ann">
+                        <span>
+                <a href="#" editable-textarea="currentArticle.annotation.main">
+                  <pre>{{ currentArticle.annotation.main || 'empty annotation main' }}</pre>
+                </a>
+              </span>
+                        <div class="row">
+                            <div class="col-xs-3">
+                                <button class="btn btn-link btn-xs" ng-click="createNewSection('annotation')">
+                                    <span class="glyphicon glyphicon-plus"></span>  New Annotation Section
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+
+                        <div data-ng-repeat="section in currentArticle.annotation.section track by $index">
+                            <div id="section_a_{{$index}}">
+                                <h2><span>ANNOTATION-SECTION - <a href="#" editable-text="section.name">{{ section.name || 'empty section name' }}</a></span></h2>
+                                <span>TAGS - <a href="#" editable-text="section.tags">{{ section.tags || 'empty section tags' }}</a></span>
+                                <br/>
+                                <!-- TODO: BAD responsive design - hardcoding rows and columns -->
+                                <a href="#" editable-textarea="section.main">
+                                    <pre>{{ section.main || 'empty section main' }}</pre>
+                                </a>
+                                <div class="row">
+                                    <div class="col-xs-3">
+                                        <button class="btn btn-link btn-xs" ng-click="createNewSubSection(section)">
+                                            <span class="glyphicon glyphicon-plus"></span>  New Sub Section
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <div>
+
+                                    <div data-ng-repeat="sub_section in section.sub_section">
+                                        <h3><span>ANNOTATION-SUB-SECTION - <a href="#" editable-text="sub_section.name">{{ sub_section.name || 'empty sub_section name' }}</a></span></h3>
+                                        <span>TAGS - <a href="#" editable-text="sub_section.tags">{{ sub_section.tags || 'empty sub_section tags' }}</a></span>
+                                        <br/>
+                                        <a href="#" editable-textarea="sub_section.main">
+                                            <pre>{{ sub_section.main || 'empty sub_section main' }}</pre>
+                                        </a>
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+            <!-- row -->
+        </div>
+    </section>
+</section>
+<!-- </div> -->
+<!--       <div class="modal-footer">
+
+      </div> -->
+
+<!-- </div>
+  </div>
+</div> -->

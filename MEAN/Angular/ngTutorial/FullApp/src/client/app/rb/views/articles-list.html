@@ -1,5 +1,24 @@
 <section id="dashboard-view" class="mainbar">
     <section class="matter">
+      <div class="container">
+          <div class="row">
+            <div class="col-md-1">
+            </div>
+            <div class="col-md-2">
+              <span class="badge" style="vertical-align:middle;">{{filteredOuter.filtered.length}}</span>
+            </div>
+            <div class="col-md-2">
+              <a href="" ng-click="createNewArticle('new')" class="btn btn-success" style="line-height:1.5;"><span class="glyphicon glyphicon-plus"></span>&nbsp;<span>New</span>&nbsp;</a>
+            </div>
+            <div class="col-md-2">
+              <button type="button" class="btn btn-primary" ng-click="setFilters()">Filter</button>
+            </div>
+            <div class="col-md-5">
+            </div>
+          </div>
+        </div>
+    </section>
+    <section class="matter">
         <div class="container-fluid" style="height:100%; background:white;">
             <div class="row-fluid margin-top-10" style="height:100%; overflow:auto;">
                 <ol class="list-group">
@@ -62,6 +81,6 @@
 <div ui-content-for="modals">
   <div ng-include="'partials/article_details_modal.html'"></div>
 </div>
+
 <div ui-content-for="title">
-  <a href="" ng-click="createNewArticle('new')" class="btn btn-success" style="line-height:1.5;"><span class="glyphicon glyphicon-plus"></span>&nbsp;<span>New</span>&nbsp;</a><span class="badge" style="vertical-align:middle;">{{filteredOuter.filtered.length}}</span>
 </div> -->
