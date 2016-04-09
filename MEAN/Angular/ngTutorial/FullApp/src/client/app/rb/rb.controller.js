@@ -369,7 +369,14 @@
 
     }]);
 
-    angular.module('app.rb').controller('articleListController', ['$scope', '$http', '$location', '$routeParams', 'sharedVars', 'rbFiles', 'socketIO', function($scope, $http, $location, $routeParams, sharedVars, rbFiles, socketIO) {
+    // http://stackoverflow.com/a/35662649/512126 - ui-router -> $routeParams; angular-ui-router -> $stateParams
+    angular.module('app.rb').controller('articleListController', ['$scope', '$http', '$location', '$stateParams', 'sharedVars', 'rbFiles', 'socketIO', 'logger', function($scope, $http, $location, $stateParams, sharedVars, rbFiles, socketIO, logger) {
+
+        activate();
+
+        function activate() {
+            logger.info('Activated RB View');
+        }
 
         // this method was called twice - http://stackoverflow.com/a/24519817/512126 - in index.html
         // <div ng-include="'partials/sidebar.html'"
@@ -383,8 +390,8 @@
             sharedVars.articles.pop();
         }
 
-        $scope.projectArea = $routeParams.area; // picking value from the url in angular
-        $scope.projectName = $routeParams.project;
+        $scope.projectArea = 'attitude'; // $stateParams.area; // picking value from the url in angular
+        $scope.projectName = 'rb'; // $stateParams.project;
 
 
         // one way to load the articles is the regular way - make a get call to the server, where the server
@@ -666,9 +673,9 @@
 
     }]);
 
-    angular.module('app.rb').controller('articleDetailsController', ['$scope', '$http', '$routeParams', 'sharedVars', function($scope, $http, $routeParams, sharedVars) {
+    angular.module('app.rb').controller('articleDetailsController', ['$scope', '$http', '$stateParams', 'sharedVars', function($scope, $http, $stateParams, sharedVars) {
 
-        $scope.article = sharedVars.articles[$routeParams.articleId];
+        $scope.article = sharedVars.articles[$stateParams.articleId];
 
     }]);
 
