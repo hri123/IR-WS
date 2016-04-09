@@ -10,6 +10,8 @@
         var vm = this;
 
         vm.login = login;
+        vm.username = 'db2onc';
+        vm.password = 'db2onc';
 
         (function initController() {
             // reset login status
