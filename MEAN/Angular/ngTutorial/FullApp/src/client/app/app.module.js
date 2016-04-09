@@ -4,11 +4,12 @@
     angular.module('app', [
         'app.core',
         'app.widgets',
-        // 'app.dashboard',
+        'app.dashboard',
         'app.layout',
-        // 'app.admin',
-        // 'app.trial-watson',
+        'app.admin',
+        'app.trial-watson',
         'app.customer',
+        'app.rb',
         'app.userAuth'
     ]);
 

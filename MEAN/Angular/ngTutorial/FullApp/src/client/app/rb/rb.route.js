@@ -2,7 +2,7 @@
     'use strict';
 
     angular
-        .module('app.customer')
+        .module('app.rb')
         .run(appRun);
 
     appRun.$inject = ['routerHelper'];
@@ -14,16 +14,16 @@
     function getStates() {
         return [
             {
-                state: 'customer',
+                state: 'rb',
                 config: {
-                    url: '/customer',
-                    templateUrl: 'app/customer/customer.html',
-                    controller: 'CustomerController',
+                    url: '/rb',
+                    templateUrl: 'app/rb/rb.html',
+                    controller: 'RBController',
                     controllerAs: 'vm',
-                    title: 'Customer',
+                    title: 'RB',
                     settings: {
                         nav: 2,
-                        content: '<i class="fa fa-lock"></i> Customer'
+                        content: '<i class="fa fa-lock"></i> RB'
                     }
                 }
             }
