@@ -1,9 +1,9 @@
 // Usage
 // update the line with source folder location in the code below
 // var p = './RB-files/attitude/rb';
-// node ./app/js/server/reverse_migrate.js
+// node ./src/server/routes/rb/reverse_migrate.js
 
-utils = require('./common/utils.js');
+utils = require('../../../common/rb/utils.js');
 var mkdirp = require('mkdirp');
 
 var massageArticleForExport = function(inArticle) {

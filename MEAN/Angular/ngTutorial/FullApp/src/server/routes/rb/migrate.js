@@ -1,9 +1,9 @@
 // Usage
 // update the line with source folder location in the code below
 // var p = '/Users/hrishikesh/H/HP/Dropbox/Kaizen/Hhh100204';
-// node ./app/js/server/migrate.js
+// node ./src/server/routes/rb/migrate.js
 
-utils = require('./common/utils.js');
+utils = require('../../../common/rb/utils.js');
 var mkdirp = require('mkdirp');
 
 var massageArticleForExport = function(inArticle, subProjectName, num) {

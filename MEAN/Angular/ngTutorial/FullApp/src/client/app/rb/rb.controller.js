@@ -390,6 +390,7 @@
             sharedVars.articles.pop();
         }
 
+        // TODO: Remove the hardcoding
         $scope.projectArea = 'attitude'; // $stateParams.area; // picking value from the url in angular
         $scope.projectName = 'rb'; // $stateParams.project;
 
@@ -599,6 +600,15 @@
 
         };
 
+
+    }]);
+
+    angular.module('app.rb').controller('articleDetailsController', ['$scope', '$http', '$stateParams', 'sharedVars', '$location', 'rbFiles', function($scope, $http, $stateParams, sharedVars, $location, rbFiles) {
+
+        // $scope.article = sharedVars.articles[$stateParams.articleId];
+        $scope.currentArticle = sharedVars.currentArticle;
+
+
         $scope.createNewSection = function(type) {
 
             var section = new newSection();
@@ -638,8 +648,9 @@
                 // using two different ways to call the Rest APIs on the server for demonstration
                 (function(toSaveArticle) {
                     rbFiles.save({
-                        area: $scope.projectArea,
-                        project: $scope.projectName
+                        // TODO: Remove the hardcoding
+                        area: 'attitude', // $scope.projectArea,
+                        project: 'rb', // $scope.projectName
                     }, $scope.currentArticle, function(savedArticle) {
                         //data saved. do something here.
                         // mixin is required to add the $update method for the next save
@@ -669,15 +680,15 @@
                 })($scope.currentArticle);
             }
 
+            $location.path('/rb');
+
         };
 
+        $scope.closeWithoutSaving = function () {
 
-    }]);
+            $location.path('/rb');
 
-    angular.module('app.rb').controller('articleDetailsController', ['$scope', '$http', '$stateParams', 'sharedVars', function($scope, $http, $stateParams, sharedVars) {
-
-        // $scope.article = sharedVars.articles[$stateParams.articleId];
-        $scope.currentArticle = sharedVars.currentArticle;
+        };
 
     }]);
 

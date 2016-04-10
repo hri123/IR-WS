@@ -242,8 +242,9 @@ module.exports = function(app) {
             //     console.log("accountInfo: " + JSON.stringify(accountInfo));
             // });
 
-            var selectedArea = req.query.area;
-            var selectedProject = req.query.project;
+            // TODO: Remove the hardcoding
+            var selectedArea = 'attitude'; // req.query.area;
+            var selectedProject = 'rb'; // req.query.project;
 
             var fileName = "";
             var articleToSave = JSON.parse(JSON.stringify(req.body));
