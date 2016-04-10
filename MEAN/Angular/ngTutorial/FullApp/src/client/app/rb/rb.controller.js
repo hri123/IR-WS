@@ -606,6 +606,11 @@
 
         };
 
+        $scope.setFilters = function() {
+
+          $location.path('/rb-filters');
+
+        };
 
     }]);
 
@@ -695,6 +700,10 @@
             $location.path('/rb');
 
         };
+
+    }]);
+
+    angular.module('app.rb').controller('articleFiltersController', ['$scope', '$http', '$stateParams', 'sharedVars', '$location', 'rbFiles', function($scope, $http, $stateParams, sharedVars, $location, rbFiles) {
 
     }]);
 

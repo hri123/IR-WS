@@ -43,6 +43,15 @@
                 controllerAs: 'vm',
                 title: 'RB-Metadata',
             }
+        }, {
+            state: 'rb-filters',
+            config: {
+                url: '/rb-filters',
+                templateUrl: 'app/rb/views/sidebar.html',
+                controller: 'articleFiltersController',
+                controllerAs: 'vm',
+                title: 'RB-Filters',
+            }
         }];
     }
 
