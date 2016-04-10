@@ -1,0 +1,78 @@
+@color_1: #563d7c;
+@color_2: #767676;
+@color_3: #333333;
+@font-family_1: "Helvetica Neue",Helvetica,Arial,sans-serif;
+
+/* 992px is medium device responsive breakpoint in bootstrap 3 */
+/* Make inline editables take the full width of their parents */
+/* http://stackoverflow.com/questions/24230990/how-to-make-an-ordered-list-with-twitter-bootstrap-component */
+.scroll-spy-article {
+	max-height: calc(95vh);
+	overflow-y: auto;
+}
+.margin-top-10 {
+	margin-top: 10px;
+}
+.editable-textarea {
+	width: 95%;
+	height: 500px;
+	.form-group {
+		width: 95%;
+		height: 500px;
+		textarea {
+			width: 95%;
+			height: 500px;
+		}
+	}
+}
+.nav-pills {
+	>li.active {
+		>a {
+			color: @color_1;
+			background-color: #ffffff;
+			border-left: 2px solid #563d7c;
+			border-radius: 0px;
+			font-weight: 900;
+			&:focus {
+				color: @color_1;
+				background-color: #ffffff;
+				border-left: 2px solid #563d7c;
+				border-radius: 0px;
+				font-weight: 900;
+			}
+		}
+	}
+	>li {
+		>a {
+			color: @color_2;
+			font-weight: 400;
+		}
+	}
+}
+.nav {
+	>li {
+		>a {
+			padding: 0px 0px 0px 5px;
+		}
+	}
+}
+.list-group {
+	margin-left: 40px;
+}
+.list-group-item {
+	display: list-item;
+}
+ul {
+	list-style-type: none;
+}
+pre {
+	background-color: #ffffff;
+	color: @color_3;
+	font-size: 15px;
+	font-family: @font-family_1;
+}
+@media screen and (max-width: 992px) {
+	.scroll-spy-article {
+		max-height: calc(95vh - 150px);
+	}
+}
