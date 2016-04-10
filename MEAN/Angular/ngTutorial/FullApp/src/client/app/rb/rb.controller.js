@@ -295,23 +295,6 @@
             filtered: []
         };
 
-        sharedVars.processArrayOfTags = function(value, tagCountArray) {
-
-            var tagArr = value.split(",");
-
-            for (var j = 0; j < tagArr.length; j++) {
-                var tag = tagArr[j].trim();
-                if (tagCountArray[tag]) {
-                    tagCountArray[tag].value++;
-                } else {
-                    tagCountArray[tag] = {};
-                    tagCountArray[tag].value = 1;
-                    tagCountArray[tag].name = tag;
-                }
-            }
-
-        };
-
         $scope.isLast = function(check) {
             var cssClass = check ? 'active' : null;
             return cssClass;
@@ -377,6 +360,23 @@
         function activate() {
             logger.info('Activated RB View');
         }
+
+        sharedVars.processArrayOfTags = function(value, tagCountArray) {
+
+            var tagArr = value.split(",");
+
+            for (var j = 0; j < tagArr.length; j++) {
+                var tag = tagArr[j].trim();
+                if (tagCountArray[tag]) {
+                    tagCountArray[tag].value++;
+                } else {
+                    tagCountArray[tag] = {};
+                    tagCountArray[tag].value = 1;
+                    tagCountArray[tag].name = tag;
+                }
+            }
+
+        };
 
         // this method was called twice - http://stackoverflow.com/a/24519817/512126 - in index.html
         // <div ng-include="'partials/sidebar.html'"
@@ -597,6 +597,12 @@
             var article = new newArticle();
 
             $scope.articles.unshift(article);
+
+        };
+
+        $scope.showMetadata = function() {
+
+          $location.path('/rb-metadata');
 
         };
 

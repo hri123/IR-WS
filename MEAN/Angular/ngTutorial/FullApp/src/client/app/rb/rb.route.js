@@ -34,6 +34,15 @@
                 controllerAs: 'vm',
                 title: 'RB-Details',
             }
+        }, {
+            state: 'rb-metadata',
+            config: {
+                url: '/rb-metadata',
+                templateUrl: 'app/rb/views/metadata.html',
+                controller: 'metaDataController',
+                controllerAs: 'vm',
+                title: 'RB-Metadata',
+            }
         }];
     }
 
