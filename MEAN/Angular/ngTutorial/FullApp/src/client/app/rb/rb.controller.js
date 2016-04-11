@@ -217,26 +217,27 @@
 
         $scope.changeRefineBy = function() {
 
-            $scope.search1.tags = setSearchValAfterRefinedBy($scope.articleTags);
-            $scope.search4.summary = setSearchValAfterRefinedBy($scope.articleSummary);
-            $scope.search5.content.main = setSearchValAfterRefinedBy($scope.articleContentMain);
-            $scope.search6.annotation.main = setSearchValAfterRefinedBy($scope.articleAnnotationMain);
+            $scope.sharedVars.search1.tags = setSearchValAfterRefinedBy($scope.articleTags);
+            $scope.sharedVars.search4.summary = setSearchValAfterRefinedBy($scope.articleSummary);
+            $scope.sharedVars.search5.content.main = setSearchValAfterRefinedBy($scope.articleContentMain);
+            $scope.sharedVars.search6.annotation.main = setSearchValAfterRefinedBy($scope.articleAnnotationMain);
 
-            $scope.search7.val = '';
-            if ((x = setSearchValAfterRefinedBy($scope.articleContentSectionName)) != '') $scope.search7.val = x;
-            if ((x = setSearchValAfterRefinedBy($scope.articleContentSectionMain)) != '') $scope.search7.val = x;
-            if ((x = setSearchValAfterRefinedBy($scope.articleContentSubSectionName)) != '') $scope.search7.val = x;
-            if ((x = setSearchValAfterRefinedBy($scope.articleContentSubSectionMain)) != '') $scope.search7.val = x;
-            if ((x = setSearchValAfterRefinedBy($scope.articleAnnotationSectionName)) != '') $scope.search7.val = x;
-            if ((x = setSearchValAfterRefinedBy($scope.articleAnnotationSectionMain)) != '') $scope.search7.val = x;
-            if ((x = setSearchValAfterRefinedBy($scope.articleAnnotationSubSectionName)) != '') $scope.search7.val = x;
-            if ((x = setSearchValAfterRefinedBy($scope.articleAnnotationSubSectionMain)) != '') $scope.search7.val = x;
+            $scope.sharedVars.search7.val = '';
+            var x = '';
+            if ((x = setSearchValAfterRefinedBy($scope.articleContentSectionName)) != '') $scope.sharedVars.search7.val = x;
+            if ((x = setSearchValAfterRefinedBy($scope.articleContentSectionMain)) != '') $scope.sharedVars.search7.val = x;
+            if ((x = setSearchValAfterRefinedBy($scope.articleContentSubSectionName)) != '') $scope.sharedVars.search7.val = x;
+            if ((x = setSearchValAfterRefinedBy($scope.articleContentSubSectionMain)) != '') $scope.sharedVars.search7.val = x;
+            if ((x = setSearchValAfterRefinedBy($scope.articleAnnotationSectionName)) != '') $scope.sharedVars.search7.val = x;
+            if ((x = setSearchValAfterRefinedBy($scope.articleAnnotationSectionMain)) != '') $scope.sharedVars.search7.val = x;
+            if ((x = setSearchValAfterRefinedBy($scope.articleAnnotationSubSectionName)) != '') $scope.sharedVars.search7.val = x;
+            if ((x = setSearchValAfterRefinedBy($scope.articleAnnotationSubSectionMain)) != '') $scope.sharedVars.search7.val = x;
 
-            $scope.search9.val = '';
-            if ((x = setSearchValAfterRefinedBy($scope.articleContentSectionTags)) != '') $scope.search9.val = x;
-            if ((x = setSearchValAfterRefinedBy($scope.articleContentSubSectionTags)) != '') $scope.search9.val = x;
-            if ((x = setSearchValAfterRefinedBy($scope.articleAnnotationSectionTags)) != '') $scope.search9.val = x;
-            if ((x = setSearchValAfterRefinedBy($scope.articleAnnotationSubSectionTags)) != '') $scope.search9.val = x;
+            $scope.sharedVars.search9.val = '';
+            if ((x = setSearchValAfterRefinedBy($scope.articleContentSectionTags)) != '') $scope.sharedVars.search9.val = x;
+            if ((x = setSearchValAfterRefinedBy($scope.articleContentSubSectionTags)) != '') $scope.sharedVars.search9.val = x;
+            if ((x = setSearchValAfterRefinedBy($scope.articleAnnotationSectionTags)) != '') $scope.sharedVars.search9.val = x;
+            if ((x = setSearchValAfterRefinedBy($scope.articleAnnotationSubSectionTags)) != '') $scope.sharedVars.search9.val = x;
         };
 
         // http://www.tutorialrepublic.com/twitter-bootstrap-tutorial/bootstrap-accordion.php
