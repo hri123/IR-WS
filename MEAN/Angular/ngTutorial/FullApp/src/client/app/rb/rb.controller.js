@@ -42,8 +42,9 @@
         printCurrentLevel("", data);
     };
 
+
     // sharing variables between sidebar and the main body
-    angular.module('app.rb').controller('mainAppController', ['$scope', 'sharedVars', function($scope, sharedVars) {
+    angular.module('app.rb').controller('articleFiltersController', ['$scope', '$http', '$stateParams', 'sharedVars', '$location', 'rbFiles', function($scope, $http, $stateParams, sharedVars, $location, rbFiles) {
 
         $scope.articles = sharedVars.articles;
 
@@ -272,22 +273,6 @@
         // expanding / collapsing via data attributes caused the controller to be called again, so using the javascript call directly
         $scope.accordianCollapse = function(panelID) {
             jQuery(panelID).collapse('toggle');
-        };
-
-        $scope.clearInputTags = function(inputVar) {
-            inputVar.tags = '';
-        };
-
-        $scope.clearInputVal = function(inputVar) {
-            inputVar.val = '';
-        };
-
-        $scope.clearInputSummary = function(inputVar) {
-            inputVar.summary = '';
-        };
-
-        $scope.clearInputMain = function(inputVar) {
-            inputVar.main = '';
         };
 
         // filteredOuter is required, else does not work in global scope
@@ -700,10 +685,6 @@
             $location.path('/rb');
 
         };
-
-    }]);
-
-    angular.module('app.rb').controller('articleFiltersController', ['$scope', '$http', '$stateParams', 'sharedVars', '$location', 'rbFiles', function($scope, $http, $stateParams, sharedVars, $location, rbFiles) {
 
     }]);
 
