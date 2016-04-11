@@ -140,8 +140,8 @@
                                                     <div class="row">
                                                         <div class="col-md-2">
                                                             <div class="has-feedback">
-                                                                <input type="text" ng-model="sharedVars.searchAll.val" class="form-control hasclear" style="width: 90%;" placeholder="search string..."/>
-                                                                <a class="clear" ng-click="sharedVars.searchAll.val = ''">
+                                                                <input type="text" ng-model="searchAll.val" class="form-control hasclear" style="width: 90%;" placeholder="search string..."/>
+                                                                <a class="clear" ng-click="searchAll.val = ''">
                                                                     <span class="glyphicon glyphicon-remove"></span>
                                                                 </a>
                                                             </div>
@@ -157,7 +157,7 @@
                                                 <div class="checkbox">
                                                     <div data-ng-repeat="elem in searchAllCheckboxGroup">
                                                         <label>
-                                                            <input type="checkbox" value="" ng-model="elem.model" ng-change="changeRefineBy()">{{elem.name}}
+                                                            <input type="checkbox" value="" ng-model="elem.model" ng-change="changeRefineBy()" style="position: relative;"/>{{elem.name}}
                                                             <span class="badge" style="vertical-align:middle;">{{elem.count}}</span>
                                                         </label>
                                                     </div>

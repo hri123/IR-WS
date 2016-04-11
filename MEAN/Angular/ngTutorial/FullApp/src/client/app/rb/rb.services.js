@@ -6,7 +6,40 @@
 
     rbAppServices.service('sharedVars', function() {
         return {
-          articles: []
+          articles: [],
+
+          search1: {
+              tags: '',
+          },
+          search2: {
+              tags: ''
+          },
+          search3: {
+              tags: ''
+          },
+          search4: {
+              summary: ''
+          },
+          search5: {
+              content: {
+                  main: ''
+              }
+          },
+          search6: {
+              annotation: {
+                  main: ''
+              }
+          },
+          search7: {
+              val: ''
+          },
+          search8: {
+              val: ''
+          },
+          search9: {
+              val: ''
+          },
+          selectedTags: []
         };
     });
 

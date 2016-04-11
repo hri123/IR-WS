@@ -48,37 +48,7 @@
 
         $scope.articles = sharedVars.articles;
 
-        $scope.search1 = {
-            tags: '',
-        };
-        $scope.search2 = {
-            tags: ''
-        };
-        $scope.search3 = {
-            tags: ''
-        };
-        $scope.search4 = {
-            summary: ''
-        };
-        $scope.search5 = {
-            content: {
-                main: ''
-            }
-        };
-        $scope.search6 = {
-            annotation: {
-                main: ''
-            }
-        };
-        $scope.search7 = {
-            val: ''
-        };
-        $scope.search8 = {
-            val: ''
-        };
-        $scope.search9 = {
-            val: ''
-        };
+        $scope.sharedVars = sharedVars;
 
         // for the Search All
         $scope.searchAll = {
@@ -287,18 +257,18 @@
 
         $scope.addToSelectedTags = function(selectedTag) {
 
-            if (jQuery.inArray(selectedTag, $scope.selectedTags) == -1) {
-                $scope.selectedTags.push(selectedTag);
+            if (jQuery.inArray(selectedTag, $scope.sharedVars.selectedTags) == -1) {
+                $scope.sharedVars.selectedTags.push(selectedTag);
                 $scope.filterArticleTags();
             }
         };
 
         $scope.removeFromSelectedTags = function(selectedTag) {
-            $scope.selectedTags.splice($scope.selectedTags.indexOf(selectedTag), 1);
+            $scope.sharedVars.selectedTags.splice($scope.sharedVars.selectedTags.indexOf(selectedTag), 1);
             $scope.filterArticleTags();
         };
 
-        $scope.selectedTags = [];
+        $scope.sharedVars.selectedTags = [];
         $scope.filteredTags = {};
         $scope.filterArticleTags = function() {
 
@@ -313,11 +283,11 @@
 
                 if (currentArticle.tags) {
 
-                    var selectedTagsLength = $scope.selectedTags.length;
-                    if ($scope.selectedTags.length != 0) {
+                    var selectedTagsLength = $scope.sharedVars.selectedTags.length;
+                    if ($scope.sharedVars.selectedTags.length != 0) {
 
                         for (var j = 0; j < selectedTagsLength; j++) {
-                            var selectedTag = $scope.selectedTags[j];
+                            var selectedTag = $scope.sharedVars.selectedTags[j];
                             if (currentArticle.tags.indexOf(selectedTag) == -1) {
                                 isApplicable = false;
                                 break;
@@ -345,6 +315,8 @@
         function activate() {
             logger.info('Activated RB View');
         }
+
+        $scope.sharedVars = sharedVars;
 
         sharedVars.processArrayOfTags = function(value, tagCountArray) {
 
@@ -481,11 +453,11 @@
 
             if (currentArticle.tags) {
 
-                var selectedTagsLength = $scope.selectedTags.length;
-                if ($scope.selectedTags.length != 0) {
+                var selectedTagsLength = $scope.sharedVars.selectedTags.length;
+                if ($scope.sharedVars.selectedTags.length != 0) {
 
                     for (var j = 0; j < selectedTagsLength; j++) {
-                        var selectedTag = $scope.selectedTags[j];
+                        var selectedTag = $scope.sharedVars.selectedTags[j];
                         if (currentArticle.tags.indexOf(selectedTag) == -1) {
                             isApplicable = false;
                             break;
