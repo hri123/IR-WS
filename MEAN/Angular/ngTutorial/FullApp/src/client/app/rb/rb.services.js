@@ -79,15 +79,15 @@
             this.connect = function(url) {
                 this.socket = io.connect(url, {'force new connection': true});
             },
-            this.loadArticles = function(url, rbFiles, $scope) {
+            this.loadArticles = function(url, rbFiles, $scope, sharedVars) {
 
                 // http://stackoverflow.com/a/7504015
                 this.connect(url);
                 this.socket.on('connect_success', function(data) {
 
                     var data = rbFiles.query({
-                        area: $scope.projectArea,
-                        project: $scope.projectName,
+                        area: sharedVars.projectArea,
+                        project: sharedVars.projectName,
                         socket_id: data.socket_id
                     }, function(data) {
                         // nothing here, the server sends data using sockets

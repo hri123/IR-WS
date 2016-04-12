@@ -317,6 +317,11 @@
     // http://stackoverflow.com/a/35662649/512126 - ui-router -> $routeParams; angular-ui-router -> $stateParams
     angular.module('app.rb').controller('articleListController', ['$scope', '$http', '$location', '$state', '$stateParams', 'sharedVars', 'rbFiles', 'socketIO', 'logger', function($scope, $http, $location, $state, $stateParams, sharedVars, rbFiles, socketIO, logger) {
 
+
+        // TODO: Remove the hardcoding
+        sharedVars.projectArea = 'attitude'; // $stateParams.area; // picking value from the url in angular
+        sharedVars.projectName = 'rb'; // $stateParams.project;
+
         activate();
 
         function activate() {
@@ -354,9 +359,6 @@
             sharedVars.articles.pop();
         }
 
-        // TODO: Remove the hardcoding
-        $scope.projectArea = 'attitude'; // $stateParams.area; // picking value from the url in angular
-        $scope.projectName = 'rb'; // $stateParams.project;
 
 
         // one way to load the articles is the regular way - make a get call to the server, where the server
@@ -404,7 +406,7 @@
         // invokeReadFile({area: $scope.projectArea, project: $scope.projectName});
 
         var articlesLoadUrl = $location.$$protocol + "://" + $location.$$host + ":" + $location.$$port;
-        socketIO.loadArticles(articlesLoadUrl, rbFiles, $scope);
+        socketIO.loadArticles(articlesLoadUrl, rbFiles, $scope, sharedVars);
 
         $scope.setCurrentArticle = function(currentArticle) {
             sharedVars.currentArticle = currentArticle;
@@ -629,9 +631,8 @@
                 // using two different ways to call the Rest APIs on the server for demonstration
                 (function(toSaveArticle) {
                     rbFiles.save({
-                        // TODO: Remove the hardcoding
-                        area: 'attitude', // $scope.projectArea,
-                        project: 'rb', // $scope.projectName
+                        area: sharedVars.projectArea,
+                        project: sharedVars.projectName
                     }, $scope.currentArticle, function(savedArticle) {
                         //data saved. do something here.
                         // mixin is required to add the $update method for the next save
@@ -644,15 +645,13 @@
                 // the $update will not work after using websockets as we are using sockets to load the articles
                 // previously the $resource usage would mixin the $update method to the returned articles
                 // $scope.currentArticle.$update({
-                //     area: $scope.projectArea,
-                //     project: $scope.projectName
                 // }, function() {
                 //     //updated in the backend
                 // });
                 (function(toSaveArticle) {
                     rbFiles.update({
-                        area: $scope.projectArea,
-                        project: $scope.projectName
+                        area: sharedVars.projectArea,
+                        project: sharedVars.projectName
                     }, $scope.currentArticle, function(savedArticle) {
                         //data saved. do something here.
                         // mixin is required to add the $update method for the next save
