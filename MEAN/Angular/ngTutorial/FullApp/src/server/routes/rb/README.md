@@ -81,8 +81,10 @@ References
 TODO
 ----
 
+- http://stackoverflow.com/questions/23682511/how-to-store-user-session-in-angular
+- http://stackoverflow.com/questions/23418836/oauth-with-dropbox-api-repeated-app-confirmation
+- http://stackoverflow.com/questions/11321361/how-to-do-dropbox-authentication-in-a-single-page-app-without-opening-a-new-wind
 - Structure the app like Hardeep's mobile services code, one part for serverside base, one part for client side base, each with its own testing, and any application over it to make these two as dependencies, this way, hackaton projects will be easy to code
-- delete article-details.html
 - Article list page should look like this - http://www.flipkart.com/all-categories/pr?sid=search.flipkart.com&filterNone=true
 - instant search should be the core value add with this application (like Verse mail client from IBM)
 - protractor testing pending
