@@ -30,7 +30,7 @@ module.exports = function(app) {
     var parser = new xml2js.Parser();
 
 
-    var passport = require('passport');
+    var passport = app.passport;
     var DropboxStrategy = require('passport-dropbox-oauth2').Strategy;
 
     var path = require('path');
