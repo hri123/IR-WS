@@ -60,7 +60,7 @@ app.get('/auth/dropbox',
 
 app.get('/auth/dropbox/callback',
     app.passport.authenticate('dropbox-oauth2', {
-        failureRedirect: '/login'
+        failureRedirect: '/rb-select'
     }),
     function(req, res) {
         res.redirect('/rblist');
