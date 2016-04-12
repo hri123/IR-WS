@@ -39,7 +39,10 @@
           search9: {
               val: ''
           },
-          selectedTags: []
+          selectedTags: [],
+
+          projectArea: 'attitude', // $stateParams.area; // picking value from the url in angular
+          projectName: 'rb' // $stateParams.project;
         };
     });
 

@@ -317,11 +317,6 @@
     // http://stackoverflow.com/a/35662649/512126 - ui-router -> $routeParams; angular-ui-router -> $stateParams
     angular.module('app.rb').controller('articleListController', ['$scope', '$http', '$location', '$state', '$stateParams', 'sharedVars', 'rbFiles', 'socketIO', 'logger', function($scope, $http, $location, $state, $stateParams, sharedVars, rbFiles, socketIO, logger) {
 
-
-        // TODO: Remove the hardcoding
-        sharedVars.projectArea = 'attitude'; // $stateParams.area; // picking value from the url in angular
-        sharedVars.projectName = 'rb'; // $stateParams.project;
-
         activate();
 
         function activate() {
@@ -583,6 +578,13 @@
 
         };
 
+        $scope.selectProjectAreaAndName = function() {
+          $state.transitionTo('rb.select');
+        };
+
+        $scope.OnSelectProjectAreaAndName = function(area, name) {
+          $state.go('rb.list', {}, {reload: true});
+        };
 
     }]);
 

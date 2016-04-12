@@ -77,6 +77,17 @@
                 url: '/rb-filters',
                 title: 'RB-Filters',
             }
+        }, {
+            state: 'rb.select',
+            config: {
+                views: {
+                    'rb': {
+                      templateUrl: 'app/rb/views/select.html'
+                    }
+                },
+                url: '/rb-select',
+                title: 'RB-Select',
+            }
         }];
     }
 

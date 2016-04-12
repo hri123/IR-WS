@@ -2,7 +2,8 @@
     <section class="matter">
         <div class="container">
             <div class="row">
-                <div class="col-md-1">
+                <div class="col-md-2">
+                  <h4>{{sharedVars.projectArea}} / {{sharedVars.projectName}}</h4>
                 </div>
                 <div class="col-md-2">
                     <span class="badge" style="vertical-align:middle;">{{filteredOuter.filtered.length}}</span>
@@ -10,14 +11,11 @@
                 <div class="col-md-2">
                     <a href="" ng-click="createNewArticle('new')" class="btn btn-success" style="line-height:1.5;"><span class="glyphicon glyphicon-plus"></span>&nbsp;<span>New</span>&nbsp;</a>
                 </div>
-                <div class="col-md-2">
+                <div class="col-md-5">
                     <button type="button" class="btn btn-primary" ng-click="setFilters()">Filters</button>
-                </div>
-                <div class="col-md-2">
                     <button type="button" class="btn btn-primary" ng-click="showMetadata()">Metadata</button>
-                </div>
-                <div class="col-md-2">
                     <button type="button" class="btn btn-primary" ng-click="reloadArticles()">Refresh</button>
+                    <button type="button" class="btn btn-primary" ng-click="selectProjectAreaAndName()">Project</button>
                 </div>
                 <div class="col-md-1">
                 </div>
