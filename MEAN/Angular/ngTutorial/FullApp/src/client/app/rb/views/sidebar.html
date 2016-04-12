@@ -2,6 +2,25 @@
     <section class="matter">
         <div class="container">
             <div class="row">
+                <div class="col-md-1">
+                </div>
+                <div class="col-md-2">
+                    <button type="button" class="btn btn-primary" ng-click="goBack()">back</button>
+                </div>
+                <div class="col-md-2">
+                </div>
+                <div class="col-md-2">
+                </div>
+                <div class="col-md-2">
+                </div>
+                <div class="col-md-3">
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="matter">
+        <div class="container">
+            <div class="row">
                 <div class="scrollable">
                     <h1 class="scrollable-header app-name">RB <small>0.1</small></h1>
                     <div class="scrollable-content section">
@@ -12,77 +31,79 @@
                     <button data-toggle="collapse" data-parent="#accordion" class="btn btn-link btn-xs" ng-click="accordianCollapse('#collapseOne');">Input Search</button>
                 </h4>
                                 </div>
-                                <div id="collapseOne" class="panel-collapse collapse">
+                                <div id="collapseOne" class="panel-collapse collapse in">
                                     <div class="panel-body">
                                         <div class="">
                                             <!-- ui-turn-off='uiSidebarLeft' -->
                                             <div class="form-group">
                                                 <label>Article</label>
                                                 <div class="has-feedback">
-                                                  <input type="text" ng-model="sharedVars.search1.tags" class="form-control hasclear" style="width: 90%;" placeholder="tag 1..."/>
-                                                  <a class="clear" ng-click="sharedVars.search1.tags = ''">
-                                                      <span class="glyphicon glyphicon-remove"></span>
-                                                  </a>
+                                                    <input type="text" ng-model="sharedVars.search1.tags" class="form-control hasclear" style="width: 90%;" placeholder="tag 1..." />
+                                                    <a class="clear" ng-click="sharedVars.search1.tags = ''">
+                                                        <span class="glyphicon glyphicon-remove"></span>
+                                                    </a>
                                                 </div>
                                                 <br>
                                                 <div class="has-feedback">
-                                                  <input type="text" ng-model="sharedVars.search2.tags" class="form-control hasclear" style="width: 90%;" placeholder="tag 2..."/>
-                                                  <a class="clear" ng-click="sharedVars.search2.tags = ''">
-                                                      <span class="glyphicon glyphicon-remove"></span>
-                                                  </a>
-                                                </div>                                                <br>
-                                                <div class="has-feedback">
-                                                  <input type="text" ng-model="sharedVars.search3.tags" class="form-control hasclear" style="width: 90%;" placeholder="tag 3..."/>
-                                                  <a class="clear" ng-click="sharedVars.search3.tags = ''">
-                                                      <span class="glyphicon glyphicon-remove"></span>
-                                                  </a>
-                                                </div>                                                <br>
-                                                <div class="has-feedback">
-                                                  <input type="text" ng-model="sharedVars.search4.summary" class="form-control hasclear" style="width: 90%;" placeholder="summary..."/>
-                                                  <a class="clear" ng-click="sharedVars.search4.summary = ''">
-                                                      <span class="glyphicon glyphicon-remove"></span>
-                                                  </a>
+                                                    <input type="text" ng-model="sharedVars.search2.tags" class="form-control hasclear" style="width: 90%;" placeholder="tag 2..." />
+                                                    <a class="clear" ng-click="sharedVars.search2.tags = ''">
+                                                        <span class="glyphicon glyphicon-remove"></span>
+                                                    </a>
                                                 </div>
                                                 <br>
                                                 <div class="has-feedback">
-                                                  <input type="text" ng-model="sharedVars.search5.content.main" class="form-control hasclear" style="width: 90%;" placeholder="main content..."/>
-                                                  <a class="clear" ng-click="sharedVars.search5.content.main = ''">
-                                                      <span class="glyphicon glyphicon-remove"></span>
-                                                  </a>
+                                                    <input type="text" ng-model="sharedVars.search3.tags" class="form-control hasclear" style="width: 90%;" placeholder="tag 3..." />
+                                                    <a class="clear" ng-click="sharedVars.search3.tags = ''">
+                                                        <span class="glyphicon glyphicon-remove"></span>
+                                                    </a>
+                                                </div>
+                                                <br>
+                                                <div class="has-feedback">
+                                                    <input type="text" ng-model="sharedVars.search4.summary" class="form-control hasclear" style="width: 90%;" placeholder="summary..." />
+                                                    <a class="clear" ng-click="sharedVars.search4.summary = ''">
+                                                        <span class="glyphicon glyphicon-remove"></span>
+                                                    </a>
+                                                </div>
+                                                <br>
+                                                <div class="has-feedback">
+                                                    <input type="text" ng-model="sharedVars.search5.content.main" class="form-control hasclear" style="width: 90%;" placeholder="main content..." />
+                                                    <a class="clear" ng-click="sharedVars.search5.content.main = ''">
+                                                        <span class="glyphicon glyphicon-remove"></span>
+                                                    </a>
                                                 </div>
                                             </div>
                                             <div class="form-group">
                                                 <label>(Sub) Section</label>
                                                 <div class="has-feedback">
-                                                  <input type="text" ng-model="sharedVars.search9.val" class="form-control hasclear" style="width: 90%;" placeholder="tag..."/>
-                                                  <a class="clear" ng-click="sharedVars.search9.val = ''">
-                                                      <span class="glyphicon glyphicon-remove"></span>
-                                                  </a>
+                                                    <input type="text" ng-model="sharedVars.search9.val" class="form-control hasclear" style="width: 90%;" placeholder="tag..." />
+                                                    <a class="clear" ng-click="sharedVars.search9.val = ''">
+                                                        <span class="glyphicon glyphicon-remove"></span>
+                                                    </a>
                                                 </div>
                                                 <br>
                                                 <div class="has-feedback">
-                                                  <input type="text" ng-model="sharedVars.search7.val" class="form-control hasclear" style="width: 90%;" placeholder="name / main..."/>
-                                                  <a class="clear" ng-click="sharedVars.search7.val = ''">
-                                                      <span class="glyphicon glyphicon-remove"></span>
-                                                  </a>
+                                                    <input type="text" ng-model="sharedVars.search7.val" class="form-control hasclear" style="width: 90%;" placeholder="name / main..." />
+                                                    <a class="clear" ng-click="sharedVars.search7.val = ''">
+                                                        <span class="glyphicon glyphicon-remove"></span>
+                                                    </a>
                                                 </div>
                                             </div>
                                             <div class="form-group">
                                                 <label>@tags</label>
                                                 <div class="has-feedback">
-                                                  <input type="text" ng-model="sharedVars.search8.val" class="form-control hasclear" style="width: 90%;" placeholder="..."/>
-                                                  <a class="clear" ng-click="sharedVars.search8.val = ''">
-                                                      <span class="glyphicon glyphicon-remove"></span>
-                                                  </a>
+                                                    <input type="text" ng-model="sharedVars.search8.val" class="form-control hasclear" style="width: 90%;" placeholder="..." />
+                                                    <a class="clear" ng-click="sharedVars.search8.val = ''">
+                                                        <span class="glyphicon glyphicon-remove"></span>
+                                                    </a>
                                                 </div>
                                             </div>
                                             <div class="form-group">
                                                 <label>Article Annotation Main</label>
                                                 <div class="has-feedback">
-                                                  <input type="text" ng-model="sharedVars.search6.annotation.main" class="form-control hasclear" style="width: 90%;" placeholder="..."/>
-                                                  <a class="clear" ng-click="sharedVars.search6.annotation.main = ''">
-                                                      <span class="glyphicon glyphicon-remove"></span>
-                                                  </a>
+                                                    <input type="text" ng-model="sharedVars.search6.annotation.main" class="form-control hasclear" style="width: 90%;" placeholder="..." />
+                                                    <a class="clear" ng-click="sharedVars.search6.annotation.main = ''">
+                                                        <span class="glyphicon glyphicon-remove"></span>
+                                                    </a>
                                                 </div>
                                             </div>
                                         </div>
@@ -95,7 +116,7 @@
                     <button data-toggle="collapse" data-parent="#accordion" class="btn btn-link btn-xs" ng-click="accordianCollapse('#collapseTwo');">Tag Cloud Search</button>
                 </h4>
                                 </div>
-                                <div id="collapseTwo" class="panel-collapse collapse">
+                                <div id="collapseTwo" class="panel-collapse collapse in">
                                     <div class="panel-body">
                                         <div class="container">
                                             <div class="row">
@@ -140,7 +161,7 @@
                                                     <div class="row">
                                                         <div class="col-md-2">
                                                             <div class="has-feedback">
-                                                                <input type="text" ng-model="searchAll.val" class="form-control hasclear" style="width: 90%;" placeholder="search string..."/>
+                                                                <input type="text" ng-model="searchAll.val" class="form-control hasclear" style="width: 90%;" placeholder="search string..." />
                                                                 <a class="clear" ng-click="searchAll.val = ''">
                                                                     <span class="glyphicon glyphicon-remove"></span>
                                                                 </a>
@@ -157,7 +178,7 @@
                                                 <div class="checkbox">
                                                     <div data-ng-repeat="elem in searchAllCheckboxGroup">
                                                         <label>
-                                                            <input type="checkbox" value="" ng-model="elem.model" ng-change="changeRefineBy()" style="position: relative;"/>{{elem.name}}
+                                                            <input type="checkbox" value="" ng-model="elem.model" ng-change="changeRefineBy()" style="position: relative;" />{{elem.name}}
                                                             <span class="badge" style="vertical-align:middle;">{{elem.count}}</span>
                                                         </label>
                                                     </div>

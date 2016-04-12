@@ -44,7 +44,7 @@
 
 
     // sharing variables between sidebar and the main body
-    angular.module('app.rb').controller('articleFiltersController', ['$scope', '$http', '$stateParams', 'sharedVars', '$location', 'rbFiles', function($scope, $http, $stateParams, sharedVars, $location, rbFiles) {
+    angular.module('app.rb').controller('articleFiltersController', ['$scope', '$http', '$state', '$stateParams', 'sharedVars', '$location', 'rbFiles', function($scope, $http, $state, $stateParams, sharedVars, $location, rbFiles) {
 
         $scope.articles = sharedVars.articles;
 
@@ -53,6 +53,12 @@
         // for the Search All
         $scope.searchAll = {
             val: ''
+        };
+
+        $scope.goBack = function() {
+
+          $state.transitionTo('rb.list');
+
         };
 
         $scope.displayRefineBy = function() {
@@ -309,7 +315,7 @@
     }]);
 
     // http://stackoverflow.com/a/35662649/512126 - ui-router -> $routeParams; angular-ui-router -> $stateParams
-    angular.module('app.rb').controller('articleListController', ['$scope', '$http', '$location', '$stateParams', 'sharedVars', 'rbFiles', 'socketIO', 'logger', function($scope, $http, $location, $stateParams, sharedVars, rbFiles, socketIO, logger) {
+    angular.module('app.rb').controller('articleListController', ['$scope', '$http', '$location', '$state', '$stateParams', 'sharedVars', 'rbFiles', 'socketIO', 'logger', function($scope, $http, $location, $state, $stateParams, sharedVars, rbFiles, socketIO, logger) {
 
         activate();
 
@@ -560,19 +566,25 @@
 
         $scope.showMetadata = function() {
 
-          $location.path('/rb-metadata');
+          $state.transitionTo('rb.metadata');
 
         };
 
         $scope.setFilters = function() {
 
-          $location.path('/rb-filters');
+          $state.transitionTo('rb.filters');
 
         };
 
+        $scope.reloadArticles = function() {
+          $state.go($state.current, {}, {reload: true});
+
+        };
+
+
     }]);
 
-    angular.module('app.rb').controller('articleDetailsController', ['$scope', '$http', '$stateParams', 'sharedVars', '$location', 'rbFiles', function($scope, $http, $stateParams, sharedVars, $location, rbFiles) {
+    angular.module('app.rb').controller('articleDetailsController', ['$scope', '$http', '$state', '$stateParams', 'sharedVars', '$location', 'rbFiles', function($scope, $http, $state, $stateParams, sharedVars, $location, rbFiles) {
 
         // $scope.article = sharedVars.articles[$stateParams.articleId];
         $scope.currentArticle = sharedVars.currentArticle;
@@ -649,22 +661,29 @@
                 })($scope.currentArticle);
             }
 
-            $location.path('/rb');
+            $state.transitionTo('rb.list');
 
         };
 
         $scope.closeWithoutSaving = function () {
 
-            $location.path('/rb');
+            // $location.path('/rb');
+            $state.transitionTo('rb.list');
 
         };
 
     }]);
 
-    angular.module('app.rb').controller('metaDataController', ['$scope', 'rbFiles', 'sharedVars', function($scope, rbFiles, sharedVars) {
+    angular.module('app.rb').controller('metaDataController', ['$scope', 'rbFiles', 'sharedVars', '$state', function($scope, rbFiles, sharedVars, $state) {
 
         $scope.keys = function(obj) {
             return obj ? Object.keys(obj) : [];
+        };
+
+        $scope.goBack = function() {
+
+          $state.transitionTo('rb.list');
+
         };
 
         $scope.tags = {};

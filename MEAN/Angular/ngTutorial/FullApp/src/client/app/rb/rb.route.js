@@ -11,14 +11,27 @@
         routerHelper.configureStates(getStates());
     }
 
+    // having nested views with articleListController in the parent makes sure that the controller is not reloaded when the views get changed
     function getStates() {
         return [{
             state: 'rb',
             config: {
-                url: '/rb',
-                templateUrl: 'app/rb/views/articles-list.html',
-                controller: 'articleListController',
-                controllerAs: 'vm',
+              abstract: true,
+              template: "<div ui-view='rb'></div>",
+              controller: 'articleListController',
+            }
+        },{
+            state: 'rb.list',
+            config: {
+                views: {
+                    'rb': {
+                      templateUrl: 'app/rb/views/articles-list.html',
+
+                      controllerAs: 'vm'
+
+                    }
+                },
+                url: '/rblist',
                 title: 'RB',
                 settings: {
                     nav: 2,
@@ -26,30 +39,42 @@
                 }
             }
         }, {
-            state: 'rb-details',
+            state: 'rb.details',
             config: {
+                views: {
+                    'rb': {
+                      templateUrl: 'app/rb/views/article-details.html',
+                      controller: 'articleDetailsController',
+                      controllerAs: 'vm'
+                    }
+                },
                 url: '/rb-details',
-                templateUrl: 'app/rb/views/article-details.html',
-                controller: 'articleDetailsController',
-                controllerAs: 'vm',
                 title: 'RB-Details',
             }
         }, {
-            state: 'rb-metadata',
+            state: 'rb.metadata',
             config: {
+                views: {
+                    'rb': {
+                      templateUrl: 'app/rb/views/metadata.html',
+                      controller: 'metaDataController',
+                      controllerAs: 'vm',
+                    }
+                },
                 url: '/rb-metadata',
-                templateUrl: 'app/rb/views/metadata.html',
-                controller: 'metaDataController',
-                controllerAs: 'vm',
                 title: 'RB-Metadata',
             }
         }, {
-            state: 'rb-filters',
+            state: 'rb.filters',
             config: {
+                views: {
+                    'rb': {
+                      templateUrl: 'app/rb/views/sidebar.html',
+                      controller: 'articleFiltersController',
+                      controllerAs: 'vm',
+                    }
+                },
                 url: '/rb-filters',
-                templateUrl: 'app/rb/views/sidebar.html',
-                controller: 'articleFiltersController',
-                controllerAs: 'vm',
                 title: 'RB-Filters',
             }
         }];
