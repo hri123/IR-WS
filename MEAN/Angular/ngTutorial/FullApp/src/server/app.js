@@ -63,7 +63,7 @@ app.get('/auth/dropbox/callback',
         failureRedirect: '/login'
     }),
     function(req, res) {
-        res.redirect('/select');
+        res.redirect('/rblist');
     });
 
 

@@ -6,7 +6,7 @@ var superSecret = 'superSecret';
 // https://scotch.io/tutorials/authenticate-a-node-js-api-with-json-web-tokens
 // We won’t want to protect the /api/authenticate a.k.a. /api/login route so what we’ll do is place our middleware beneath that route. Order is important here.
 router.post('/login', login);
-// TODO: need to logut too, but for now, just remove the token from the client
+// TODO: need to logout too, but for now, just remove the token from the client
 // http://stackoverflow.com/questions/21978658/invalidating-json-web-tokens
 
 router.use(authenticateRequest);
