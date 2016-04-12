@@ -1,5 +1,7 @@
 // TODO: THIS FILE YET TO BE PORTED
 
+// <li><a href="/auth/dropbox"><span class="glyphicon glyphicon-log-in"></span> Login via DropBox</a></li>
+
 
 app.configure(function() {
     app.set("view options", {

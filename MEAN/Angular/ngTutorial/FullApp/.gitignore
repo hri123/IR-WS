@@ -5,3 +5,6 @@ bower_components/
 
 # other
 .tmp
+
+RB-files/
+app/js/server/oauth.js

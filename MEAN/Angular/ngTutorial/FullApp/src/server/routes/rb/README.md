@@ -1,9 +1,3 @@
-IMPORTANT
----------
-
-This project is deprecated, please see the FullApp project.
-
-
 What does this application cover
 --------------------------------
 
