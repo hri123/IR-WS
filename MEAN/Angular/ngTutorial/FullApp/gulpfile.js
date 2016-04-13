@@ -434,6 +434,12 @@ function serve(isDev, specRunner) {
     var nodeOptions = getNodeOptions(isDev);
 
     nodeOptions.nodeArgs = [debugMode + '=5858'];
+    // for debugging needed to add the below line
+    // https://github.com/JacksonGariety/gulp-nodemon/issues/85#issuecomment-139200272
+    // adding --debug to nodeArgs does not work
+    // open http://127.0.0.1:8080/?port=5858 for debugging
+    // npm install -g node-inspector / node-debug app.js
+    nodeOptions.exec = 'node-inspector & node --debug';
 
     if (args.verbose) {
         console.log(nodeOptions);
