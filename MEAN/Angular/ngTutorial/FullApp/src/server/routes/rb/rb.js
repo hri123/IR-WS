@@ -32,20 +32,23 @@ module.exports = function(app) {
 
     var storageFactory = require('./storageFactory.js');
 
-
-    // var skipDropboxAuth = false;
-    var skipDropboxAuth = true; // TODO: removing until porting is complete
-    if (process.argv[2] == 'local') {
-        skipDropboxAuth = true;
-    }
+    // if (process.argv[2] == 'local') { // read from command line args
+    //     setStorageClient('LocalFileSystem');
+    // }
 
     var storageClient;
-    if (skipDropboxAuth) { // read from command line args
-        storageClient = storageFactory.getStorageClient('LocalFileSystem');
-        storageClient.prototype.baseDirectory = config.paths.storageClient_local_baseDirectory;
-    } else {
-        storageClient = storageFactory.getStorageClient();
+
+    function setStorageClient(clientName) {
+        if (clientName == 'Dropbox') {
+          storageClient = storageFactory.getStorageClient('Dropbox');
+          storageClient.skipAuth = false;
+        } else { // default to 'LocalFileSystem'
+          storageClient = storageFactory.getStorageClient('LocalFileSystem');
+          storageClient.prototype.baseDirectory = config.paths.storageClient_local_baseDirectory;
+          storageClient.skipAuth = true;
+        }
     }
+    setStorageClient('LocalFileSystem'); // initialize
 
 
     // serialize and deserialize
@@ -103,22 +106,21 @@ module.exports = function(app) {
             failureRedirect: '/login'
         }),
         function(req, res) {
-            skipDropboxAuth = false;
-            storageClient = storageFactory.getStorageClient();
+            setStorageClient('Dropbox');
             res.redirect('/rb-select');
         });
 
 
     // test authentication
     function ensureAuthenticated(req, res, next) {
-        if (skipDropboxAuth || req.isAuthenticated()) {
+        if (storageClient.skipAuth || req.isAuthenticated()) {
             return next();
         }
         res.redirect('/login')
     }
 
     var getAccessTokenFromGlobal = function(req) {
-        if (skipDropboxAuth) {
+        if (storageClient.skipAuth) {
             return "";
         } else {
             return accessTokenGlobal['id_' + req.user.id];
