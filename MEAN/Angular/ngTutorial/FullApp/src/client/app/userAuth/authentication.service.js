@@ -46,13 +46,18 @@
         function SetCredentials(username, password, token) {
             var authdata = Base64.encode(username + ':' + password);
 
-            $rootScope.globals = {
-                currentUser: {
-                    username: username,
-                    authdata: authdata,
-                    token: token
-                }
+            var currentUser = {
+                username: username,
+                authdata: authdata,
+                token: token
             };
+
+            $rootScope.globals = {
+                currentUser: currentUser
+            };
+
+            lscache.flushExpired();
+            lscache.set('currentUser', currentUser, 2);
 
             $http.defaults.headers.common['Authorization'] = 'Basic ' + authdata; // jshint ignore:line
             // $cookieStore.put('globals', $rootScope.globals);
