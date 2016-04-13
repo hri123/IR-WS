@@ -2,6 +2,33 @@ var express = require('express');
 
 module.exports = function(app) {
     'use strict';
+
+
+
+    // Dropbox OAuth
+    app.passport = require('passport');
+
+    app.use(app.passport.initialize());
+    app.use(app.passport.session());
+
+    app.get('/auth/dropbox',
+        app.passport.authenticate('dropbox-oauth2'),
+        function(req, res) {});
+
+    // Error : Invalid redirect_uri: "http://localhost:3000/auth/dropbox/callback" (https://ng-rb.mybluemix.net/auth/dropbox/callback).
+    // for OAuth2, the above URL needs to be registered with the app in dropbox app configuration page under OAuth2 - Redirect URIs
+
+    app.get('/auth/dropbox/callback',
+        app.passport.authenticate('dropbox-oauth2', {
+            failureRedirect: '/rb-select'
+        }),
+        function(req, res) {
+            res.redirect('/rblist');
+        });
+
+
+
+
     var router = express.Router();
 
 
