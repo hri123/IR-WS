@@ -23,6 +23,14 @@
                     if ($rootScope.globals.currentUser.token != '') {
                         loggedIn = true;
                     }
+                } else { // if not in $rootScope check HTML5 localStorage
+
+                    lscache.flushExpired();
+                    var currentUser = lscache.get('currentUser');
+
+                    if (currentUser && currentUser.token != '') {
+                        loggedIn = true;
+                    }
                 }
 
                 if (restrictedPage && !loggedIn) {
