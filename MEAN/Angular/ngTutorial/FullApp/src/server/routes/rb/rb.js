@@ -20,12 +20,9 @@ module.exports = function(app) {
 
     app.get('/auth/dropbox/callback',
         app.passport.authenticate('dropbox-oauth2', {
-            failureRedirect: '/rb-select'
         }),
         function(req, res) {
-            res.redirect('/rblist');
         });
-
 
 
 

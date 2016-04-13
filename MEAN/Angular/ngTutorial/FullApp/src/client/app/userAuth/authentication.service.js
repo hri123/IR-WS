@@ -57,7 +57,7 @@
             };
 
             lscache.flushExpired();
-            lscache.set('currentUser', currentUser, 2);
+            lscache.set('currentUser', currentUser, 60);
 
             $http.defaults.headers.common['Authorization'] = 'Basic ' + authdata; // jshint ignore:line
             // $cookieStore.put('globals', $rootScope.globals);
