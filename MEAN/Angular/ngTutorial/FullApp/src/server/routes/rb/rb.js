@@ -4,60 +4,13 @@ module.exports = function(app) {
     'use strict';
 
 
-
     // Dropbox OAuth
     app.passport = require('passport');
-
-    app.use(app.passport.initialize());
-    app.use(app.passport.session());
-
-    app.get('/auth/dropbox',
-        app.passport.authenticate('dropbox-oauth2'),
-        function(req, res) {});
-
-    // Error : Invalid redirect_uri: "http://localhost:3000/auth/dropbox/callback" (https://ng-rb.mybluemix.net/auth/dropbox/callback).
-    // for OAuth2, the above URL needs to be registered with the app in dropbox app configuration page under OAuth2 - Redirect URIs
-
-    app.get('/auth/dropbox/callback',
-        app.passport.authenticate('dropbox-oauth2', {
-        }),
-        function(req, res) {
-        });
-
-
-
-    var router = express.Router();
-
-
-    // router.METHOD(path, [callback, ...] callback)
-
-    // REST: Query - get all
-    router.get('/articles', ensureAuthenticated, getAllArticles);
-
-
-    // REST: PUT - update existing
-    router.put('/articles/:fileName', ensureAuthenticated, articleUpdate);
-
-    // REST: POST - save new
-    router.post('/articles', ensureAuthenticated, articleCreate);
-
-
-    /////////
-    var Promise = require('bluebird');
-    var shortId = require('shortid');
-
-
-    var js2xmlparser = require('js2xmlparser'); // using diff module for js to xml to make sure nothing is lost during conversion
-
-    var xml2js = require('xml2js');
-
-    var parser = new xml2js.Parser();
-
-
-    var passport = app.passport;
     var DropboxStrategy = require('passport-dropbox-oauth2').Strategy;
 
+    var shortId = require('shortid');
     var path = require('path');
+    var Promise = require('bluebird');
 
 
     // for the app - rBookApp (Register your application with all of the OAuth providers you want to use, except Google - as Google uses OpenID)
@@ -79,6 +32,7 @@ module.exports = function(app) {
 
     var storageFactory = require('./storageFactory.js');
 
+
     // var skipDropboxAuth = false;
     var skipDropboxAuth = true; // TODO: removing until porting is complete
     if (process.argv[2] == 'local') {
@@ -93,23 +47,25 @@ module.exports = function(app) {
         storageClient = storageFactory.getStorageClient();
     }
 
+
     // serialize and deserialize
-    passport.serializeUser(function(user, done) {
+    app.passport.serializeUser(function(user, done) {
         done(null, user);
     });
-    passport.deserializeUser(function(obj, done) {
+    app.passport.deserializeUser(function(obj, done) {
         done(null, obj);
     });
 
     var socketsGlobal = {};
     var accessTokenGlobal = {};
 
+
     var tempCallbackURL = config_oauth.dropbox.callbackURLLocal;
     if (process.env.VCAP_APP_PORT) // if on bluemix
         tempCallbackURL = config_oauth.dropbox.callbackURLBluemix;
 
     // config_oauth
-    passport.use(new DropboxStrategy({
+    app.passport.use(new DropboxStrategy({
             clientID: config_oauth.dropbox.clientID, // "--insert-dropbox-app-key-here--"
             clientSecret: config_oauth.dropbox.clientSecret, //"--insert-dropbox-app-secret-here--";
             callbackURL: tempCallbackURL
@@ -123,6 +79,78 @@ module.exports = function(app) {
         }
     ));
 
+    // dropbox oauth passport requires the below lines about app.use(session...)
+    // without the below lines, you get the following error
+    // [$resource:badcfg] Error in resource configuration for action `query`. Expected response to contain an array but got an object - on client side
+    // req.isAuthenticated() on the server side returns false without the below lines
+    var express_session = require('express-session');
+
+    app.use(express_session({
+        secret: 'my_precious'
+    }));
+    app.use(app.passport.initialize());
+    app.use(app.passport.session());
+
+    app.get('/auth/dropbox',
+        app.passport.authenticate('dropbox-oauth2'),
+        function(req, res) {});
+
+    // Error : Invalid redirect_uri: "http://localhost:3000/auth/dropbox/callback" (https://ng-rb.mybluemix.net/auth/dropbox/callback).
+    // for OAuth2, the above URL needs to be registered with the app in dropbox app configuration page under OAuth2 - Redirect URIs
+
+    app.get('/auth/dropbox/callback',
+        app.passport.authenticate('dropbox-oauth2', {
+            failureRedirect: '/login'
+        }),
+        function(req, res) {
+            skipDropboxAuth = false;
+            storageClient = storageFactory.getStorageClient();
+            res.redirect('/rb-select');
+        });
+
+
+    // test authentication
+    function ensureAuthenticated(req, res, next) {
+        if (skipDropboxAuth || req.isAuthenticated()) {
+            return next();
+        }
+        res.redirect('/login')
+    }
+
+    var getAccessTokenFromGlobal = function(req) {
+        if (skipDropboxAuth) {
+            return "";
+        } else {
+            return accessTokenGlobal['id_' + req.user.id];
+        }
+    }
+
+    /////////
+
+    var router = express.Router();
+
+
+    // router.METHOD(path, [callback, ...] callback)
+
+    // REST: Query - get all
+    router.get('/articles', ensureAuthenticated, getAllArticles);
+
+
+    // REST: PUT - update existing
+    router.put('/articles/:fileName', ensureAuthenticated, articleUpdate);
+
+    // REST: POST - save new
+    router.post('/articles', ensureAuthenticated, articleCreate);
+
+
+    /////////
+
+
+    var js2xmlparser = require('js2xmlparser'); // using diff module for js to xml to make sure nothing is lost during conversion
+
+    var xml2js = require('xml2js');
+
+    var parser = new xml2js.Parser();
 
 
     var read_json_files = function (totalNumOfFiles, client, dirName, fileName, socket_id) {
@@ -240,14 +268,6 @@ module.exports = function(app) {
 
     }
 
-    // test authentication
-    function ensureAuthenticated(req, res, next) {
-        if (skipDropboxAuth || req.isAuthenticated()) {
-            return next();
-        }
-        res.redirect('/login')
-    }
-
     var articleSaveAndUpdate = function(req, res, isNew) {
 
         var client = new storageClient({
@@ -318,13 +338,6 @@ module.exports = function(app) {
 
     }
 
-    var getAccessTokenFromGlobal = function(req) {
-        if (skipDropboxAuth) {
-            return "";
-        } else {
-            return accessTokenGlobal['id_' + req.user.id];
-        }
-    }
 
 
     // TODO: security testing - all possible tests / hacks to make sure one user's data cannot be accessed by another user
