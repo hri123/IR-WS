@@ -7,7 +7,11 @@ What does this application cover
 How to Run
 ----------
 
+npm install
 gulp serve-dev
+
+(for rb - check - .../FullApp/src/server/routes/rb/README.md)
+
 
 Deploying on Bluemix:
 ----------------------
