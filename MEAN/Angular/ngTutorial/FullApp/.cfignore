@@ -3,3 +3,4 @@ bower_components/
 .bowerrc
 test/
 RB-files/
+report/
