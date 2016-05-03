@@ -4,11 +4,15 @@ describe('CustomerController', function() {
 
     beforeEach(function() {
         bard.appModule('app.customer');
-        bard.inject('$controller', '$log', '$rootScope');
+        bard.inject('$controller', '$log', '$rootScope', '$q', 'customer.dataservice');
     });
 
     beforeEach(function () {
-        controller = $controller('CustomerController');
+        // Error: [$injector:unpr] Unknown provider: $scopeProvider <- $scope <- CustomerController
+        // http://stackoverflow.com/a/34286256/512126
+        sinon.stub(dataservice, 'getCustomers').returns($q.when([])); // TODO: use mockData
+        scope = $rootScope.$new();
+        controller = $controller('CustomerController', {$scope: scope});
         $rootScope.$apply();
     });
 
