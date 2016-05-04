@@ -8,6 +8,35 @@
   <style>
 
   </style>
+
+  <script>
+
+  function addPanel(panelId, panelName) {
+    $('#add-panel-here').append("<div class='col-md-4' id=" + panelId + "><div class='container panel panel-default col-md-12'><div class='panel-heading row'><h4 class='panel-title col-md-12'>" + panelName + "</h4></div><ul class='list-group'></ul></div></div>");
+  }
+
+  function addSource(panelId, filename, highlight, description) {
+    $('#' + panelId).find('ul').append("<li class='row list-group-item'><a class='col-sm-12' href='showcode.html?filename=" + filename + "&highlight=" + highlight + "'>" + description + "</a></li>");
+  }
+
+  $(document).ready(function() {
+
+
+    var panelId = "linkedlists";
+    var panelName = "Linked Lists";
+
+    addPanel(panelId, panelName);
+
+    var filename = 'LinkedLists/removeElement_complex.js';
+    var highlight = 'javascript';
+    var description = 'sample code to remove element from linked list.'
+
+    addSource(panelId, filename, highlight, description);
+
+
+  });
+
+  </script>
 </head>
 
 <body>
@@ -16,135 +45,9 @@
 
   </nav>
 
-  <div class="container-fluid">
-
-    <div class="row">
-
-      <div class="col-md-4">
-        <div class="container panel panel-default col-md-12">
-          <div class="panel-heading row">
-            <h4 class="panel-title col-md-12">&lt;Category&gt;</h4>
-          </div>
-
-          <ul class="list-group">
-            <li class="row list-group-item">
-              <a class="col-sm-12" href="LinkedLists/removeElement_complex.js">&lt;file name / description&gt;</a>
-            </li>
-            <li class="row list-group-item">
-              <a class="col-sm-12" href="#">&lt;file name / description&gt;</a>
-            </li>
-            <li class="row list-group-item">
-              <a class="col-sm-12" href="#">&lt;file name / description&gt;</a>
-            </li>
-            <li class="row list-group-item">
-              <a class="col-sm-12" href="#">&lt;file name / description&gt;</a>
-            </li>
-
-          </ul>
-        </div>
-      </div>
-
-      <div class="col-md-4">
-        <div class="container panel panel-default col-md-12">
-          <div class="panel-heading row">
-            <h4 class="panel-title col-md-12">&lt;Category&gt;</h4>
-          </div>
-
-          <ul class="list-group">
-            <li class="row list-group-item">
-              <a class="col-sm-12" href="#">&lt;file name / description&gt;</a>
-            </li>
-            <li class="row list-group-item">
-              <a class="col-sm-12" href="#">&lt;file name / description&gt;</a>
-            </li>
-          </ul>
-        </div>
-      </div>
-
-
-      <div class="col-md-4">
-        <div class="container panel panel-default col-md-12">
-          <div class="panel-heading row">
-            <h4 class="panel-title col-md-12">&lt;Category&gt;</h4>
-          </div>
-
-          <ul class="list-group">
-            <li class="row list-group-item">
-              <a class="col-sm-12" href="#">&lt;file name / description&gt;</a>
-            </li>
-            <li class="row list-group-item">
-              <a class="col-sm-12" href="#">&lt;file name / description&gt;</a>
-            </li>
-          </ul>
-        </div>
-      </div>
-
-    </div> <!-- row -->
-
-    <div class="row">
-
-      <div class="col-md-4">
-        <div class="container panel panel-default col-md-12">
-          <div class="panel-heading row">
-            <h4 class="panel-title col-md-12">&lt;Category&gt;</h4>
-          </div>
-
-          <ul class="list-group">
-            <li class="row list-group-item">
-              <a class="col-sm-12" href="LinkedLists/removeElement_complex.js">&lt;file name / description&gt;</a>
-            </li>
-            <li class="row list-group-item">
-              <a class="col-sm-12" href="#">&lt;file name / description&gt;</a>
-            </li>
-            <li class="row list-group-item">
-              <a class="col-sm-12" href="#">&lt;file name / description&gt;</a>
-            </li>
-            <li class="row list-group-item">
-              <a class="col-sm-12" href="#">&lt;file name / description&gt;</a>
-            </li>
-
-          </ul>
-        </div>
-      </div>
-
-      <div class="col-md-4">
-        <div class="container panel panel-default col-md-12">
-          <div class="panel-heading row">
-            <h4 class="panel-title col-md-12">&lt;Category&gt;</h4>
-          </div>
-
-          <ul class="list-group">
-            <li class="row list-group-item">
-              <a class="col-sm-12" href="#">&lt;file name / description&gt;</a>
-            </li>
-            <li class="row list-group-item">
-              <a class="col-sm-12" href="#">&lt;file name / description&gt;</a>
-            </li>
-          </ul>
-        </div>
-      </div>
-
-
-      <div class="col-md-4">
-        <div class="container panel panel-default col-md-12">
-          <div class="panel-heading row">
-            <h4 class="panel-title col-md-12">&lt;Category&gt;</h4>
-          </div>
-
-          <ul class="list-group">
-            <li class="row list-group-item">
-              <a class="col-sm-12" href="#">&lt;file name / description&gt;</a>
-            </li>
-            <li class="row list-group-item">
-              <a class="col-sm-12" href="#">&lt;file name / description&gt;</a>
-            </li>
-          </ul>
-        </div>
-      </div>
-
-    </div> <!-- row -->
-    
+  <div id="add-panel-here" class="container-fluid">
   </div>
+
 </body>
 
 </html>

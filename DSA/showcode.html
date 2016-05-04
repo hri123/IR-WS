@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <link rel="stylesheet" href="downloaded/bootstrap-3.3.6-dist/css/bootstrap.css"></link>
+  <script src="downloaded/jquery-1.12.3.js"></script>
+  <script src="downloaded/bootstrap-3.3.6-dist/js/bootstrap.js"></script>
+
+  <link rel="stylesheet" href="downloaded/highlight/styles/default.css">
+  <script src="downloaded/highlight/highlight.pack.js"></script>
+  <style>
+    .source-code {
+      white-space: pre;
+    }
+  </style>
+  <script>
+    function GetURLParameter(sParam) {
+      var sPageURL = window.location.search.substring(1);
+      var sURLVariables = sPageURL.split('&');
+      for (var i = 0; i < sURLVariables.length; i++) {
+        var sParameterName = sURLVariables[i].split('=');
+        if (sParameterName[0] == sParam) {
+          return sParameterName[1];
+        }
+      }
+    }
+
+    // below configuration setting is not working, using 'white-space: pre' instead
+    // hljs.configure({
+    //   useBR: true
+    // });
+
+    $(document).ready(function() {
+      $.ajax({
+            url : GetURLParameter('filename'),
+            dataType: "html",
+            success : function (data) {
+                $(".source-code").html(data);
+
+                // toggle between 'html' for comments 'readability' and javascript for code readability
+                $(".source-code").addClass(GetURLParameter('highlight'));
+
+                // calling highlightBlock after the loading is done, else the syntax is not highlighted
+                $('.source-code').each(function(i, block) {
+                  hljs.highlightBlock(block);
+                });
+            }
+        });
+      // $(".source-code").load(GetURLParameter('filename'));
+
+    });
+  </script>
+</head>
+
+<body>
+
+  <nav class="navbar navbar-default">
+
+  </nav>
+
+  <div class="container-fluid">
+
+    <div class="row">
+
+      <div class="col-md-12">
+
+        <div class="source-code">
+
+        </div>
+
+
+      </div>
+
+    </div>
+    <!-- row -->
+
+
+  </div>
+</body>
+
+</html>
