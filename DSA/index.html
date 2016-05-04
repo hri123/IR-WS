@@ -19,12 +19,12 @@
     + "</h4></div><ul class='list-group'></ul></div></div>");
   }
 
-  function addSource(panelId, filename, description) {
+  function addSource(panelId, filename, description, highlight) {
     $('#' + panelId).find('ul').append("<li class='row list-group-item'><div class='col-sm-11'>"
     + description
     + "</div><div class='col-sm-1'><a href='showcode.html?filename="
     + filename
-    + "&highlight=" + 'js' + "'>" + '(js)' + "</a><a href='showcode.html?filename="
+    + "&highlight=" + highlight + "'>" + '(' + highlight + ')' + "</a><a href='showcode.html?filename="
     + filename
     + "&highlight=" + 'html' + "'>" + '(html)' + "</a></div></li>");
   }
@@ -39,8 +39,9 @@
 
     var filename = 'source/LinkedLists/removeElement_complex.js';
     var description = 'sample code to remove element from linked list.'
+    var highlight = 'js';
 
-    addSource(panelId, filename, description);
+    addSource(panelId, filename, description, highlight);
 
 
   });
