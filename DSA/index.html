@@ -12,11 +12,21 @@
   <script>
 
   function addPanel(panelId, panelName) {
-    $('#add-panel-here').append("<div class='col-md-4' id=" + panelId + "><div class='container panel panel-default col-md-12'><div class='panel-heading row'><h4 class='panel-title col-md-12'>" + panelName + "</h4></div><ul class='list-group'></ul></div></div>");
+    $('#add-panel-here').append("<div class='col-md-4' id="
+    + panelId
+    + "><div class='container panel panel-default col-md-12'><div class='panel-heading row'><h4 class='panel-title col-md-12'>"
+    + panelName
+    + "</h4></div><ul class='list-group'></ul></div></div>");
   }
 
-  function addSource(panelId, filename, highlight, description) {
-    $('#' + panelId).find('ul').append("<li class='row list-group-item'><a class='col-sm-12' href='showcode.html?filename=" + filename + "&highlight=" + highlight + "'>" + description + "</a></li>");
+  function addSource(panelId, filename, description) {
+    $('#' + panelId).find('ul').append("<li class='row list-group-item'><div class='col-sm-11'>"
+    + description
+    + "</div><div class='col-sm-1'><a href='showcode.html?filename="
+    + filename
+    + "&highlight=" + 'js' + "'>" + '(js)' + "</a><a href='showcode.html?filename="
+    + filename
+    + "&highlight=" + 'html' + "'>" + '(html)' + "</a></div></li>");
   }
 
   $(document).ready(function() {
@@ -28,10 +38,9 @@
     addPanel(panelId, panelName);
 
     var filename = 'LinkedLists/removeElement_complex.js';
-    var highlight = 'javascript';
     var description = 'sample code to remove element from linked list.'
 
-    addSource(panelId, filename, highlight, description);
+    addSource(panelId, filename, description);
 
 
   });
