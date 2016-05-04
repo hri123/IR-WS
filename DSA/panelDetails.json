@@ -1,0 +1,11 @@
+{
+	"panels": [{
+		"panelId": "linkedlists",
+		"panelName": "Linked Lists",
+		"sources": [{
+			"filename": "source/LinkedLists/removeElement_complex.js",
+			"description": "sample code to remove element from linked list.",
+			"highlight": "js"
+		}]
+	}]
+}

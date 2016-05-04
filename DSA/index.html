@@ -10,42 +10,54 @@
   </style>
 
   <script>
+    function addPanel(panelId, panelName) {
+      $('#add-panel-here').append("<div class='col-md-4' id=" + panelId + "><div class='container panel panel-default col-md-12'><div class='panel-heading row'><h4 class='panel-title col-md-12'>" + panelName +
+        "</h4></div><ul class='list-group'></ul></div></div>");
+    }
 
-  function addPanel(panelId, panelName) {
-    $('#add-panel-here').append("<div class='col-md-4' id="
-    + panelId
-    + "><div class='container panel panel-default col-md-12'><div class='panel-heading row'><h4 class='panel-title col-md-12'>"
-    + panelName
-    + "</h4></div><ul class='list-group'></ul></div></div>");
-  }
+    function addSource(panelId, filename, description, highlight) {
+      $('#' + panelId).find('ul').append("<li class='row list-group-item'><div class='col-sm-11'>" + description + "</div><div class='col-sm-1'><a href='showcode.html?filename=" + filename + "&highlight=" + highlight + "'>" + '(' + highlight + ')' +
+        "</a><a href='showcode.html?filename=" + filename + "&highlight=" + 'html' + "'>" + '(html)' + "</a></div></li>");
+    }
 
-  function addSource(panelId, filename, description, highlight) {
-    $('#' + panelId).find('ul').append("<li class='row list-group-item'><div class='col-sm-11'>"
-    + description
-    + "</div><div class='col-sm-1'><a href='showcode.html?filename="
-    + filename
-    + "&highlight=" + highlight + "'>" + '(' + highlight + ')' + "</a><a href='showcode.html?filename="
-    + filename
-    + "&highlight=" + 'html' + "'>" + '(html)' + "</a></div></li>");
-  }
+    $(document).ready(function() {
 
-  $(document).ready(function() {
+      var dataFile = "panelDetails.json";
 
+      // Synchronous XMLHttpRequest on the main thread is deprecated because of its detrimental effects to the end user's experience. For more help, check https://xhr.spec.whatwg.org/.
+      var json = (function() {
+        var json = null;
+        $.ajax({
+          'async': false,
+          'global': false,
+          'url': dataFile,
+          'dataType': "json",
+          'success': function(data) {
+            json = data;
+          }
+        });
+        return json;
+      })();
 
-    var panelId = "linkedlists";
-    var panelName = "Linked Lists";
+      $.each(json.panels, function(i, panel) {
 
-    addPanel(panelId, panelName);
+        var panelId = panel.panelId;
+        var panelName = panel.panelName;
 
-    var filename = 'source/LinkedLists/removeElement_complex.js';
-    var description = 'sample code to remove element from linked list.'
-    var highlight = 'js';
+        addPanel(panelId, panelName);
 
-    addSource(panelId, filename, description, highlight);
+        $.each(panel.sources, function(i, source) {
 
+          var filename = source.filename;
+          var description = source.description;
+          var highlight = source.highlight;
 
-  });
+          addSource(panelId, filename, description, highlight);
+        });
 
+      });
+
+    });
   </script>
 </head>
 
