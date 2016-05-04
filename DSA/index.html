@@ -22,7 +22,7 @@
 
     $(document).ready(function() {
 
-      var dataFile = "panelDetails.json";
+      var dataFile = "source/panelDetails.json";
 
       // 'async': false, -> Synchronous XMLHttpRequest on the main thread is deprecated because of its detrimental effects to the end user's experience. For more help, check https://xhr.spec.whatwg.org/.
       // var json = (function() {
@@ -49,7 +49,8 @@
         var json = data;
         $.each(json.panels, function(i, panel) {
 
-          var panelId = panel.panelId;
+          var panelId = 'panel' + i;
+
           var panelName = panel.panelName;
 
           addPanel(panelId, panelName);
