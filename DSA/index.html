@@ -16,8 +16,14 @@
     }
 
     function addSource(panelId, filename, description, highlight) {
-      $('#' + panelId).find('ul').append("<li class='row list-group-item'><div class='col-sm-11'>" + description + "</div><div class='col-sm-1'><a href='showcode.html?filename=" + filename + "&highlight=" + highlight + "'>" + '(' + highlight + ')' +
-        "</a><a href='showcode.html?filename=" + filename + "&highlight=" + 'html' + "'>" + '(html)' + "</a></div></li>");
+
+      var html = "<li class='row list-group-item'><div class='col-sm-11'>" + description + "</div>";
+
+      if (filename && filename != "") {
+        html += "<div class='col-sm-1'><a href='showcode.html?filename=" + filename + "&highlight=" + highlight + "'>" + '(' + highlight + ')' + "</a><a href='showcode.html?filename=" + filename + "&highlight=" + 'html' + "'>" + '(html)' + "</a></div></li>";
+      }
+      
+      $('#' + panelId).find('ul').append(html);
     }
 
     $(document).ready(function() {
@@ -58,7 +64,13 @@
           $.each(panel.sources, function(i, source) {
 
             var filename = source.filename;
+
             var description = source.description;
+            // if description is an array, concatenate
+            if (Array.isArray(description)) {
+              description = description.join(' ');
+            }
+
             var highlight = source.highlight;
 
             addSource(panelId, filename, description, highlight);

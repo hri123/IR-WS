@@ -21,3 +21,15 @@ npm install -g http-server
 Then simply run http-server in any of your project directories
 
 http:127.0.0.1:8080
+
+
+TODO:
+-----
+
+1. Move this under gh-pages so that it can be hosted on github itself
+
+
+Structure:
+----------
+
+1. Big Words & Big Words Details
