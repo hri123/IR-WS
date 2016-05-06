@@ -27,6 +27,7 @@ TODO:
 -----
 
 1. Move this under gh-pages so that it can be hosted on github itself
+2. Implement a search in index.html like the search on Mac's System Preferences
 
 
 Structure:
