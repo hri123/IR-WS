@@ -22,12 +22,14 @@
       if (filename && filename != "") {
         html += "<div class='col-sm-1'><a href='showcode.html?filename=" + filename + "&highlight=" + highlight + "'>" + '(' + highlight + ')' + "</a><a href='showcode.html?filename=" + filename + "&highlight=" + 'html' + "'>" + '(html)' + "</a></div></li>";
       }
-      
+
       $('#' + panelId).find('ul').append(html);
     }
 
     $(document).ready(function() {
 
+      // these json files are like the index files of the database
+      // the database consists of all the files mentioned in the json file
       var dataFile = "source/panelDetails.json";
 
       // 'async': false, -> Synchronous XMLHttpRequest on the main thread is deprecated because of its detrimental effects to the end user's experience. For more help, check https://xhr.spec.whatwg.org/.
