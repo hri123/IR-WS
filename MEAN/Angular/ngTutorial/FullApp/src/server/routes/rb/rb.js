@@ -133,6 +133,9 @@ module.exports = function(app) {
 
 
     // router.METHOD(path, [callback, ...] callback)
+    
+    // control reaches here for /api/changeStorageClient, if you do not want the /api, you need to use app.get instead of router.get
+    router.get('/changeStorageClient', ensureAuthenticated, changeStorageClient);
 
     // REST: Query - get all
     router.get('/articles', ensureAuthenticated, getAllArticles);
@@ -209,6 +212,13 @@ module.exports = function(app) {
                 }
             }
         });
+    }
+    
+    function changeStorageClient(req, res) {
+        
+        var storageClient = req.query.storageClient;
+        setStorageClient(storageClient);
+        res.redirect('/rb-select');
     }
 
     function getAllArticles(req, res) {
