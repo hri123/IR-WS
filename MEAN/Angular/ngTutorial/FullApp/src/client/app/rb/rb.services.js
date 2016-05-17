@@ -40,6 +40,8 @@
               val: ''
           },
           selectedTags: [],
+          
+          storageClient: "Local", // default value
 
           projectArea: 'attitude', // $stateParams.area; // picking value from the url in angular
           projectName: 'rb' // $stateParams.project;

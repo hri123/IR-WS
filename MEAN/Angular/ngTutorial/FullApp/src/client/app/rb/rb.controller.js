@@ -585,6 +585,10 @@
         $scope.OnSelectProjectAreaAndName = function(area, name) {
           $state.go('rb.list', {}, {reload: true});
         };
+        
+        $scope.onStorageClientChanged = function() {
+          alert('Yet to be implemented');
+        }
 
     }]);
 

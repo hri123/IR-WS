@@ -35,6 +35,22 @@
                   </ul>
                 </div>
             </div>
+            <div class="row">
+                <div class="col-xs-3">
+                    <div class="radio">
+                    <label>
+                        <input type="radio" name="storageClient" style="position: relative;" ng-model="sharedVars.storageClient" ng-change="onStorageClientChanged()" value="Local"/>
+                        Local
+                    </label>
+                    </div>
+                    <div class="radio">
+                    <label>
+                        <input type="radio" name="storageClient" style="position: relative;" ng-model="sharedVars.storageClient" ng-change="onStorageClientChanged()" value="Dropbox"/>
+                        Dropbox
+                    </label>
+                    </div>                    
+                </div>
+            </div>
         </div>
     </section>
 </section>
