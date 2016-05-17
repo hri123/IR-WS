@@ -412,12 +412,12 @@
 
             var found = false;
 
-            if (!$scope.search7 || !$scope.search7.val || $scope.search7.val == "") {
+            if (!$scope.sharedVars.search7 || !$scope.sharedVars.search7.val || $scope.sharedVars.search7.val == "") {
                 return true;
             }
 
             var setFound = function(inContent) {
-                var searchTerm = $scope.search7.val.toLowerCase();
+                var searchTerm = $scope.sharedVars.search7.val.toLowerCase();
                 if (inContent && inContent.section) jQuery.each(inContent.section, function(index, value) {
 
                     if (value.name && value.name.toLowerCase().indexOf(searchTerm) != -1) {
@@ -478,12 +478,12 @@
 
             var found = false;
 
-            if (!$scope.search9 || !$scope.search9.val || $scope.search9.val == "") {
+            if (!$scope.sharedVars.search9 || !$scope.sharedVars.search9.val || $scope.sharedVars.search9.val == "") {
                 return true;
             }
 
             var setFound = function(inContent) {
-                var searchTerm = $scope.search9.val.toLowerCase();
+                var searchTerm = $scope.sharedVars.search9.val.toLowerCase();
                 if (inContent && inContent.section) jQuery.each(inContent.section, function(index, value) {
 
                     if (value) {
@@ -513,11 +513,11 @@
 
             var found = false;
 
-            if (!$scope.search8 || !$scope.search8.val || $scope.search8.val == "") {
+            if (!$scope.sharedVars.search8 || !$scope.sharedVars.search8.val || $scope.sharedVars.search8.val == "") {
                 return true;
             }
 
-            var atTagVal = $scope.search8.val;
+            var atTagVal = $scope.sharedVars.search8.val;
 
             var regExp = new RegExp("@tags\\(([^)]*)" + atTagVal, "g");
 
