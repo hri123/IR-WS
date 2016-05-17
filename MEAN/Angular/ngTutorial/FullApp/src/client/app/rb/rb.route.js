@@ -88,6 +88,17 @@
                 url: '/rb-select',
                 title: 'RB-Select',
             }
+        }, {
+            state: 'rb.close',
+            config: {
+                views: {
+                    'rb': {
+                      template: '<script>window.close();</script>'
+                    }
+                },
+                url: '/rb-close',
+                title: 'RB-Close',
+            }
         }];
     }
 

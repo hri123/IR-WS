@@ -107,7 +107,7 @@ module.exports = function(app) {
         }),
         function(req, res) {
             setStorageClient('Dropbox');
-            res.redirect('/rb-select');
+            res.redirect('/rb-close');
         });
 
 
