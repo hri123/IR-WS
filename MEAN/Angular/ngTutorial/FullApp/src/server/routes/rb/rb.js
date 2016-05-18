@@ -107,7 +107,7 @@ module.exports = function(app) {
         }),
         function(req, res) {
             setStorageClient('Dropbox');
-            res.redirect('/rb-close');
+            res.redirect('/rb-close'); // close the browser that was opened for dropbox authentication
         });
 
 
