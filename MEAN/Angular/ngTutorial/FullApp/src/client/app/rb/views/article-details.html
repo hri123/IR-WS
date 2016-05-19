@@ -42,11 +42,11 @@
                     <div id="section_mc">
                         <h1 class="page-header"><a href="#" editable-text="currentArticle.summary">{{ currentArticle.summary || 'empty summary' }}</a>
               </h1>
-                        <div href="#" editable-text="currentArticle.tags">{{ currentArticle.tags || 'empty tags' }}</a>
+                        <div><a href="#" editable-text="currentArticle.tags">{{ currentArticle.tags || 'empty tags' }}</a>
                         </div>
-                        <div href="#" editable-text="currentArticle.rating">{{ currentArticle.rating || 'empty rating' }}</a>
+                        <div><a href="#" editable-text="currentArticle.rating">{{ currentArticle.rating || 'empty rating' }}</a>
                         </div>
-                        <div href="#" editable-text="currentArticle.from">{{ currentArticle.from || 'empty from' }}</a>
+                        <div><a href="#" editable-text="currentArticle.from">{{ currentArticle.from || 'empty from' }}</a>
                         </div>
                     </div>
                     <div>
@@ -54,6 +54,7 @@
                         But not using it as the existing format is completly changed by this editor-->
                         <!--<div text-angular ng-model="currentArticle.content.main"></div>-->
                         <a href="#" editable-textarea="currentArticle.content.main" e-style="color:blue;font-weight:900;">
+                            <!--word wrap for pre is added to styles.less file-->
                             <pre>{{ currentArticle.content.main || 'empty content main' }}</pre>
                         </a>
                     </div>
