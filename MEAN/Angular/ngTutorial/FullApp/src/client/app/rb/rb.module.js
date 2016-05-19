@@ -5,7 +5,8 @@
         'app.core',
         'app.widgets',
         'rbAppServices',
-        'xeditable'
+        'xeditable',
+        'textAngular'
     ]);
 
     app_rb.directive('scrollSpy', function($timeout){
