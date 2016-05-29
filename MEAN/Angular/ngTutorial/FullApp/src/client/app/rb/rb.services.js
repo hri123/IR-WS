@@ -103,9 +103,29 @@
                     // $scope.apply is required to trigger the 2 way data binding of angular between model and view
                     // if this is not done, the view is not getting updated
                     // http://stackoverflow.com/questions/21658490/angular-websocket-and-rootscope-apply
+                    
+                    // this issue is evident when loading from Dropbox, if you are loading articles from LocalFileSystem
+                    // the articles load properly even without the $apply or $digest method being called
+                    
+                    // http://tutorials.jenkov.com/angularjs/watch-digest-apply.html
+                    // When you create a data binding from somewhere in your view to a variable on the $scope object, 
+                    // AngularJS creates a "watch" internally. A watch means that AngularJS watches changes in the variable on the $scope object. 
+                    // The framework is "watching" the variable. Watches are created using the $scope.$watch() function
+                    
+                    // In the case below the data binding is not updated, because angular framework does not call $scope.$digest() automatically
+                    // as angular framework does not know that a value is changed, so, it needs to be called manually                    
+                    
+                    // either of the below solutions work
+                    // solution 1                    
                     $scope.$apply(function() {
                         $scope.articles.push(data);
                     });
+             
+                    // solution 2
+                    // $scope.articles.push(data);
+                    // $scope.$digest();
+                    
+
                 });
             }
         }
