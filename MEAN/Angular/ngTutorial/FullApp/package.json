@@ -6,7 +6,14 @@
     "init": "npm install",
     "install": "bower install",
     "start": "node src/server/app.js",
-    "test": "gulp test"
+    "test": "gulp test",
+    "ng2-start": "angular 2 scripts below - use 'npm run ng2-start'",
+    "ng2-start": "tsc && concurrently \"npm run tsc:w\" \"npm run lite\" ",
+    "lite": "lite-server",
+    "postinstall": "typings install",
+    "tsc": "tsc",
+    "tsc:w": "tsc -w",
+    "typings": "typings"
   },
   "dependencies": {
     "async": "^1.5.2",
@@ -31,7 +38,24 @@
     "socket.io": "^1.4.5",
     "twit": "^2.2.3",
     "watson-developer-cloud": "^1.3.1",
-    "xml2js": "^0.4.16"
+    "xml2js": "^0.4.16",
+    "@angular/common": "angular 2 dependencies begin",
+    "@angular/common": "angular 2 tutorial recommends to install using npm and not bower",
+    "@angular/common":  "2.0.0-rc.1",
+    "@angular/compiler":  "2.0.0-rc.1",
+    "@angular/core":  "2.0.0-rc.1",
+    "@angular/http":  "2.0.0-rc.1",
+    "@angular/platform-browser":  "2.0.0-rc.1",
+    "@angular/platform-browser-dynamic":  "2.0.0-rc.1",
+    "@angular/router":  "2.0.0-rc.1",
+    "@angular/router-deprecated":  "2.0.0-rc.1",
+    "@angular/upgrade":  "2.0.0-rc.1",
+    "systemjs": "0.19.27",
+    "core-js": "^2.4.0",
+    "reflect-metadata": "^0.1.3",
+    "rxjs": "5.0.0-beta.6",
+    "zone.js": "^0.6.12",
+    "angular2-in-memory-web-api": "0.0.10"
   },
   "devDependencies": {
     "browser-sync": "^2.7.13",
@@ -94,7 +118,12 @@
     "sinon": "^1.12.2",
     "sinon-chai": "^2.6.0",
     "wiredep": "^2.2.2",
-    "yargs": "^3.15.0"
+    "yargs": "^3.15.0",
+    "concurrently": "angular 2 dependencies begin",
+    "concurrently": "^2.0.0",
+    "lite-server": "^2.2.0",
+    "typescript": "^1.8.10",
+    "typings":"^1.0.4"
   },
   "engines": {
     "node": "0.12.7",
