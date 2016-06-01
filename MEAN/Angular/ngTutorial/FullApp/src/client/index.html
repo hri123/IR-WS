@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html ng-app="app">
+<html>
+<!--see below - in angular 2, using ng-app to bootstrap the application is not supported, only calling the method angular.bootstrap is supported-->
+<!--<html ng-app="app">-->
 <head>
     <style>
         /* This helps the ng-show/ng-hide animations start at the right place. */
@@ -136,6 +138,12 @@
 
     <!-- TODO: let wiredep inject this -->
     <script src="/src/common/rb/utils.js"></script>
+    
+    
+    <!-- bootstrap -->
+    <script>
+        angular.bootstrap(document.body, ['app'], {});
+    </script>
 
 </body>
 </html>
