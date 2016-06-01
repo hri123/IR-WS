@@ -139,11 +139,23 @@
     <!-- TODO: let wiredep inject this -->
     <script src="/src/common/rb/utils.js"></script>
     
-    
-    <!-- bootstrap -->
-    <script>
-        angular.bootstrap(document.body, ['app'], {});
-    </script>
+    <!-- TODO: let wiredep inject this -->
 
+    <!-- zone.js:323 Error: SyntaxError: Unexpected token < -->
+    <script src="node_modules/typescript/lib/typescript.js"></script>
+
+    <!-- Error: EXCEPTION: Error during instantiation of NgZone! (ApplicationRef -> ApplicationRef_ -> NgZone) -->
+    <script src="node_modules/zone.js/dist/zone.js"></script>
+
+    <script src="/node_modules/systemjs/dist/system.src.js"></script>
+    <script src="systemjs.config.js"></script>
+    <script>
+      System.import('app')
+            .then(null, console.error.bind(console));
+
+    <!-- bootstrap angular - moved to '/src/client/app/main.ts' -->
+    //   angular.bootstrap(document.body, ['app'], {});
+    </script>
+    
 </body>
 </html>
