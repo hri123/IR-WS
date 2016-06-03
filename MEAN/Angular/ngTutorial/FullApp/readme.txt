@@ -1,7 +1,7 @@
 What does this application cover
 --------------------------------
 
-- Hot towel as base
+- Hot towel as base (johnpapa style guide for angular)
 - Cloudant (bluemix shared free) service for storing documents
 
 How to Run
