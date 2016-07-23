@@ -1,9 +1,9 @@
 // Usage
 // update the line with source folder location in the code below
-// var p = './RB-files/attitude/rb';
-// node ./src/server/routes/rb/reverse_migrate.js
+// var p = '/Users/hrishikesh/H/HP/Dropbox/Kaizen/ng-rb/RB-files/attitude/rb';
+// node ./src/server/routes/rb/helpers/reverse_migrate.js
 
-utils = require('../../../common/rb/utils.js');
+utils = require('../../../../common/rb/utils.js');
 var mkdirp = require('mkdirp');
 
 var massageArticleForExport = function(inArticle) {
@@ -23,7 +23,7 @@ if (!fs.existsSync('./RB-files-xml')) {
 }
 var outdir = './RB-files-xml';
 
-var p = './RB-files/attitude/rb';
+var p = '/Users/hrishikesh/H/HP/Dropbox/Kaizen/ng-rb/RB-files/attitude/rb';
 fs.readdir(p, function(err, entries) {
     if (err) {
         throw err;

@@ -32,6 +32,8 @@ module.exports = function(app) {
 
     var storageFactory = require('./storageFactory.js');
 
+    var utils = require('../../../common/rb/utils.js');
+
     // if (process.argv[2] == 'local') { // read from command line args
     //     setStorageClient('LocalFileSystem');
     // }
@@ -169,6 +171,9 @@ module.exports = function(app) {
                 if (!article.fileName) {
                    article.fileName = stat.name; // this works for dropbox client, stat not available for local file system client
                 }
+
+                // for readability outside the application, e.g.: while using the text editors, main is stored as array of strings
+                article = utils.convertMainFromArrayToString(article);
 
                 // the articles were sent once everything was loaded from dropbox, which used to give a slow response feeling to the user
                 // so, using websockets to return the articles as soon as it is read from dropbox
@@ -318,6 +323,9 @@ module.exports = function(app) {
                 subProjectName = articleToSave.tags;
             }
 
+            // for readability outside the application, e.g.: while using the text editors, main is stored as array of strings
+            articleToSave = utils.convertMainFromStringToArray(articleToSave);
+
             var writeFilePath = (client.baseDirectory || "/") + selectedArea + "/" + selectedProject + "/" + subProjectName + "/" + fileName;
             var fileString = JSON.stringify(articleToSave, null, 2); // pretty print - formatted print
             client.writeFile(writeFilePath,
@@ -329,7 +337,7 @@ module.exports = function(app) {
                     }
                 });
 
-            res.send(articleToSave);
+            res.send(utils.convertMainFromArrayToString(articleToSave));
 
         } else {
             console.log('dropbox client is not authenticated'); // Something went wrong.

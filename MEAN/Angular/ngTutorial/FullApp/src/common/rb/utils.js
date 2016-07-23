@@ -105,12 +105,64 @@ var getStructure = function(data) {
 
 };
 
+var convertMainFromStringToArray = function(inArticle) {
+
+    (function eachRecursive(obj) {
+        for (var k in obj)
+        {
+            if (!obj.hasOwnProperty(k))
+                continue;
+
+            if (typeof obj[k] == "object" && obj[k] !== null)
+                eachRecursive(obj[k]);
+            else {
+                if (typeof obj[k] == "string") {
+                    if (k == "main") {
+                        // obj[k] = obj[k].split("\r").join('');
+                        var convertedToArray = obj[k].split("\n");
+                        obj[k] = convertedToArray;
+                    }
+                }
+            }
+        }
+    })(inArticle);
+
+    return inArticle;
+
+};
+
+var convertMainFromArrayToString = function(inArticle) {
+
+    (function eachRecursive(obj) {
+        for (var k in obj)
+        {
+            if (!obj.hasOwnProperty(k))
+                continue;
+
+            if (k == "main") {
+                var convertedToString = obj[k].join("\n");
+                obj[k] = convertedToString;
+            } else if (typeof obj[k] == "object" && obj[k] !== null)
+                eachRecursive(obj[k]);
+        }
+    })(inArticle);
+
+    return inArticle;
+
+};
+
+
+
 try {
     module.exports.getStructure = getStructure;
 
     module.exports.newArticle = newArticle;
     module.exports.newSection = newSection;
     module.exports.newSubSection = newSubSection;
+
+    module.exports.convertMainFromStringToArray = convertMainFromStringToArray;
+    module.exports.convertMainFromArrayToString = convertMainFromArrayToString;
+
 } catch (err) {
     console.log('This file is shared between angular and node, ignore this error if you see it on angular side.')
 }

@@ -1,37 +1,19 @@
 // Usage
-// node ./src/server/routes/rb/process_to_compare.js
+// node ./src/server/routes/rb/helpers/process_to_compare.js
 
-var source_dir="/Users/hrishikesh/H/HP/Dropbox/Kaizen/ng-rb/RB-files/attitude/rb";
-var output_dir="/Users/hrishikesh/H/HP/Dropbox/Kaizen/ng-rb/RB-files/attitude/rb_for_compare"
+// var source_dir="/Users/hrishikesh/H/HP/Dropbox/Kaizen/ng-rb/RB-files/attitude/rb";
+// var output_dir="/Users/hrishikesh/H/HP/Dropbox/Kaizen/ng-rb/RB-files/attitude/rb_for_compare"
+
 // var source_dir="/Users/hrishikesh/H/HP/Dropbox/Kaizen/ng-rb/Snapshot_160204/RB-files/attitude/rb";
 // var output_dir="/Users/hrishikesh/H/HP/Dropbox/Kaizen/ng-rb/Snapshot_160204/RB-files/attitude/rb_for_compare"
 
-utils = require('../../../common/rb/utils.js');
+var source_dir="/Users/hrishikesh/H/HP/Dropbox/Kaizen/ng-rb/RB-files/attitude/rb";
+var output_dir="/Users/hrishikesh/H/HP/Dropbox/Kaizen/ng-rb/RB-files/attitude/rb_for_compare_orig"
+
+
+utils = require('../../../../common/rb/utils.js');
 var mkdirp = require('mkdirp');
 
-var massageArticleForExport = function(inArticle) {
-
-    (function eachRecursive(obj) {
-        for (var k in obj)
-        {
-            if (!obj.hasOwnProperty(k))
-                continue;
-
-            if (typeof obj[k] == "object" && obj[k] !== null)
-                eachRecursive(obj[k]);
-            else {
-                if (typeof obj[k] == "string") {
-                    obj[k] = obj[k].split("\r").join('');
-                    var convertedToArray = obj[k].split("\n");
-                    obj[k] = convertedToArray;
-                }
-            }
-        }
-    })(inArticle);
-
-    return inArticle;
-
-};
 
 xml2js = require('xml2js');
 var builder = new xml2js.Builder();
@@ -72,7 +54,8 @@ fs.readdir(source_dir, function(err, entries) {
                         var data = fs.readFileSync(dirName + '/' + sub_entries[j]);
 
                         var json_articleToSave = JSON.parse(data);
-                        json_articleToSave = massageArticleForExport(json_articleToSave);
+                        // json_articleToSave = utils.convertMainFromStringToArray(json_articleToSave);
+                        json_articleToSave = utils.convertMainFromArrayToString(json_articleToSave);
 
                         var fileString = JSON.stringify(json_articleToSave, null, 2); // pretty print - formatted print
                         if (!fs.existsSync(output_dir + '/' + subdir)) {
