@@ -20,6 +20,21 @@
                 <div class="col-md-1">
                 </div>
             </div>
+            <div class="row">
+                <nav class="navbar navbar-default">
+
+                    <div class="container">
+                        <p style="font-size: 70%; color: gray;">Use browser search to search on this page. Use the below search to search inside the files.</p>
+                    </div>
+
+                    <div class="container">
+                        <div class="input-group" style="width: 100%;">
+                            <input type="text" ng-model="sharedVars.instantSearchPhrase.val" ng-change="changeInstantSearchPhrase()" class="form-control"/>
+                        </div>
+                    </div>
+
+                </nav>
+            </div>
         </div>
     </section>
     <section class="matter">

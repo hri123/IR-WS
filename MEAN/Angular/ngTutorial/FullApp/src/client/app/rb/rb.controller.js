@@ -588,7 +588,12 @@
         
         $scope.onStorageClientChanged = function() {
           alert('Yet to be implemented');
-        }
+        };
+
+        $scope.changeInstantSearchPhrase = function() {
+            var isp = $scope.sharedVars.instantSearchPhrase.val;
+            sharedVars.search1.tags = isp;
+        };
 
     }]);
 

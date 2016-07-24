@@ -39,6 +39,11 @@
           search9: {
               val: ''
           },
+          
+          instantSearchPhrase: {
+              val: ''
+          },
+
           selectedTags: [],
           
           storageClient: "LocalFileSystem", // default value
