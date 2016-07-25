@@ -81,6 +81,12 @@ References
 TODO
 ----
 
+- @tags search under Input Search is broken
+
+- @tags search is not listed at all under Search All
+
+- Instant search bar at the top of articles list - link it to Input Search or have its own logic. The search phrase can be like "key: (value1 OR value2)" or "key:(value1 AND value2)" or "key1(value) AND key2(value)".<br/>e.g.: content:section:main(brave AND PTW)
+
 - delete oauth.js from github
 
 - Structure the app like Hardeep's mobile services code, one part for serverside base, one part for client side base, each with its own testing, and any application over it to make these two as dependencies, this way, hackaton projects will be easy to code
