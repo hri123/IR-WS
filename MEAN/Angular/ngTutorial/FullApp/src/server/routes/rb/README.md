@@ -81,8 +81,6 @@ References
 TODO
 ----
 
-- @tags search under Input Search is broken
-
 - @tags search is not listed at all under Search All
 
 - Instant search bar at the top of articles list - link it to Input Search or have its own logic. The search phrase can be like "key: (value1 OR value2)" or "key:(value1 AND value2)" or "key1(value) AND key2(value)".<br/>e.g.: content:section:main(brave AND PTW)
