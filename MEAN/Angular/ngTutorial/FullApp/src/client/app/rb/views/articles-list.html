@@ -29,7 +29,7 @@
 
                     <div class="container">
                         <div class="input-group" style="width: 100%;">
-                            <input type="text" ng-model="sharedVars.instantSearchPhrase.val" ng-keypress="($event.which === 13)?changeInstantSearchPhrase():0" class="form-control"/>
+                            <input type="text" ng-model="sharedVars.instantSearchPhrase.val" ng-keypress="($event.which === 13)?changeInstantSearchPhrase():0" class="form-control" placeholder='{"terms":[{"tags":"brave","_text":true},{"tags":"sacrifice","_text":true}],"_join":"OR"}' ng-style="sharedVars.instantSearchPhrase.style"/>
                         </div>
                     </div>
 
@@ -42,7 +42,7 @@
             <div class="row-fluid margin-top-10" style="height:100%; overflow:auto;">
                 <ol class="list-group">
                     <!-- TODO: fix filters -->
-                    <li class="list-group-item" data-ng-repeat="article in filteredOuter.filtered = (articles | filter : sharedVars.search1 : false | filter : sharedVars.search2 : false | filter : sharedVars.search3 : false | filter : sharedVars.search4 : false | filter : sharedVars.search5 : false | filter : sharedVars.search6: false | filter : searchSectionOrSubSection | filter : searchAtTags | filter : searchSectionOrSubSectionTags | filter : searchTagCloud) ">
+                    <li class="list-group-item" data-ng-repeat="article in filteredOuter.filtered = (articles | filter : sharedVars.search1 : false | filter : sharedVars.search2 : false | filter : sharedVars.search3 : false | filter : sharedVars.search4 : false | filter : sharedVars.search5 : false | filter : sharedVars.search6: false | filter : searchSectionOrSubSection | filter : searchAtTags | filter : searchSectionOrSubSectionTags | filter : searchTagCloud | filter: searchQueryString)">
                         <!-- <a href="/#/article/{{article.index}}"><p style="white-space: pre-line;">ARTICLE - {{article.summary}}</p></a><br/> -->
                         <a href="" ui-turn-on="article_details_modal" ng-click="setCurrentArticle(article)" class="btn btn-primary">ARTICLE</a> - {{article.summary}}
                         <br/>

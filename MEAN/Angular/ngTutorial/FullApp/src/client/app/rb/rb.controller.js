@@ -474,6 +474,38 @@
             return isApplicable;
         };
 
+        $scope.changeInstantSearchPhrase = function() {
+            var isp = $scope.sharedVars.instantSearchPhrase.val;
+            $scope.sharedVars.instantSearchPhrase.realSearchVal = isp;
+        };
+
+        $scope.searchQueryString = function(currentArticle) {
+
+            var found = false;
+            $scope.sharedVars.instantSearchPhrase.style = {"background-color": ""};
+
+            if ($scope.sharedVars.instantSearchPhrase.realSearchVal != '') {
+
+                var jsqlObject = {};
+                try {
+                    var jsqlObject = JSON.parse($scope.sharedVars.instantSearchPhrase.realSearchVal);
+                } catch (error) {
+                    $scope.sharedVars.instantSearchPhrase.style = {"background-color": "red"};
+                    return true; // TODO: implement better error handling later
+                }
+
+                found = SEARCHJS.matchObject(currentArticle, jsqlObject);
+
+            } else {
+
+                found = true;
+
+            } 
+                
+            return found;
+
+        };        
+
         $scope.searchSectionOrSubSectionTags = function(article) {
 
             var found = false;
@@ -588,11 +620,6 @@
         
         $scope.onStorageClientChanged = function() {
           alert('Yet to be implemented');
-        };
-
-        $scope.changeInstantSearchPhrase = function() {
-            var isp = $scope.sharedVars.instantSearchPhrase.val;
-            sharedVars.search1.tags = isp;
         };
 
     }]);

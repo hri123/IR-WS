@@ -41,7 +41,9 @@
           },
           
           instantSearchPhrase: {
-              val: ''
+              val: '',
+              realSearchVal: '', // gets updated only when user presses enter
+              style: {"background-color": ""}
           },
 
           selectedTags: [],
