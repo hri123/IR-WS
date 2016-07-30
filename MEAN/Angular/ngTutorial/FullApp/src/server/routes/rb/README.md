@@ -81,6 +81,12 @@ References
 TODO
 ----
 
+- Filters have performance issues, fix it: https://toddmotto.com/use-controller-filters-to-prevent-digest-performance-issues/
+
+- Retag / spruce tags of articles, sections and sub-section as per - Kaizen/OnePicture1000Words/Emotions-EQ.jpg, make sure all (sub)sections are tagged
+
+- the search on the articles list page, make it a drop down with 25 frequently used samples that can be quickly selected
+
 - @tags search is not listed at all under Search All
 
 - Instant search bar at the top of articles list - link it to Input Search or have its own logic. The search phrase can be like "key: (value1 OR value2)" or "key:(value1 AND value2)" or "key1(value) AND key2(value)".<br/>e.g.: content:section:main(brave AND PTW)

@@ -29,7 +29,11 @@
 
                     <div class="container">
                         <div class="input-group" style="width: 100%;">
-                            <input type="text" ng-model="sharedVars.instantSearchPhrase.val" ng-keypress="($event.which === 13)?changeInstantSearchPhrase():0" class="form-control" placeholder='{"terms":[{"tags":"brave","_text":true},{"tags":"sacrifice","_text":true}],"_join":"OR"}' ng-style="sharedVars.instantSearchPhrase.style"/>
+                            <input list="sample-queries" ng-model="sharedVars.instantSearchPhrase.val" ng-keypress="($event.which === 13)?changeInstantSearchPhrase():0" class="form-control" placeholder='select from options below or enter your own' ng-style="sharedVars.instantSearchPhrase.style"/>
+                            <datalist id="sample-queries">
+                                <option value='{"terms":[{"tags":"brave","_text":true},{"tags":"sacrifice","_text":true}],"_join":"OR"}'>
+                                <option value='{"main":"brave","_text":true, "_propertySearch":true}'>
+                            </datalist>
                         </div>
                     </div>
 
