@@ -81,7 +81,9 @@ References
 TODO
 ----
 
-- Filters have performance issues, fix it: https://toddmotto.com/use-controller-filters-to-prevent-digest-performance-issues/
+- Filters have performance issues, fix it: 
+  - https://toddmotto.com/use-controller-filters-to-prevent-digest-performance-issues/
+  - http://www.bennadel.com/blog/2487-filter-vs-nghide-with-ngrepeat-in-angularjs.htm
 
 - Retag / spruce tags of articles, sections and sub-section as per - Kaizen/OnePicture1000Words/Emotions-EQ.jpg, make sure all (sub)sections are tagged
 
