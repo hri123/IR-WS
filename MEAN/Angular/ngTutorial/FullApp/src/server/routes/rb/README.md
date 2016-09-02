@@ -81,6 +81,11 @@ References
 TODO
 ----
 
+- Merge all articles (~11) with the tags in content main and section main with acts-of-god into one article
+
+- {"main":"bda","_text":true, "_propertySearch":true} seems broken, I think it is supposed to list a union of
+{"content.main":"bda","_text":true, "_propertySearch":true}, {"section.main":"bda","_text":true, "_propertySearch":true}, {"sub_section.main":"bda","_text":true, "_propertySearch":true}, but is showing only content.main
+
 - Filters have performance issues, fix it: 
   - https://toddmotto.com/use-controller-filters-to-prevent-digest-performance-issues/
   - http://www.bennadel.com/blog/2487-filter-vs-nghide-with-ngrepeat-in-angularjs.htm
