@@ -434,9 +434,12 @@
                                 found = true;
                                 return false;
                             }
-                            if (value.main && value.main.toLowerCase().indexOf(searchTerm) != -1) {
-                                found = true;
-                                return false; // return false is equivalent to break loop
+                            if (value.main) {
+                                if (value.main.toLowerCase().indexOf(searchTerm) != -1) {
+//                                if (fuzzball.partial_token_sort_ratio(searchTerm, value.main.toLowerCase()) >= 50) {
+                                    found = true;
+                                    return false; // return false is equivalent to break loop
+                                }
                             }
                         });
                         if (found == true) return false;
