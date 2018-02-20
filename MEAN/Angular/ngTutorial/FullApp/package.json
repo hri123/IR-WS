@@ -20,7 +20,7 @@
     "bluebird": "^3.3.4",
     "body-parser": "^1.8.2",
     "bower": "^1.7.7",
-    "cloudant": "^1.4.1",
+    "cloudant": "1.7.1",
     "cors": "^2.7.1",
     "dropbox": "^0.10.3",
     "express": "^4.9.3",
