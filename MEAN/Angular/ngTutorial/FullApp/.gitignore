@@ -12,3 +12,5 @@ app/js/server/oauth.js
 report/
 
 typings/
+package-lock.json
+

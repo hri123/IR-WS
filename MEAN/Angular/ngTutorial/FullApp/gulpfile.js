@@ -430,7 +430,7 @@ function orderSrc (src, order) {
  * @param  {Boolean} specRunner - server spec runner html
  */
 function serve(isDev, specRunner) {
-    var debugMode = '--debug';
+    var debugMode = '--inspect';
     var nodeOptions = getNodeOptions(isDev);
 
     nodeOptions.nodeArgs = [debugMode + '=5858'];
@@ -439,7 +439,7 @@ function serve(isDev, specRunner) {
     // adding --debug to nodeArgs does not work
     // open http://127.0.0.1:8080/?port=5858 for debugging
     // npm install -g node-inspector / node-debug app.js
-    nodeOptions.exec = 'node-inspector & node --debug';
+    nodeOptions.exec = 'node-inspector & node --inspect';
 
     if (args.verbose) {
         console.log(nodeOptions);
