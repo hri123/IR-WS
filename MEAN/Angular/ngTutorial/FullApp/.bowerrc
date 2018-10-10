@@ -3,5 +3,5 @@
 	"scripts": {
 		"postinstall": "gulp wiredep"
 	},
-    "registry": "http://bower.herokuapp.com"
+    "registry": "https://registry.bower.io"
 }
