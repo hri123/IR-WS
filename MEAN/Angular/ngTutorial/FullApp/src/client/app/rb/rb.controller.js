@@ -726,10 +726,52 @@
 
         };
 
+        var populateUnselectedTags = function() {
+
+            var articlesLength = sharedVars.articles.length;
+            $scope.unselectedTags = [];
+            for (var i = 0; i < articlesLength; i++) {
+    
+                var currentArticle = sharedVars.articles[i];
+    
+                if (currentArticle.tags) {
+
+                    var tmp = currentArticle.tags.split(",").map(item=>item.trim());
+                    let checker = (arr, target) => target.every(v => arr.includes(v));
+
+                    if (checker(tmp, $scope.selectedTags)) {
+                        $.each(tmp, function(value) {
+                            var tag = tmp[value];
+                            if ($.inArray(tag, $scope.selectedTags) == -1 && $.inArray(tag, $scope.unselectedTags) == -1) 
+                                $scope.unselectedTags.push(tag);
+                        });
+                    }    
+                }
+    
+            };
+        }
+
+        $scope.removeFromSelected = function(selectedTag) {
+
+            $scope.selectedTags.splice( $.inArray(selectedTag, $scope.selectedTags), 1 );
+            populateUnselectedTags();
+
+        };
+
+        $scope.addToSelected = function(unselectedTag) {
+
+            $scope.selectedTags.push(unselectedTag);
+            populateUnselectedTags();
+
+        };
+
         $scope.tags = {};
         $scope.regularTags = [];
         $scope.sectionAndSubSectionTags = [];
         $scope.atTags = [];
+
+        $scope.unselectedTags = [];
+        $scope.selectedTags = [];
 
         var addToAtTags = function(inText) {
             var regExp = /@tags\(([^)]+)\)/g; // to extract @tags
@@ -782,6 +824,8 @@
             findTagsInSectionAndSubSections(articleAnnotation.section);
 
         };
+
+        populateUnselectedTags();
 
     }]);
 

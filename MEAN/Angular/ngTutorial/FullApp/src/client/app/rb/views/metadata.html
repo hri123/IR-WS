@@ -26,6 +26,26 @@
                     <div class="container">
                         <div class="row">
                             <div class="col-md-5">
+                                <span>Selected Tags</span>
+                                <br/>
+                                <ol>
+                                    <li data-ng-repeat="selectedTag in selectedTags track by $index">
+                                        <button type="button" class="btn btn-primary" ng-click="removeFromSelected(selectedTag)">{{selectedTag}}</button>
+                                    </li>
+                                </ol>
+                            </div>
+                            <div class="col-md-5">
+                                <span>Waiting to be Selected</span>
+                                <br/>
+                                <ol>
+                                    <li data-ng-repeat="unselectedTag in unselectedTags track by $index">
+                                        <button type="button" class="btn btn-primary" ng-click="addToSelected(unselectedTag)">{{unselectedTag}}</button>
+                                    </li>
+                                </ol>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-5">
                                 <span>ALL TAGS with Count ordered by number of occurences</span>
                                 <br/>
                                 <ol>
